@@ -1,0 +1,15 @@
+{
+  "name": "svg-parser",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gokul Nath",
+  "license": "ISC",
+  "dependencies": {
+    "extract-svg-path": "^2.1.0",
+    "parse-svg-path": "^0.1.2"
+  }
+}
