@@ -1,7 +1,10 @@
 from xml.dom import minidom
 
 doc = minidom.parse('sign-up.svg')  # parseString also exists
-path_strings = [path.getAttribute('d') for path in doc.getElementsByTagName('path')]
-for item in path_strings:
-	print item
+# path_strings = [path.getAttribute('d') for path in doc.getElementsByTagName('path')]
+# for item in path_strings:
+# 	print item
+for text in doc.getElementsByTagName('tspan'):
+	# print text.getAttribute('font-family')
+	print text.firstChild.nodeValue
 doc.unlink()
