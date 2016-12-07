@@ -6,6 +6,7 @@ angular.module('myApp', []).
 			console.log('clicked');
 			$http.get('/xml').success(function(response) {
 				console.log(response);
+        $scope.xml = response;
 			});
 		}
 	}]);

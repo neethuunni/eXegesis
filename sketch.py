@@ -1,10 +1,22 @@
 from xml.dom import minidom
+from xml.dom.minidom import parse
+import xml.dom.minidom
+from collections import defaultdict
+from xml.dom.minidom import Node
+import xml.etree.ElementTree as ET
 
-doc = minidom.parse('sign-up.svg')  # parseString also exists
-# path_strings = [path.getAttribute('d') for path in doc.getElementsByTagName('path')]
-# for item in path_strings:
-# 	print item
-for text in doc.getElementsByTagName('tspan'):
-	# print text.getAttribute('font-family')
-	print text.firstChild.nodeValue
-doc.unlink()
+# doc = minidom.parse('svg.svg')  # parseString also exists
+
+# for elem in doc.getElementsByTagName('svg'):
+#     for x in elem.childNodes:
+#         if x.nodeType == Node.ELEMENT_NODE:
+#         	if x.firstChild:
+#         		print '1'
+#         		print x.tagName, x.attributes.items()
+#         		print x.parentNode.tagName
+#         	else:
+#         		print '2'
+#         		print x.tagName, x.firstChild
+
+tree = ET.parse('svg.svg')
+root = tree.getroot()
