@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SVG</title>
+</head>
+<body>
+<h1>SVG Parser</h1>
+{% include 'sign-in.svg' %}
+<script type="text/javascript">
+  var obj = {{ annotations|safe}};
+  console.log(obj);
+  document.getElementById("Rectangle-22").addEventListener('click',function(event){
+    // var oh = obj.id === "Rectangle-23";
+    console.log('rectangle22',event.bubbles);
+    
+  });
+   document.getElementById("LOGIN").addEventListener('click',function(event){
+    // document.getElementById("LOGIN").zIndex = "1";
+    // var oh = obj.id === "Rectangle-23";
+    console.log('login',event.bubbles);
+    
+  });
+   document.getElementById("Rectangle-23").addEventListener('click',function(event){
+    // document.getElementById("LOGIN").zIndex = "1";
+    // var oh = obj.id === "Rectangle-23";
+    console.log('Rectangle-23',event.bubbles);
+    
+  });
+</script>
+</body>
+</html>
