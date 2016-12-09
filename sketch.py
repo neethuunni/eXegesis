@@ -20,3 +20,16 @@ import xml.etree.ElementTree as ET
 
 tree = ET.parse('svg.svg')
 root = tree.getroot()
+
+for elm in root.iter():
+	attribute = elm.attrib
+	tag = elm.tag.split('}')[1]
+	if tag == 'text':
+		ids = attribute['id']
+		for i in elm:
+			i.set('parent', ids)
+			attrib = i.attrib
+			print attribute
+			
+tree.write('svg2.svg')
+

@@ -2,30 +2,58 @@
 <html>
 <head>
   <title>SVG</title>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
 <h1>SVG Parser</h1>
 {% include 'sign-in.svg' %}
 <script type="text/javascript">
-  var obj = {{ annotations|safe}};
+  var obj = {{ annotations|safe }};
   console.log(obj);
-  document.getElementById("Rectangle-22").addEventListener('click',function(event){
-    // var oh = obj.id === "Rectangle-23";
-    console.log('rectangle22',event.bubbles);
-    
-  });
-   document.getElementById("LOGIN").addEventListener('click',function(event){
-    // document.getElementById("LOGIN").zIndex = "1";
-    // var oh = obj.id === "Rectangle-23";
-    console.log('login',event.bubbles);
-    
-  });
-   document.getElementById("Rectangle-23").addEventListener('click',function(event){
-    // document.getElementById("LOGIN").zIndex = "1";
-    // var oh = obj.id === "Rectangle-23";
-    console.log('Rectangle-23',event.bubbles);
-    
-  });
+
+  var count = 0;
+  for(var i = 0; i < obj.length; i++) {
+    if (obj[i]['type'] === 'text') {
+      id = obj[i]['id'];
+      for (var j = i + 1; j < obj.length; j++) {
+        if (obj[j]['type'] != 'tspan') {
+          break;
+        }
+        else {
+          document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
+          count++;
+        }
+      }
+    }
+  }
+  $('svg').on('click', function(e){
+    var parent = '';
+    outer = e.target.outerHTML;
+    outer = outer.split(' ');
+    for (var i=0; i < outer.length; i++){
+      if (outer[i].startsWith('parent')) {
+        parent = outer[i].split("\"")[1];
+        console.log(parent);
+      }
+    }
+    for (var i = 0; i < obj.length; i++) {
+      if (obj[i]['id'] === parent) {
+        console.log(obj[i]);
+        break;
+      }
+    }
+    if (obj[i]['type'] == 'text') {
+        for (var j = i + 1; j < obj.length; j++) {
+          if (obj[j]['type'] != 'tspan') {
+            break;
+          }
+          else {
+            console.log(obj[j]);
+          }
+        }
+      }
+    });
 </script>
 </body>
 </html>
