@@ -32,13 +32,13 @@
                     </text>
                 </g>
             </g>
-<!--             <g id="Group-Copy-3" transform="translate(40.000000, 237.500000)">
- -->                <text id="Email-Address" font-family=".SFNSDisplay-Light, .SF NS Display" font-size="15" font-weight="300" letter-spacing="-0.0250000022" fill="#8C8C8C">
-                    <tspan x="41.57265626" y="252.5">Email Address</tspan>
+            <g id="Group-Copy-3" transform="translate(40.000000, 237.500000)">
+                <text id="Email-Address" font-family=".SFNSDisplay-Light, .SF NS Display" font-size="15" font-weight="300" letter-spacing="-0.0250000022" fill="#8C8C8C">
+                    <tspan x="1.57265626" y="15">Email Address</tspan>
                 </text>
                 <path d="M0.5,22.5 L299.501672,22.5" id="Line-Copy-2" stroke="#FFFFFF" stroke-linecap="square" opacity="0.5"></path>
-<!--             </g>
- -->            <g id="Group-Copy-5" transform="translate(40.000000, 328.000000)">
+            </g>
+            <g id="Group-Copy-5" transform="translate(40.000000, 328.000000)">
                 <text id="Date-of-Birth" font-family="GothamHTF-Light, Gotham HTF" font-size="14" font-weight="300" letter-spacing="-0.0233333353" fill="#8C8C8C">
                     <tspan x="1.5" y="13">Date of Birth</tspan>
                 </text>

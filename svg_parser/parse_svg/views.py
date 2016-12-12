@@ -4,11 +4,9 @@ from svg_parser import settings
 import os
 import json
 
-
-# Create your views here.
-
 translate = []
 annotations = []
+g_attributes = {}
 
 def getSubChild(child):
 	for subchild in child:
@@ -25,13 +23,33 @@ def getSubChild(child):
 				translate.append(float(transform[1]))
 		if tag == 'rect' or tag == 'text' or tag == 'tspan':
 			if translate and 'x' in attribute.keys():
-				attribute['x'] = float(attribute['x']) + translate[0]
-				attribute['y'] = float(attribute['y']) + translate[1]
+				if len(translate) > 2:
+					translation = [0] * 2
+					for i in range(len(translate)):
+						if i % 2 == 0:
+							translation[0] += translate[i]
+						else:
+							translation[1] += translate[i]
+				else:
+					translation = translate[:]
+
+				attribute['x'] = float(attribute['x']) + translation[0]
+				attribute['y'] = float(attribute['y']) + translation[1]
 			if tag == 'tspan':
+				g_attributes.clear()
 				attribute['text'] = subchild.text
 			# print tag, attribute, translate
 			attribute['type'] = tag
+			if g_attributes:
+				attribute.update(g_attributes)
 			annotations.append(attribute)
+		if tag == 'g':
+			g_attributes.clear()
+			for i in attribute.keys():
+				if i == 'id' or i == 'transform':
+					continue
+				else:
+					g_attributes[i] = attribute[i]
 		getSubChild(subchild)
 		if translate:
 			translate.pop()
@@ -47,7 +65,7 @@ def getChild(root):
 def index(request):
 	global annotations
 	annotations = []
-	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates', 'sign-in.svg'))
+	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates', 'sign-up.svg'))
 	root = tree.getroot()
 	getChild(root)
 	# args = {'annotations': annotations}

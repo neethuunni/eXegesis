@@ -6,54 +6,115 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
-<h1>SVG Parser</h1>
-{% include 'sign-in.svg' %}
-<script type="text/javascript">
-  var obj = {{ annotations|safe }};
-  console.log(obj);
 
-  var count = 0;
-  for(var i = 0; i < obj.length; i++) {
-    if (obj[i]['type'] === 'text') {
-      id = obj[i]['id'];
-      for (var j = i + 1; j < obj.length; j++) {
-        if (obj[j]['type'] != 'tspan') {
-          break;
+  <nav class="navbar navbar-inverse" style="margin-bottom:0;">
+    <div class="container-fluid" style="background-color:#3385ff;">
+      <div class="navbar-header" style="display:inline-block">
+        <a class="navbar-brand" style="color:FFFFFF;" href="#">SVG Parser</a>
+      </div>
+    <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a ui-sref="/">Employee</a></li>
+        <li class="active"><a ui-sref="admin">Admin<span class="sr-only">(current)</span></a></li>
+      </ul>
+      <button style="float:right;" class="btn btn-warning navbar-btn" type="button" ng-click="logoutAdmin()">Logout</button>
+    </div> -->   
+  </div>
+</nav>
+
+<div class="container" style="width:100%; margin-top:15px; display:flex;flex-direction:row;justify-content: center;">
+  <div style="width:80%; display:inline-block;text-align:center">
+    {% include 'sign-up.svg' %}
+    <script type="text/javascript">
+      var obj = {{ annotations|safe }};
+      console.log(obj);
+      var object;
+      var count = 0;
+      var full_list = '<ul>'
+      for(var i = 0; i < obj.length; i++) {
+        if (obj[i]['type'] === 'text') {
+          id = obj[i]['id'];
+          for (var j = i + 1; j < obj.length; j++) {
+            if (obj[j]['type'] != 'tspan') {
+              break;
+            }
+            else {
+              document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
+              count++;
+            }
+          }
+        }
+      }
+      $('svg').on('click', function(e){
+        var parent = '';
+        outer = e.target.outerHTML;
+        outer = outer.split(' ');
+        for (var i=0; i < outer.length; i++){
+          if (outer[i].startsWith('parent')) {
+            parent = outer[i].split("\"")[1];
+            // console.log(parent);
+          }
+        }
+        if (parent !== '') {
+          for (var i = 0; i < obj.length; i++) {
+            if (obj[i]['id'] === parent) {
+              console.log(obj[i]);
+              displayAnnotations(obj[i]);
+              break;
+            }
+          }
+          if (obj[i]['type'] == 'text') {
+            for (var j = i + 1; j < obj.length; j++) {
+              if (obj[j]['type'] != 'tspan') {
+                full_list = '<ul>'
+                break;
+              }
+              else {
+                console.log(obj[j]);
+                object = obj[j];
+                displayAnnotations(object);
+              }
+            }
+          }
         }
         else {
-          document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
-          count++;
-        }
-      }
-    }
-  }
-  $('svg').on('click', function(e){
-    var parent = '';
-    outer = e.target.outerHTML;
-    outer = outer.split(' ');
-    for (var i=0; i < outer.length; i++){
-      if (outer[i].startsWith('parent')) {
-        parent = outer[i].split("\"")[1];
-        console.log(parent);
-      }
-    }
-    for (var i = 0; i < obj.length; i++) {
-      if (obj[i]['id'] === parent) {
-        console.log(obj[i]);
-        break;
-      }
-    }
-    if (obj[i]['type'] == 'text') {
-        for (var j = i + 1; j < obj.length; j++) {
-          if (obj[j]['type'] != 'tspan') {
-            break;
+          for (var i=0; i < outer.length; i++){
+            if (outer[i].startsWith('id')) {
+              var id = outer[i].split('\"')[1];
+              console.log(id);
+              break;
+            }
           }
-          else {
-            console.log(obj[j]);
+          for (var i = 0; i < obj.length; i++) {
+            if (obj[i]['id'] === id) {
+              console.log(obj[i]);
+              object = obj[i];
+              displayAnnotations(object);
+              full_list = '<ul>';
+              break;
+            }
           }
         }
-      }
-    });
-</script>
+        function displayAnnotations(object) {
+          for (var key in object) {
+            if (key === 'type' || key == 'id') {
+              continue;
+            }
+            if (object.hasOwnProperty(key)) {
+              full_list = full_list + '<li>' + key + ': ' + object[key] + '</li>';
+            }
+          }
+          full_list += '</ul><br />';
+          $("#annotations").html(full_list);
+        }
+        full_list = '<ul>';
+      });
+    </script>
+  </div>
+
+  <div id="annotations" style="width:20%; display:inline-block">
+  </div>
+
+</div>
 </body>
 </html>
