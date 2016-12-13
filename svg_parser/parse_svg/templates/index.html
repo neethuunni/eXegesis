@@ -23,14 +23,14 @@
 </nav>
 
 <div class="container" style="width:100%; margin-top:15px; display:flex;flex-direction:row;justify-content: center;">
-  <div style="width:80%; display:inline-block;text-align:center">
-    {% include 'sign-up.svg' %}
+  <div style="width:70%; display:inline-block;text-align:center">
+    {% include 'uploads/sign-in.svg' %}
     <script type="text/javascript">
       var obj = {{ annotations|safe }};
       console.log(obj);
       var object;
       var count = 0;
-      var full_list = '<ul>'
+      var full_list = ''
       for(var i = 0; i < obj.length; i++) {
         if (obj[i]['type'] === 'text') {
           id = obj[i]['id'];
@@ -66,7 +66,7 @@
           if (obj[i]['type'] == 'text') {
             for (var j = i + 1; j < obj.length; j++) {
               if (obj[j]['type'] != 'tspan') {
-                full_list = '<ul>'
+                full_list = ''
                 break;
               }
               else {
@@ -90,7 +90,7 @@
               console.log(obj[i]);
               object = obj[i];
               displayAnnotations(object);
-              full_list = '<ul>';
+              full_list = '';
               break;
             }
           }
@@ -104,15 +104,15 @@
               full_list = full_list + '<li>' + key + ': ' + object[key] + '</li>';
             }
           }
-          full_list += '</ul><br />';
+          full_list += '<br />';
           $("#annotations").html(full_list);
         }
-        full_list = '<ul>';
+        full_list = '';
       });
     </script>
   </div>
 
-  <div id="annotations" style="width:20%; display:inline-block">
+  <div id="annotations" style="width:30%; display:inline-block">
   </div>
 
 </div>

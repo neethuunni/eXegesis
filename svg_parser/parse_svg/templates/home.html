@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+</head>
+<body>
+  <nav class="navbar navbar-inverse" style="margin-bottom:0;">
+    <div class="container-fluid" style="background-color:#3385ff;">
+      <div class="navbar-header" style="display:inline-block">
+        <a class="navbar-brand" style="color:FFFFFF;" href="#">SVG Parser</a>
+      </div>
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <<!-- ul class="nav navbar-nav">
+        <li><a ui-sref="/">Employee</a></li>
+        <li class="active"><a ui-sref="admin">Admin<span class="sr-only">(current)</span></a></li>
+      </ul> -->
+      <a href="/logout"><button style="float:right;" class="btn btn-warning navbar-btn" type="button">Logout</button></a>
+    </div>   
+  </div>
+</nav>
+<div style="margin-top:50px;margin-left:150px">
+  {% if images%}
+  <ul>
+    {% for image in images %}
+    <a href='/svg?url={{image.url}}'>
+    <li><h5>{{image.image}}</h5></li>
+    </a>
+    {% endfor %}
+  </ul>
+  {%endif%}
+</div>
+<div>
+  
+</div>
+</body>
+</html>

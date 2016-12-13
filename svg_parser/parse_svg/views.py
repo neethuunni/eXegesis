@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout as auth_logout
 import xml.etree.ElementTree as ET
 from svg_parser import settings
 import os
 import json
+from models import Image
 
 translate = []
 annotations = []
@@ -63,15 +65,30 @@ def getChild(root):
 			getSubChild(child)
 
 def index(request):
+	params = request.GET.get('url')
+	print params
 	global annotations
 	annotations = []
-	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates', 'sign-up.svg'))
+	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates', 'sign-in.svg'))
 	root = tree.getroot()
 	getChild(root)
 	# args = {'annotations': annotations}
 	return render(request, 'index.html', {'annotations': json.dumps(annotations)})
 
+def login(request):
+	return render(request, 'login.html')
 
+def home(request):
+	if request.user:
+		user = request.user
+		email = user.email
 
+	# obj, created = Image.objects.get_or_create(email=email)
+	# print 'obj: ', obj
+	# print 'created: ', created
+	images = Image.objects.filter(email=email)
+	return render(request, 'home.html', {'images': images})
 
-
+def logout(request):
+    auth_logout(request)
+    return redirect('/')
