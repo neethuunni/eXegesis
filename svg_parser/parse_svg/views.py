@@ -5,6 +5,7 @@ from svg_parser import settings
 import os
 import json
 from models import Image
+import uuid
 
 translate = []
 annotations = []
@@ -69,11 +70,10 @@ def index(request):
 	print params
 	global annotations
 	annotations = []
-	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates', 'sign-in.svg'))
+	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + params)
 	root = tree.getroot()
 	getChild(root)
-	# args = {'annotations': annotations}
-	return render(request, 'index.html', {'annotations': json.dumps(annotations)})
+	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params})
 
 def login(request):
 	return render(request, 'login.html')
@@ -88,6 +88,27 @@ def home(request):
 	# print 'created: ', created
 	images = Image.objects.filter(email=email)
 	return render(request, 'home.html', {'images': images})
+
+def svg_images(request):
+	email = request.user.email
+	images_path = os.path.join('parse_svg', 'templates', 'uploads')
+	if not os.path.exists(images_path):
+           os.makedirs(images_path)
+	for f in request.FILES.getlist('svgfile'):
+		filename = f.name
+		print 'filename: ', filename
+		img_data = f.read()
+		uuid_name = uuid.uuid4()
+		img_name = "%s.%s" % (uuid_name, 'svg')
+		image_path = 'uploads/' + img_name
+		url = image_path
+		with open(os.path.join(images_path, img_name), "wb") as image:
+		   image.write(img_data)
+		new_entry = Image(email=email, image=filename, url=url)
+		new_entry.save()
+	# images = Image.objects.filter(email=email)
+	# return render(request, 'home.html', {'images': images})
+	return redirect('/home')
 
 def logout(request):
     auth_logout(request)

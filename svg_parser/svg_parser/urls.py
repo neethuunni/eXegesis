@@ -23,5 +23,6 @@ urlpatterns = [
     url(r'^$', views.login),
     url(r'^home/$', views.home),
     url(r'^logout/$', views.logout),
-    url(r'^svg/', views.index)
+    url(r'^svg/', views.index),
+    url(r'^svg_images/', views.svg_images)
 ]

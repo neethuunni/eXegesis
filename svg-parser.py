@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-tree = ET.parse('test2.svg')
+tree = ET.parse('svg.svg')
 root = tree.getroot()
 translate = []
 annotations = []
@@ -36,7 +36,7 @@ def getSubChild(child):
 			if tag == 'tspan':
 				g_attributes.clear()
 				attribute['text'] = subchild.text
-			print tag, attribute, translate, '\n'
+			print tag, attribute, '\n'
 			attribute['type'] = tag
 			if g_attributes:
 				attribute.update(g_attributes)

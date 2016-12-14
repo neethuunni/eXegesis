@@ -24,7 +24,7 @@
 
 <div class="container" style="width:100%; margin-top:15px; display:flex;flex-direction:row;justify-content: center;">
   <div style="width:70%; display:inline-block;text-align:center">
-    {% include 'uploads/sign-in.svg' %}
+    {% include url %}
     <script type="text/javascript">
       var obj = {{ annotations|safe }};
       console.log(obj);
@@ -48,6 +48,7 @@
       $('svg').on('click', function(e){
         var parent = '';
         outer = e.target.outerHTML;
+        console.log('element: ', outer);
         outer = outer.split(' ');
         for (var i=0; i < outer.length; i++){
           if (outer[i].startsWith('parent')) {
