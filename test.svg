@@ -1,38 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-<svg
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   version="1.0"
-   width="360"
-   height="360"
-   id="svg2">
-  <defs
-     id="defs4" />
-  <g
-     id="layer1">
-    <rect
-       width="30"
-       height="30"
-       x="120"
-       y="90"
-       transform="matrix(4,0,0,4,-450,-330)"
-       id="rect2407"
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    <path
-       d="M 169.58823,121.19571 L 154.58824,147.17647 L 184.58823,147.17647 L 169.58823,121.19571 z"
-       transform="matrix(4.0000013,0,0,4.0000013,-588.35316,-266.70607)"
-       id="path2462"
-       style="fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <path
-       d="M 165,185.5 L 150,211.46875 L 165,237.46875 L 195,237.46875 L 210,211.46875 L 195,185.5 L 165,185.5 z"
-       transform="matrix(2,0,0,2,-90,-152.9375)"
-       id="path2480"
-       style="fill:#000000;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
-    <path
-       d="M 182.11764,276.70587 A 55.411762,54.35294 0 1 1 71.294117,276.70587 A 55.411762,54.35294 0 1 1 182.11764,276.70587 z"
-       transform="matrix(1.0828026,0,0,1.1038962,132.80254,-215.45456)"
-       id="path2490"
-       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-  </g>
+<svg width="375px" height="667px" viewBox="0 0 375 667" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>Sign up</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Sign-up">
+            <rect id="Rectangle-22-Copy" fill="#722047" x="0" y="0" width="375" height="667"></rect>
+            <rect id="Rectangle-23-Copy" fill="#FFFFFF" opacity="0.1" x="0" y="605" width="375" height="72"></rect>
+            <text id="Already-have-an-acco" font-family="GothamHTF-Light, Gotham HTF" font-size="14" font-weight="300" letter-spacing="-0.0233333353" fill="#FFFFFF">
+                <tspan x="51.8813334" y="644">Already have an account?</tspan>
+                <tspan x="229.065333" y="644" font-family="GothamHTF-Medium, Gotham HTF" font-weight="400"> Login here</tspan>
+            </text>
+            <g id="Group-3-Copy" transform="translate(40.000000, 543.000000)">
+                <rect id="Rectangle-Copy-2" fill="#9E9068" x="0" y="0" width="300" height="50" rx="4"></rect>
+                <text id="REGISTER" font-family="GothamHTF-Book, Gotham HTF" font-size="18" font-weight="300" letter-spacing="-0.0300000031" fill="#FFFFFF">
+                    <tspan x="103.914" y="32">REGISTER</tspan>
+                </text>
+            </g>
+            <g id="Group-2" transform="translate(40.000000, 135.000000)">
+                <g id="Group" transform="translate(0.000000, 16.000000)">
+                    <text id="First-Name" font-family="GothamHTF-Light, Gotham HTF" font-size="14" font-weight="300" letter-spacing="-0.0233333353" fill="#FFFFFF">
+                        <tspan x="1.5" y="13">First Name</tspan>
+                    </text>
+                    <path d="M0.5,20.5 L299.501672,20.5" id="Line-Copy-2" stroke="#FFFFFF" stroke-linecap="square"></path>
+                </g>
+                <g id="Group-Copy-10" transform="translate(1.000000, 0.000000)" font-size="8" font-family="GothamHTF-Light, Gotham HTF" letter-spacing="-0.0133333346" fill="#8C8C8C" font-weight="300">
+                    <text id="First-Name">
+                        <tspan x="0.5" y="7">First Name</tspan>
+                    </text>
+                </g>
+            </g>
+            <text id="Sign-Up" font-family="GothamHTF-Book, Gotham HTF" font-size="20" font-weight="300" letter-spacing="-0.0333333351" fill="#FEFEFE">
+                <tspan x="146.626979" y="119">Sign Up</tspan>
+            </text>
+            
+        </g>
+    </g>
 </svg>
