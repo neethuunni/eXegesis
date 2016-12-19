@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-tree = ET.parse('sign-in2.svg')
+tree = ET.parse('sign-up.svg')
 root = tree.getroot()
 translate = []
 annotations = []
@@ -157,5 +157,5 @@ def getChild(root):
 
 
 getChild(root)
-# for i in annotations:
-# 	print i
+for i in annotations:
+	print i

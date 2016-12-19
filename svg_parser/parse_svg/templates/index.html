@@ -12,7 +12,7 @@
       <div class="navbar-header" style="display:inline-block">
         <a class="navbar-brand" style="color:FFFFFF;" href="#">SVG Parser</a>
       </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <!-- <ul class="nav navbar-nav">
         <li><a ui-sref="/">Employee</a></li>
         <li class="active"><a ui-sref="admin">Admin<span class="sr-only">(current)</span></a></li>
@@ -25,12 +25,22 @@
 <div class="container" style="width:100%; margin-top:15px; display:flex;flex-direction:row;justify-content: center;">
   <div style="width:70%; display:inline-block;text-align:center">
     {% include url %}
+
     <script type="text/javascript">
+      var jEscape = function(jquery) {
+        jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
+        jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
+        jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
+        jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
+        return jquery;
+      };
+
       var obj = {{ annotations|safe }};
       console.log(obj);
       var object;
       var count = 0;
-      var full_list = ''
+      var full_list = '';
+      var current_idq = ''
       for(var i = 0; i < obj.length; i++) {
         if (obj[i]['type'] === 'text') {
           id = obj[i]['id'];
@@ -46,6 +56,7 @@
         }
       }
       $('svg').on('click', function(e){
+        $(current_idq).removeAttr('style');
         var parent = '';
         outer = e.target.outerHTML;
         console.log('element: ', outer);
@@ -53,10 +64,14 @@
         for (var i=0; i < outer.length; i++){
           if (outer[i].startsWith('parent')) {
             parent = outer[i].split("\"")[1];
-            // console.log(parent);
+            console.log(parent);
           }
         }
         if (parent !== '') {
+          idq = jEscape(parent);
+          idq = '#' + idq;
+          current_idq = idq
+          $(idq).css('stroke', 'orange');
           for (var i = 0; i < obj.length; i++) {
             if (obj[i]['id'] === parent) {
               console.log(obj[i]);
@@ -86,6 +101,10 @@
               break;
             }
           }
+          idq = jEscape(id)
+          idq = '#' + idq;
+          current_idq = idq
+          $(idq).css('stroke', 'orange');
           for (var i = 0; i < obj.length; i++) {
             if (obj[i]['id'] === id) {
               console.log(obj[i]);
