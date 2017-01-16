@@ -6,6 +6,7 @@ import os
 import json
 from models import Image
 import uuid
+import zipfile
 
 translate = []
 annotations = []
@@ -188,15 +189,33 @@ def svg_images(request):
 	for f in request.FILES.getlist('svgfile'):
 		filename = f.name
 		print 'filename: ', filename
-		img_data = f.read()
-		uuid_name = uuid.uuid4()
-		img_name = "%s.%s" % (uuid_name, 'svg')
-		image_path = 'uploads/' + img_name
-		url = image_path
-		with open(os.path.join(images_path, img_name), "wb") as image:
-		   image.write(img_data)
-		new_entry = Image(email=email, image=filename, url=url)
-		new_entry.save()
+		if filename.endswith('zip'):
+			archive = zipfile.ZipFile(f)
+			for file in archive.namelist():
+				print 'file: ', file
+				if file.endswith('svg'):
+					img_data = archive.read(file)
+					uuid_name = uuid.uuid4()
+					img_name = "%s.%s" % (uuid_name, 'svg')
+					image_path = 'uploads/' + img_name
+					url = image_path
+					with open(os.path.join(images_path, img_name), "wb") as image:
+					   image.write(img_data)
+					if '/' in file:
+						file = file.split('/')[1]
+					new_entry = Image(email=email, image=file, url=url)
+					new_entry.save()
+
+		else:
+			img_data = f.read()
+			uuid_name = uuid.uuid4()
+			img_name = "%s.%s" % (uuid_name, 'svg')
+			image_path = 'uploads/' + img_name
+			url = image_path
+			with open(os.path.join(images_path, img_name), "wb") as image:
+			   image.write(img_data)
+			new_entry = Image(email=email, image=filename, url=url)
+			new_entry.save()
 	return redirect('/home')
 
 def logout(request):
