@@ -21,8 +21,13 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^$', views.login),
-    url(r'^home/$', views.home),
+    # url(r'^home/$', views.home),
     url(r'^logout/$', views.logout),
     url(r'^svg/', views.index),
-    url(r'^svg_images/', views.svg_images)
+    url(r'^svg_images/', views.svg_images),
+    url(r'^projects/', views.projects),
+    url(r'^create_project/', views.create_project),
+    url(r'^artboards/', views.artboards),
+    url(r'^share_project/', views.share_project),
+    url(r'^verify_share/', views.verify_share),
 ]

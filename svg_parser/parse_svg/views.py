@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as auth_logout
 import xml.etree.ElementTree as ET
+from svg_parser.settings import EMAIL_SUBJECT, EMAIL_MESSAGE, EMAIL_HOST_USER
 from svg_parser import settings
 import os
 import json
-from models import Image
+from models import Project, ArtBoard
 import uuid
 import zipfile
+from django.core.mail import EmailMessage
+import jwt
 
 translate = []
 annotations = []
@@ -173,16 +176,17 @@ def index(request):
 def login(request):
 	return render(request, 'login.html')
 
-def home(request):
-	if request.user:
-		user = request.user
-		email = user.email
-
-	images = Image.objects.filter(email=email)
-	return render(request, 'home.html', {'images': images})
+def artboards(request):
+	project = request.GET.get('project')
+	request.session['project'] = project
+	project = Project.objects.filter(project=project)
+	artboards = ArtBoard.objects.filter(project=project)
+	return render(request, 'artboards.html', {'artboards': artboards})
 
 def svg_images(request):
-	email = request.user.email
+	project = request.session['project']
+	redirection = '/artboards?project=' + project
+	project = Project.objects.get(project=project)
 	images_path = os.path.join('parse_svg', 'templates', 'uploads')
 	if not os.path.exists(images_path):
            os.makedirs(images_path)
@@ -203,7 +207,7 @@ def svg_images(request):
 					   image.write(img_data)
 					if '/' in file:
 						file = file.split('/')[1]
-					new_entry = Image(email=email, image=file, url=url)
+					new_entry = ArtBoard(project=project, artboard=file, location=url)
 					new_entry.save()
 
 		else:
@@ -214,10 +218,46 @@ def svg_images(request):
 			url = image_path
 			with open(os.path.join(images_path, img_name), "wb") as image:
 			   image.write(img_data)
-			new_entry = Image(email=email, image=filename, url=url)
+			new_entry = ArtBoard(project=project, artboard=filename, location=url)
 			new_entry.save()
-	return redirect('/home')
+	return redirect(redirection)
 
 def logout(request):
-    auth_logout(request)
-    return redirect('/')
+	auth_logout(request)
+	return redirect('/')
+
+def projects(request):
+	if request.user:
+		email = request.user.email
+	print 'email: ', email
+	all_projects = Project.objects.filter(email=email)
+	return render(request, 'projects.html', {'projects': all_projects})
+
+def create_project(request):
+	email = request.user.email
+	project_name = request.POST.get('project-name')
+	project_description = request.POST.get('project-description')
+	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True)
+	new_project.save()
+	return redirect('/projects')
+
+def share_project(request):
+	project = request.session['project']
+	redirection = '/artboards?project=' + project
+	email = request.POST.get('email')
+	share = request.POST.get('share')
+	edit = request.POST.get('edit')
+	encoded = jwt.encode({'code': 'verification_success', 'redirection': redirection, 'email': email}, 'svgparser', algorithm='HS256')
+	url = '127.0.0.1:8000/verify_share?token=' + encoded
+	mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
+	mail.send(fail_silently=False)
+	
+	return redirect(redirection)
+
+def verify_share(request):
+	token = request.GET.get('token')
+	decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
+	if decoded['code'] == 'verification_success':
+		new_user = Project(email=decoded['email'])
+		return redirect(decoded['redirection'])
+
