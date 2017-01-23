@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from parse_svg import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,4 +32,4 @@ urlpatterns = [
     url(r'^artboards/', views.artboards),
     url(r'^share_project/', views.share_project),
     url(r'^verify_share/', views.verify_share),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

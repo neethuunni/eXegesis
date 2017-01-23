@@ -1,12 +1,32 @@
 import xml.etree.ElementTree as ET
-
-tree = ET.parse('sign-up.svg')
+from random import randint
+ET.register_namespace('', "http://www.w3.org/2000/svg")
+ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
+tree = ET.parse('search-by-name.svg')
 root = tree.getroot()
 translate = []
 annotations = []
 g_attributes = {}
 defs = {}
 trans_child = []
+ids = []
+
+def check_for_id(elem_id):
+	if elem_id in ids:
+		rand = randint(0,1000)
+		elem_id = elem_id + str(rand)
+	ids.append(elem_id)
+	return elem_id
+
+for child in root.iter():
+	attribute = child.attrib
+	if 'id' in child.attrib:
+		elem_id = check_for_id(attribute['id'])
+		child.set('id', elem_id)
+
+tree.write('temp.svg')
+tree = ET.parse('temp.svg')
+root = tree.getroot()
 
 def getSubChild(child):
 	global trans_child
@@ -16,13 +36,14 @@ def getSubChild(child):
 		tag = subchild.tag.split('}')[1]
 		if tag == 'g' and 'transform' in attribute.keys():
 			transform = attribute['transform']
-			if transform.startswith('translate'):
-				trans_child.append(subchild)
-				length = len(transform) - 1
-				transform = transform[10:length]
-				transform = transform.split(',')
-				translate.append(float(transform[0]))
-				translate.append(float(transform[1]))
+			if 'rotate' not in transform:
+				if transform.startswith('translate'):
+					trans_child.append(subchild)
+					length = len(transform) - 1
+					transform = transform[10:length]
+					transform = transform.split(',')
+					translate.append(float(transform[0]))
+					translate.append(float(transform[1]))
 
 		if tag == 'rect' or tag == 'text' or tag == 'tspan':
 			if translate and 'x' in attribute.keys():
@@ -63,21 +84,22 @@ def getSubChild(child):
 					break
 			id = id.replace('#', '')
 			defs_list = defs.copy()
-			defs_list[id]['id'] = attribute['id']
-			if translate and 'x' in defs_list[id].keys():
-				if len(translate) > 2:
-					translation = [0] * 2
-					for i in range(len(translate)):
-						if i % 2 == 0:
-							translation[0] += translate[i]
-						else:
-							translation[1] += translate[i]
-				else:
-					translation = translate[:]
+			if 'id' in attribute.keys():
+				defs_list[id]['id'] = attribute['id']
+				if translate and 'x' in defs_list[id].keys():
+					if len(translate) > 2:
+						translation = [0] * 2
+						for i in range(len(translate)):
+							if i % 2 == 0:
+								translation[0] += translate[i]
+							else:
+								translation[1] += translate[i]
+					else:
+						translation = translate[:]
 
-				defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
-				defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
-			annotations.append(defs_list[id])
+					defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
+					defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
+				annotations.append(defs_list[id])
 
 		if tag == 'path':
 			path_data = {}
@@ -138,12 +160,12 @@ def getSubChild(child):
 def getDefs(root):
 	for child in root:
 		tag = child.tag.split('}')[1]
-		if tag == 'rect':
+		if tag == 'rect' or tag == 'circle' or tag == 'ellipse':
 			attribute = child.attrib
 			if 'id' in attribute.keys():
 				id = attribute['id']
 				del attribute['id']
-				attribute['type'] = 'rect'
+				attribute['type'] = tag
 				defs[id] = attribute
 
 def getChild(root):

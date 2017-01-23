@@ -126,9 +126,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'static')
+STATIC_ROOT = [os.path.join(BASE_DIR, 'parse_svg', 'static'),]
 STATIC_URL = '/static/'
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'templates', 'uploads')
+MEDIA_URL = '/uploads/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
@@ -137,4 +139,4 @@ EMAIL_HOST_PASSWORD = 'svgparser2017'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT = "SVG Parser - Project shared!"
-EMAIL_MESSAGE = "The following project has been shared with you. Click on the following link to continue.\n"
+EMAIL_MESSAGE = "An 'SVG Parser' project has been shared with you. Click on the following link to continue.\n\n"

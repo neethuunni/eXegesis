@@ -10,9 +10,11 @@ class Project(models.Model):
 	description = models.CharField(max_length=100)
 	share = models.BooleanField(default=False)
 	edit = models.BooleanField(default=False)
+	thumbnail = models.CharField(max_length=100)
+	owner = models.CharField(max_length=50, default=None)
 
 	def __str__(self):
-		return str(self.email) + '  ' + str(self.project) +  '  ' + str(self.description)
+		return str(self.email) + ', ' + str(self.project) +  ', ' + str(self.description)
 
 class ArtBoard(models.Model):
 	project = models.ForeignKey(Project)
@@ -20,4 +22,4 @@ class ArtBoard(models.Model):
 	location = models.CharField(max_length=100)
 
 	def __str__(self):
-		return str(self.project) + '  ' + str(self.artboard) +  '  ' + str(self.location)
+		return str(self.project) + ', ' + str(self.artboard) +  ', ' + str(self.location)

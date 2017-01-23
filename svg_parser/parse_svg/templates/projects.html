@@ -13,35 +13,40 @@
         <a class="navbar-brand" style="color:FFFFFF;" href="#">SVG Parser</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <!-- ul class="nav navbar-nav">
-        <li><a ui-sref="/">Employee</a></li>
-        <li class="active"><a ui-sref="admin">Admin<span class="sr-only">(current)</span></a></li>
-      </ul> -->
-      <a href="/logout"><button style="float:right;" class="btn btn-warning navbar-btn" type="button">Logout</button></a>
-    </div>   
-  </div>
-</nav>
-<div style="margin-top:50px;margin-left:75px">
-  {% if projects%}
-  <ul>
-    {% for project in projects %}
-    <a href='/artboards?project={{project.project}}'>
-      <li><h5>{{project.project}}</h5></li>
-    </a>
-    {% endfor %}
-  </ul>
-  {%endif%}
+        <div class="dropdown" style="float:right;margin-right:10px;margin-top:13px">
+          <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">{{user}}
+            <span class="caret"></span></button>
+            <ul class="dropdown-menu">
+              <li><a href="/logout">LOGOUT</a></li>
+            </ul>
+          </div>
+        </div>   
+      </div>
+    </nav>
+<div class="container">
+  <div class="page-header">
+    <h2><center>Projects</center></h2>      
+  </div>     
 </div>
-<!-- <div class = "form-container" style="margin-top:40px;margin-left:50px">
-<form class = "form-main-class" action="/svg_images/" method="post" enctype="multipart/form-data">
-   {% csrf_token %}
-   <h4 class="text-class">Upload SVG Images</h4>
-   <input class="input-class" type="file" id="svgfile" name="svgfile" multiple />
-   <button  class="list-btn-user" type="submit">Upload</button>
- </form>
-</div> -->
 
-<div class="container" style="margin-top:30px">
+<div class="container" style="margin-top:50px;">
+  {% if projects %}
+  {% for project in projects %}
+  <div class="col-md-4">
+    <div class="thumbnail">
+      <a href='/artboards?project={{project.project}}'>
+        <img src="/{{ project.thumbnail }}" alt="/{{ project.project }}" style="width:250px;height:250px">
+        <div class="caption">
+          <p><h4>{{ project.project }}</h4></p>
+        </div>
+      </a>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+<div class="container" style="margin-top:30px;">
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Create Project</button>
   <!-- Modal -->
@@ -55,19 +60,18 @@
         </div>
         <div class="modal-body">
           <form class = "form-main-class" action="/create_project/" method="post">
-          {% csrf_token %}
-           <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
-           <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" />
-           <button  class="list-btn-user" type="submit">Create</button>
-         </form>
-       </div>
-       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            {% csrf_token %}
+            <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
+            <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" />
+            <button  class="list-btn-user" type="submit">Create</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-
 </body>
 </html>
