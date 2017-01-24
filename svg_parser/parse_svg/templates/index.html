@@ -31,6 +31,13 @@
         jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
         jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
         jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
+        jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
+        jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
+        jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
+        jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
+        jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
+        jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
+        jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
         return jquery;
       };
 
@@ -54,11 +61,11 @@
           }
         }
       }
-      $('svg').on('click', function(e){
+      $('svg').on('mouseover', function(e){
         $(current_idq).removeAttr('style');
         var parent = '';
         outer = e.target.outerHTML;
-        console.log('element: ', outer);
+        console.log('element: ', outer.substring(0, 20));
         outer = outer.split(' ');
         for (var i=0; i < outer.length; i++){
           if (outer[i].startsWith('parent')) {
