@@ -20,35 +20,71 @@ annotations = []
 g_attributes = {}
 defs = {}
 trans_child = []
-ids = []
 
-def check_for_id(elem_id):
-	if elem_id in ids:
-		rand = randint(0,1000)
-		elem_id = elem_id + str(rand)
-	ids.append(elem_id)
-	return elem_id
+def check_for_id():
+	new_id = str(uuid.uuid4())[0:8]
+	return new_id
 
 def getSubChild(child):
-	try:
-		global trans_child
-		for subchild in child:
-			elm = {}
-			attribute = subchild.attrib
-			tag = subchild.tag.split('}')[1]
-			if tag == 'g' and 'transform' in attribute.keys():
-				transform = attribute['transform']
-				if 'rotate' not in transform:
-					if transform.startswith('translate'):
-						trans_child.append(subchild)
-						length = len(transform) - 1
-						transform = transform[10:length]
-						transform = transform.split(',')
-						translate.append(float(transform[0]))
-						translate.append(float(transform[1]))
+	global trans_child
+	for subchild in child:
+		elm = {}
+		attribute = subchild.attrib
+		tag = subchild.tag.split('}')[1]
+		if tag == 'g' and 'transform' in attribute.keys():
+			transform = attribute['transform']
+			if 'rotate' not in transform:
+				if transform.startswith('translate'):
+					trans_child.append(subchild)
+					length = len(transform) - 1
+					transform = transform[10:length]
+					transform = transform.split(',')
+					translate.append(float(transform[0]))
+					translate.append(float(transform[1]))
 
-			if tag == 'rect' or tag == 'text' or tag == 'tspan':
-				if translate and 'x' in attribute.keys():
+		if tag == 'rect' or tag == 'text' or tag == 'tspan' or tag == 'ellipse':
+			if translate and 'x' in attribute.keys():
+				if len(translate) > 2:
+					translation = [0] * 2
+					for i in range(len(translate)):
+						if i % 2 == 0:
+							translation[0] += translate[i]
+						else:
+							translation[1] += translate[i]
+				else:
+					translation = translate[:]
+
+				attribute['x'] = float(attribute['x']) + translation[0]
+				attribute['y'] = float(attribute['y']) + translation[1]
+			if tag == 'tspan':
+				g_attributes.clear()
+				attribute['text'] = subchild.text
+			# print tag, attribute, translate, '\n'
+			attribute['type'] = tag
+			if g_attributes:
+				attribute.update(g_attributes)
+			annotations.append(attribute)
+
+		if tag == 'g':
+			g_attributes.clear()
+			for i in attribute.keys():
+				if i == 'id' or i == 'transform':
+					continue
+				else:
+					g_attributes[i] = attribute[i]
+
+		if tag == 'use':
+			for i in attribute.keys():
+				if 'href' in i:
+					id = attribute[i]
+					del attribute[i]
+					break
+			id = id.replace('#', '')
+			defs_list = defs.copy()
+			print 'defs_list: ', defs_list
+			if 'id' in attribute.keys():
+				defs_list[id]['id'] = attribute['id']
+				if translate and 'x' in defs_list[id].keys():
 					if len(translate) > 2:
 						translation = [0] * 2
 						for i in range(len(translate)):
@@ -59,51 +95,12 @@ def getSubChild(child):
 					else:
 						translation = translate[:]
 
-					attribute['x'] = float(attribute['x']) + translation[0]
-					attribute['y'] = float(attribute['y']) + translation[1]
-				if tag == 'tspan':
-					g_attributes.clear()
-					attribute['text'] = subchild.text
-				# print tag, attribute, translate, '\n'
-				attribute['type'] = tag
-				if g_attributes:
-					attribute.update(g_attributes)
-				annotations.append(attribute)
+					defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
+					defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
+				annotations.append(defs_list[id])
 
-			if tag == 'g':
-				g_attributes.clear()
-				for i in attribute.keys():
-					if i == 'id' or i == 'transform':
-						continue
-					else:
-						g_attributes[i] = attribute[i]
-
-			if tag == 'use':
-				for i in attribute.keys():
-					if 'href' in i:
-						id = attribute[i]
-						del attribute[i]
-						break
-				id = id.replace('#', '')
-				defs_list = defs.copy()
-				if 'id' in attribute.keys():
-					defs_list[id]['id'] = attribute['id']
-					if translate and 'x' in defs_list[id].keys():
-						if len(translate) > 2:
-							translation = [0] * 2
-							for i in range(len(translate)):
-								if i % 2 == 0:
-									translation[0] += translate[i]
-								else:
-									translation[1] += translate[i]
-						else:
-							translation = translate[:]
-
-						defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
-						defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
-					annotations.append(defs_list[id])
-
-			if tag == 'path':
+		if tag == 'path':
+			if 'd' in attribute.keys():
 				path_data = {}
 				path = attribute['d'].split(' ')
 				paths = []
@@ -153,25 +150,33 @@ def getSubChild(child):
 					path_data['y'] = y
 					annotations.append(path_data)
 
-			getSubChild(subchild)
-			if translate and subchild == trans_child[len(trans_child) - 1]:
-				translate.pop()
-				translate.pop()
-				trans_child.pop()
-		return annotations
-	except:
-		print 'something went wrong!'
+		getSubChild(subchild)
+		if translate and subchild == trans_child[len(trans_child) - 1]:
+			translate.pop()
+			translate.pop()
+			trans_child.pop()
+	return annotations
 
 def getDefs(root):
+	count = 0
 	for child in root:
 		tag = child.tag.split('}')[1]
-		if tag == 'rect' or tag == 'circle' or tag == 'ellipse':
+		if tag == 'rect' or tag == 'circle' or tag == 'ellipse' or tag == 'text':
 			attribute = child.attrib
 			if 'id' in attribute.keys():
 				id = attribute['id']
 				del attribute['id']
 				attribute['type'] = tag
 				defs[id] = attribute
+			if tag == 'text':
+				for subchild in child:
+					sub_tag = subchild.tag.split('}')[1]
+					if sub_tag == 'tspan':
+						count += 1
+						sub_attrib = subchild.attrib
+						sub_text = subchild.text
+						defs[id][sub_text] = sub_attrib
+	annotations.append(count)
 
 def getChild(root):
 	for child in root:
@@ -229,6 +234,7 @@ def artboards(request):
 	return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit})
 
 def svg_images(request):
+	defs_elms = []
 	project_name = request.session['project']
 	redirection = '/artboards?project=' + project_name
 	images_path = os.path.join('parse_svg', 'templates', 'uploads')
@@ -255,10 +261,18 @@ def svg_images(request):
 					tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 					root = tree.getroot()
 					for child in root.iter():
-						attribute = child.attrib
-						if 'id' in child.attrib:
-							elem_id = check_for_id(attribute['id'])
-							child.set('id', elem_id)
+						if child.tag.split('}')[1] == 'defs':
+							for subchild in child.iter():
+								defs_elms.append(subchild)
+					for child in root.iter():
+						if child not in defs_elms:
+							attribute = child.attrib
+							if 'id' in attribute:
+								elem_id = check_for_id()
+								child.set('id', elem_id)
+							if child.tag.split('}')[1] == 'use' and 'id' not in attribute.keys() or child.tag.split('}')[1] == 'text' and 'id' not in attribute.keys():
+								elem_id = check_for_id()
+								child.set('id', elem_id)
 					tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 
 					Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
@@ -278,10 +292,18 @@ def svg_images(request):
 			tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 			root = tree.getroot()
 			for child in root.iter():
-				attribute = child.attrib
-				if 'id' in child.attrib:
-					elem_id = check_for_id(attribute['id'])
-					child.set('id', elem_id)
+				if child.tag.split('}')[1] == 'defs':
+					for subchild in child.iter():
+						defs_elms.append(subchild)
+			for child in root.iter():
+				if child not in defs_elms:
+					attribute = child.attrib
+					if 'id' in child.attrib:
+						elem_id = check_for_id()
+						child.set('id', elem_id)
+					if child.tag.split('}')[1] == 'use' and 'id' not in attribute.keys() or child.tag.split('}')[1] == 'text' and 'id' not in attribute.keys():
+						elem_id = check_for_id()
+						child.set('id', elem_id)
 			tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 			Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
 			project = Project.objects.get(project=project_name, email=request.user.email)
@@ -324,6 +346,8 @@ def index(request):
 	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + params)
 	root = tree.getroot()
 	getChild(root)
+	for i in annotations:
+		print i
 	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params})
 
 def logout(request):
