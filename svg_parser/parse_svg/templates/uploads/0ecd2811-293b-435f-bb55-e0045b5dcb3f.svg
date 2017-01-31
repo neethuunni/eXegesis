@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="667px" version="1.1" viewBox="0 0 375 667" width="375px">
+    
+    <title>iPhone 7</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect height="667" id="path-1" width="375" x="0" y="0" />
+        <mask fill="white" height="667" id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" width="375" x="0" y="0">
+            <use xlink:href="#path-1" />
+        </mask>
+        <rect height="45" id="path-3" rx="3" width="268" x="55" y="426" />
+        <mask fill="white" height="45" id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" width="268" x="0" y="0">
+            <use xlink:href="#path-3" />
+        </mask>
+    </defs>
+    <g fill="none" fill-rule="evenodd" id="c4219a3e" stroke="none" stroke-width="1">
+        <g id="551ddba4">
+            <use fill="#EF5656" id="5ed48329" mask="url(#mask-2)" stroke="#979797" stroke-width="2" xlink:href="#path-1" />
+            <text fill="#FFFFFF" font-family="GothamHTF-Light, Gotham HTF" font-size="65" font-weight="300" id="3f011d6b" letter-spacing="-0.108333319">
+                <tspan x="72.485" y="205">QBurst</tspan>
+                <tspan font-size="36" letter-spacing="-0.0599999912" x="124.118" y="274">Calicut</tspan>
+            </text>
+            <text font-family="GothamHTF-Medium, Gotham HTF" font-size="78" font-weight="400" id="aac7b59d" letter-spacing="-0.12999998">
+                <tspan fill="#FFFFFF" x="72" y="360">Q</tspan>
+                <tspan fill="#2D2828" font-family="GothamHTF-XLight, Gotham HTF" font-weight="300" letter-spacing="-0.155999973" x="138.17" y="360">note</tspan>
+            </text>
+            <use fill="#FFFFFF" id="99b0461c" mask="url(#mask-4)" stroke="#ED2424" stroke-width="2" xlink:href="#path-3" />
+            <text fill="#686464" font-family="GothamHTF-XLight, Gotham HTF" font-size="12" font-weight="300" id="9fed5d92" letter-spacing="-0.0199999977">
+                <tspan x="63" y="454">Enter Email</tspan>
+            </text>
+            <rect fill="#AA2E2A" height="61" id="fbad90df" rx="6" width="317" x="32" y="541" />
+            <text fill="#FFFFFF" font-family="GothamHTF-XLight, Gotham HTF" font-size="18" font-weight="300" id="97abdd4d" letter-spacing="-0.0299999975">
+                <tspan x="105" y="578">CREATE ACCOUNT</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
