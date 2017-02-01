@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="../static/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="../static/script.js"></script>
 </head>
 <body>
   <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
@@ -30,7 +31,7 @@
       <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
       <!-- Modal -->
       <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
@@ -42,6 +43,50 @@
                 {% csrf_token %}
                 <div>
                   <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
+                </div>
+                <div style="margin-top:20px;text-align:center">
+                  <label class="radio-inline">
+                    <input type="radio" name="screen" value="android" onclick="displayDiv('android')">Android
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="screen" value="ios" onclick="displayDiv('ios')">iOS
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="screen" value="web" onclick="displayDiv('web')">Web
+                  </label>
+                </div>
+                <div id="ios" style="margin-top:20px;text-align:center;display:none">
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="1x">1x
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="2x">2x
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="3x">3x
+                  </label>
+                </div>
+                <div id="android" style="margin-top:20px;text-align:center;display:none">
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="mdpi">mdpi
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="hdpi">hdpi
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="xhdpi">xhdpi
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="xxhdpi">xxhdpi
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="xxxhdpi">xxxhdpi
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" name="density" value="xxxxhdpi">xxxxhdpi
+                  </label>
+                </div>
+                <div id="web" style="display:none;">
                 </div>
                 <div style="margin-top:20px;">
                   <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" />
@@ -69,7 +114,7 @@
           <a href='/artboards?project={{project.project}}' style="text-decoration:none;">
             <div style="background-image:url(/{{ project.thumbnail }});height:152px;width:299px">
             <!-- <img src="/{{ project.thumbnail }}" alt="/{{ project.project }}" style="width:250px;height:250px">
-          -->            
+          -->       
         </div>
         <div class="caption" style="height:152px;width:299px;padding-left:17px;padding-top:23px;">
           <div style="font-size:16px;color:#fb6946;">{{ project.project }}</div>

@@ -2,6 +2,9 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from django.utils import timezone
+
+
 # Create your models here.
 
 class Project(models.Model):
@@ -11,10 +14,14 @@ class Project(models.Model):
 	share = models.BooleanField(default=False)
 	edit = models.BooleanField(default=False)
 	thumbnail = models.CharField(max_length=100)
-	owner = models.CharField(max_length=50, default=None)
+	owner = models.CharField(max_length=50)
+	screen = models.CharField(max_length=10, default='')
+	density = models.CharField(max_length=10, blank=True, null=True)
+	created = models.DateTimeField(default=timezone.now)
+	last_updated = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
-		return str(self.email) + ', ' + str(self.project) +  ', ' + str(self.description)
+		return str(self.email) + ', ' + str(self.project) +  ', '
 
 class ArtBoard(models.Model):
 	project = models.ForeignKey(Project)

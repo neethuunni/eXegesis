@@ -36,12 +36,12 @@
       <div style="padding:0px 20px;">
         <div class="container-fluid">
 
-          <div class="col-sm-3" style="margin-top:28px;">
+          <div class="col-sm-3" style="margin-top:28px;padding-left:40px;">
             <div style="font-size:12px">
-              <div><strong>{{project}}</strong></div>
-              <div>{{description}}</div>
-              <div>line 3</div>
-              <div>line 4</div>
+              <div><strong>Type: {{ screen }}</strong></div>
+              <div>Density: {{ density }}</div>
+              <div>Created:  {{ created }}</div>
+              <div>Last Updated: {{ last_updated }} </div>
             </div>
             <div style="font-size:12px">
               <strong>Name</strong> | last updated
@@ -53,50 +53,60 @@
             <button style="font-size:30px;background-color:#ffffff;border:none;">STYLEGUIDE</button>
           </div>
 
-          <div class="col-sm-3" style="margin-top:25px;text-align:right;">
+          <div class="col-sm-3" style="margin-top:25px;text-align:right;padding-right:40px;">
             <div style="font-size:12px">
               SEARCH SCREENS
             </div>
             <div style="font-size:12px">
-              OWNER: <strong>GOKUL NATH</strong>
+              OWNER: <strong>{{ owner }}</strong>
             </div>
             <div>
               <div class="col-sm-6" style="padding:none">
-                <!-- <button class="btn-warning" style="background-color:#ffffff;border:none;color:black;height:37px;width:136px;font-size:12px;">VIEW MEMBERS</button> -->
                 <div class="dropdown">
                   <button class="btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color:#ffffff;border:none;color:#000000;padding:10px 0px;font-size:12px">VIEW MEMBERS
                     <span class="caret"></span></button>
                     <ul class="dropdown-menu" data-toggle="modal" data-target="#">
-                      <li><a href="#">Member 1</a></li>
+                      {% if shared_members %}
+                      {% for member in shared_members %}
+                      <li><a href="#">{{ member.email }}</a></li>
+                      {% endfor %}
+                      {% endif %}
                     </ul>
                   </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-6" style="padding-right:0px;" data-toggle="modal" data-target="#myModal">
                   <button class="btn-warning" style="background-color:#ffbd36;color:black;height:37px;width:136px;font-size:20px;">SHARE</button>
                 </div>
               </div>
             </div>
-
           </div>
 
           <div class="container-fluid" style="padding-top:20px">
             {% if artboards %}
             {% for artboard in artboards %}
             <div class="col-md-3" style="text-align:center;padding:15px">
-              <div style="height:306px;width:300px;margin:auto;">
+              <div style="height:306px;width:300px;margin:auto; position: relative;">
                 <a href='/svg?url={{artboard.location}}'>
                   <div style="background-image:url(/{{ artboard.location }});height:306px;width:300px;position:relative;">
-
-                    <!-- <img src="/{{ artboard.location }}" alt="/{{ artboard.artboard }}" style="width:250px;height:250px"> -->
-
                     <div class="caption" style="position:absolute;bottom:0;width:100%">
                       <div>
-                        <!-- <h4 style="color:#ffffff;">{{ artboard.artboard }}</h4> -->
-                        <button class="btn">{{ artboard.artboard }}</button>
+                        <button class="btn art-name" style="width:98%;border-radius:20px;background-color:#f5f5f5;color:#000000;">{{ artboard.artboard }}</button>
                       </div>
                     </div>
                   </div>
                 </a>
+                <div class="dropdown" style="position:absolute;top:5px;right:10px;">
+                  <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="margin-left:225px;margin-top:10px;border-radius:50%;background-color:#fb6946;">
+                  <span class="glyphicon glyphicon-cog" style="font-size:15px;color:#ffffff;margin-top:5px;">
+                    </span>
+                  </button>
+                  <ul class="dropdown-menu" data-toggle="modal" data-target="#" style="right: 0; left: inherit;">                      
+                    <li><a href="#">RENAME</a></li>
+                    <li><a href="#">UPDATE</a></li>
+                    <li><a href="#">DOWNLOAD</a></li>
+                    <li><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
+                  </ul>  
+                </div>
               </div>
             </div>
             {% endfor %}

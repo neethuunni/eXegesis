@@ -11,6 +11,7 @@ import zipfile
 from django.core.mail import EmailMessage
 import jwt
 from random import randint
+from datetime import datetime
 
 ET.register_namespace('', "http://www.w3.org/2000/svg")
 ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
@@ -205,7 +206,10 @@ def create_project(request):
 	project_description = request.POST.get('project-description')
 	user = request.user.first_name + ' ' + request.user.last_name
 	thumbnail = 'static/project.jpg'
-	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail)
+	screen = request.POST.get('screen')
+	density = request.POST.get('density')
+	created = datetime.now()
+	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created)
 	new_project.save()
 	return redirect('/projects')
 
@@ -219,6 +223,12 @@ def artboards(request):
 	edit = p.edit
 	share = p.share
 	owner = p.owner
+	screen = p.screen
+	density = p.density
+	created = p.created
+	last_updated = p.last_updated
+	shared_members = Project.objects.filter(project=project_name, share=True)
+	print 'shared_members: ', shared_members
 	request.session['project'] = project_name
 	request.session['description'] = description
 	request.session['thumbnail'] = thumbnail
@@ -231,7 +241,7 @@ def artboards(request):
 	print 'Username artboards: ', user
 	print 'project: ', project
 	print 'artboards: ', artboards
-	return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit})
+	return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
 
 def svg_images(request):
 	defs_elms = []
@@ -324,7 +334,7 @@ def share_project(request):
 	share = True if share else False
 	edit = True if edit else False
 	encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'description': description, 'thumbnail': thumbnail, 'share': share, 'edit': edit, 'owner': owner}, 'svgparser', algorithm='HS256')
-	url = '10.7.30.2.xip.io:8000/verify_share?token=' + encoded
+	url = 'localhost:8000/verify_share?token=' + encoded
 	mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
 	mail.send(fail_silently=False)
 	return redirect(redirection)

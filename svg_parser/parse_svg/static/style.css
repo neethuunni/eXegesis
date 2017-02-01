@@ -1,12 +1,12 @@
 @font-face {
-    font-family: 'Gotham';
-    src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot");
-    src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot?#iefix") format("embedded-opentype"),
-        url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.woff2") format("woff2"),
-        url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.woff") format("woff"),
-        url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.ttf") format("truetype"),
-        url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.svg#Gotham") format("svg");
-    font-weight: 500;
+	font-family: 'Gotham';
+	src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot");
+	src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot?#iefix") format("embedded-opentype"),
+	url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.woff2") format("woff2"),
+	url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.woff") format("woff"),
+	url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.ttf") format("truetype"),
+	url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.svg#Gotham") format("svg");
+	font-weight: 500;
 }
 
 body {
@@ -41,22 +41,22 @@ body {
 }
 
 .modal {
-  text-align: center;
-  padding: 0!important;
+	text-align: center;
+	padding: 0!important;
 }
 
 .modal:before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -4px;
 }
 
 .modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }
 
 .create {
@@ -79,4 +79,15 @@ body {
 
 .modal-title {
 	color: #fd3c16
+}
+
+.cog-style {
+	position: absolute;
+	margin-left: 225px;
+	margin-top: 25px;
+	border-radius: 50%;
+}
+
+.glyphicon-cog {
+	font-size: 30px;
 }
