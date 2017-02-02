@@ -33,4 +33,6 @@ urlpatterns = [
     url(r'^share_project/', views.share_project),
     url(r'^verify_share/', views.verify_share),
     url(r'^delete_artboard/', views.delete_artboard),
+    url(r'^rename_artboard/', views.rename_artboard),
+    url(r'^delete_project/', views.delete_project),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

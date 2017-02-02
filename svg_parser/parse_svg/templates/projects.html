@@ -13,120 +13,144 @@
     <div class="container-fluid" style="margin:auto;display:table;">
       <div class="navbar-header" style="display:inline-block;">
         <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="#">Projects</a>
-      </div>
-      <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <div class="dropdown" style="float:right;margin-right:10px;margin-top:13px">
-          <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown">{{user}}
-            <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-              <li><a href="/logout">LOGOUT</a></li>
-            </ul>
-          </div>
-        </div> -->   
-      </div>
-    </nav>
+      </div>   
+    </div>
+  </nav>
 
-    <div class="container" >
-      <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg">
+  <div class="container" >
+    <!-- Trigger the modal with a button -->
+    <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog modal-lg">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">New Project</h4>
+          </div>
+          <div class="modal-body">
+            <form class = "form-main-class" action="/create_project/" method="post">
+              {% csrf_token %}
+              <div>
+                <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
+              </div>
+              <div style="margin-top:20px;text-align:center">
+                <label class="radio-inline">
+                  <input type="radio" name="screen" value="android" onclick="displayDiv('android')">Android
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="screen" value="ios" onclick="displayDiv('ios')">iOS
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="screen" value="web" onclick="displayDiv('web')">Web
+                </label>
+              </div>
+              <div id="ios" style="margin-top:20px;text-align:center;display:none">
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="1x">1x
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="2x">2x
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="3x">3x
+                </label>
+              </div>
+              <div id="android" style="margin-top:20px;text-align:center;display:none">
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="mdpi">mdpi
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="hdpi">hdpi
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="xhdpi">xhdpi
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="xxhdpi">xxhdpi
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="xxxhdpi">xxxhdpi
+                </label>
+                <label class="radio-inline">
+                  <input type="radio" name="density" value="xxxxhdpi">xxxxhdpi
+                </label>
+              </div>
+              <div id="web" style="display:none;">
+              </div>
+              <div style="margin-top:20px;">
+                <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="col-sm-6" style="text-align:right">
+                <button  class="btn btn-default create" type="submit">Create</button>
+              </div>
+              <div class="col-sm-6" style="text-align:left">
+                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:50px;">
+    {% if projects %}
+    {% for project in projects %}
+    <div class="col-md-3">
+      <div style="height:306px;width:300px;border:1px solid;border-color:#a6a3a3;position:relative;left:calc(50% - 150px);">
+        <a href='/artboards?project={{project.project}}' style="text-decoration:none;">
+          <div style="background-image:url(/{{ project.thumbnail }});height:152px;width:299px">   
+          </div>
+          <div class="caption" style="height:152px;width:299px;padding-left:17px;padding-top:23px;">
+            <div style="font-size:16px;color:#fb6946;">{{ project.project }}</div>
+            <div style="font-size:8px;color:#000000;">line 1</div>
+            <div style="font-size:8px;color:#000000;">line 2</div>
+            <div style="font-size:8px;color:#000000;">line 3</div>
+          </div>
+        </a>
+        <div class="dropdown" style="position:absolute;top:160px;right:10px;">
+          <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="border-radius:50%;background-color:#fb6946;">
+            <span class="glyphicon glyphicon-cog" style="font-size:15px;color:#ffffff;margin-top:5px;">
+            </span>
+          </button>
+          <ul class="dropdown-menu" style="right:0;left:inherit;">                      
+            <li> <a href="#" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
+            <li><a href="#">EDIT</a></li>
+            <li><a href="/delete_project?project={{ project.project }}">DELETE</a></li>
+          </ul>  
+        </div>
+      </div>
+      <div class="modal fade" id="{{ project.project }}" role="dialog">
+        <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">New Project</h4>
+              <h4 class="modal-title">Choose Sharing options</h4>
             </div>
             <div class="modal-body">
-              <form class = "form-main-class" action="/create_project/" method="post">
+              <form class = "form-main-class" action="/share_project/" method="post">
                 {% csrf_token %}
-                <div>
-                  <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
-                </div>
-                <div style="margin-top:20px;text-align:center">
-                  <label class="radio-inline">
-                    <input type="radio" name="screen" value="android" onclick="displayDiv('android')">Android
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="screen" value="ios" onclick="displayDiv('ios')">iOS
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="screen" value="web" onclick="displayDiv('web')">Web
-                  </label>
-                </div>
-                <div id="ios" style="margin-top:20px;text-align:center;display:none">
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="1x">1x
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="2x">2x
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="3x">3x
-                  </label>
-                </div>
-                <div id="android" style="margin-top:20px;text-align:center;display:none">
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="mdpi">mdpi
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="hdpi">hdpi
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="xhdpi">xhdpi
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="xxhdpi">xxhdpi
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="xxxhdpi">xxxhdpi
-                  </label>
-                  <label class="radio-inline">
-                    <input type="radio" name="density" value="xxxxhdpi">xxxxhdpi
-                  </label>
-                </div>
-                <div id="web" style="display:none;">
-                </div>
-                <div style="margin-top:20px;">
-                  <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" />
-                </div>
-              </div>
-              <div class="modal-footer">
-                <div class="col-sm-6" style="text-align:right">
-                  <button  class="btn btn-default create" type="submit">Create</button>
-                </div>
-                <div class="col-sm-6" style="text-align:left">
-                  <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
-                </div>
-              </div>
-            </form>
+                <input class="input-class" type="text" id="email" name="email" placeholder="Email ID" /><br>
+                <input type="checkbox" name="share" value="share">This user can share with others<br>
+                <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
+                <input class="input-class" type="text" id="project-name" name="project-name" value="{{ project.project }}" style="display:none;" /><br>
+                <button  class="list-btn-user" type="submit">SHARE</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div style="margin-top:50px;">
-      {% if projects %}
-      {% for project in projects %}
-      <div class="col-md-3" style="position:relative">
-        <div style="height:306px;width:300px;border:1px solid;border-color:#a6a3a3;position:absolute;left:calc(50% - 150px);">
-          <a href='/artboards?project={{project.project}}' style="text-decoration:none;">
-            <div style="background-image:url(/{{ project.thumbnail }});height:152px;width:299px">
-            <!-- <img src="/{{ project.thumbnail }}" alt="/{{ project.project }}" style="width:250px;height:250px">
-          -->       
-        </div>
-        <div class="caption" style="height:152px;width:299px;padding-left:17px;padding-top:23px;">
-          <div style="font-size:16px;color:#fb6946;">{{ project.project }}</div>
-          <div style="font-size:8px;color:#000000;">line 1</div>
-          <div style="font-size:8px;color:#000000;">line 2</div>
-          <div style="font-size:8px;color:#000000;">line 3</div>
-        </div>
-      </a>
-    </div>
+    {% endfor %}
+    {% endif %}
   </div>
-  {% endfor %}
-  {% endif %}
-</div>
 </body>
 </html>

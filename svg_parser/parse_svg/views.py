@@ -84,21 +84,22 @@ def getSubChild(child):
 			defs_list = defs.copy()
 			print 'defs_list: ', defs_list
 			if 'id' in attribute.keys():
-				defs_list[id]['id'] = attribute['id']
-				if translate and 'x' in defs_list[id].keys():
-					if len(translate) > 2:
-						translation = [0] * 2
-						for i in range(len(translate)):
-							if i % 2 == 0:
-								translation[0] += translate[i]
-							else:
-								translation[1] += translate[i]
-					else:
-						translation = translate[:]
+				if id in defs_list.keys():
+					defs_list[id]['id'] = attribute['id']
+					if translate and 'x' in defs_list[id].keys():
+						if len(translate) > 2:
+							translation = [0] * 2
+							for i in range(len(translate)):
+								if i % 2 == 0:
+									translation[0] += translate[i]
+								else:
+									translation[1] += translate[i]
+						else:
+							translation = translate[:]
 
-					defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
-					defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
-				annotations.append(defs_list[id])
+						defs_list[id]['x'] = float(defs_list[id]['x']) + translation[0]
+						defs_list[id]['y'] = float(defs_list[id]['y']) + translation[1]
+					annotations.append(defs_list[id])
 
 		if tag == 'path':
 			if 'd' in attribute.keys():
@@ -289,6 +290,7 @@ def svg_images(request):
 					print 'project: ', project_name
 					print 'email: ', request.user.email
 					project = Project.objects.get(project=project_name, email=request.user.email)
+					file = file.split('.')[0]
 					new_entry = ArtBoard(project=project, artboard=file, location=url)
 					new_entry.save()
 		else:
@@ -317,34 +319,53 @@ def svg_images(request):
 			tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 			Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
 			project = Project.objects.get(project=project_name, email=request.user.email)
+			filename = filename.split('.')[0]
 			new_entry = ArtBoard(project=project, artboard=filename, location=url)
 			new_entry.save()
 	return redirect(redirection)
 
 def share_project(request):
-	print 'session values in share: ', request.session.keys(), request.session['project'], request.session['description']
-	project = request.session['project']
-	description = request.session['description']
-	thumbnail = request.session['thumbnail']
-	owner = request.session['owner']
-	redirection = '/artboards?project=' + project
-	email = request.POST.get('email')
-	share = request.POST.get('share')
-	edit = request.POST.get('edit')
-	share = True if share else False
-	edit = True if edit else False
-	encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'description': description, 'thumbnail': thumbnail, 'share': share, 'edit': edit, 'owner': owner}, 'svgparser', algorithm='HS256')
-	url = 'localhost:8000/verify_share?token=' + encoded
-	mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
-	mail.send(fail_silently=False)
-	return redirect(redirection)
+	try:
+		project = request.session['project']
+		redirection = '/artboards?project=' + project
+		email = request.POST.get('email')
+		share = request.POST.get('share')
+		edit = request.POST.get('edit')
+		share = True if share else False
+		edit = True if edit else False
+		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
+		url = 'localhost:8000/verify_share?token=' + encoded
+		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
+		mail.send(fail_silently=False)
+		return redirect(redirection)
+	except:
+		email = request.POST.get('email')
+		share = request.POST.get('share')
+		edit = request.POST.get('edit')
+		share = True if share else False
+		edit = True if edit else False
+		project = request.POST.get('project-name')
+		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
+		url = 'localhost:8000/verify_share?token=' + encoded
+		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
+		mail.send(fail_silently=False)
+		return redirect('/projects')
 
 def verify_share(request):
 	print 'session values in verify: ', request.session.keys()
 	token = request.GET.get('token')
 	decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
 	if decoded['code'] == 'verification_success':
-		new_user = Project(email=decoded['email'], project=decoded['project'], description=decoded['description'], share=decoded['share'], edit=decoded['edit'], thumbnail=decoded['thumbnail'], owner=decoded['owner'])
+		project = decoded['project']
+		p = Project.objects.filter(project=project)[0]
+		description = p.description
+		thumbnail = p.thumbnail
+		owner = p.owner
+		created = p.created
+		last_updated = p.last_updated
+		screen = p.screen
+		density = p.density
+		new_user = Project(email=decoded['email'], project=project, description=description, share=decoded['share'], edit=decoded['edit'], thumbnail=thumbnail, owner=owner, created=created, last_updated=last_updated, density=density, screen=screen)
 		new_user.save()
 		return render(request, 'verified.html')
 
@@ -372,4 +393,22 @@ def delete_artboard(request):
 	ArtBoard.objects.filter(location=url).delete()
 	redirection = '/artboards?project=' + project
 	os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+	return redirect(redirection)
+
+def rename_artboard(request):
+	url = request.POST.get('artboard')
+	new_name = request.POST.get('new-name')
+	print 'url', url
+	print 'new_name', new_name
+	project = request.session['project']
+	email = request.user.email
+	ArtBoard.objects.filter(location=url).update(artboard=new_name)
+	redirection = '/artboards?project=' + project
+	return redirect(redirection)
+
+def delete_project(request):
+	project = request.GET.get('project')
+	email = request.user.email
+	Project.objects.get(project=project, email=email).delete()
+	redirection = '/projects'
 	return redirect(redirection)
