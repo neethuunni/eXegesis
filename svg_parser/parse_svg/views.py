@@ -185,6 +185,8 @@ def getChild(root):
 		tag = child.tag.split('}')[1]
 		if len(child) > 0 and tag == 'defs':
 			getDefs(child)
+		else:
+			annotations.append(0)
 		if len(child) > 0 and tag != 'title' and tag != 'desc' and tag != 'defs':
 			getSubChild(child)
 
