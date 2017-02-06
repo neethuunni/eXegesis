@@ -26,6 +26,24 @@ def check_for_id():
 	new_id = str(uuid.uuid4())[0:8]
 	return new_id
 
+def getTranslations(transform):
+	trans = []
+	transx = transy = 0
+	p = transform.split(')')
+	for i in p:
+		if i.lstrip().startswith('translate'):
+			q = i.split('(')[1]
+			r = q.split(',')
+			trans.append(float(r[0]))
+			trans.append(float(r[1]))
+	for i in range(len(trans)):
+		if i % 2 == 0:
+			transx += trans[i]
+		else:
+			transy += trans[i]
+	translate.append(transx)
+	translate.append(transy)
+
 def getSubChild(child):
 	global trans_child
 	for subchild in child:
@@ -34,14 +52,9 @@ def getSubChild(child):
 		tag = subchild.tag.split('}')[1]
 		if tag == 'g' and 'transform' in attribute.keys():
 			transform = attribute['transform']
-			if 'rotate' not in transform:
-				if transform.startswith('translate'):
-					trans_child.append(subchild)
-					length = len(transform) - 1
-					transform = transform[10:length]
-					transform = transform.split(',')
-					translate.append(float(transform[0]))
-					translate.append(float(transform[1]))
+			getTranslations(transform)
+			if 'translate' in transform:
+				trans_child.append(subchild)
 
 		if tag == 'rect' or tag == 'text' or tag == 'tspan' or tag == 'ellipse':
 			if translate and 'x' in attribute.keys():
@@ -381,7 +394,9 @@ def index(request):
 	getChild(root)
 	for i in annotations:
 		print i
-	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params})
+	artboard = ArtBoard.objects.get(location=params)
+	artboard = artboard.artboard
+	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard})
 
 def logout(request):
 	auth_logout(request)

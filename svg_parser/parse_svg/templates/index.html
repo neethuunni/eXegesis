@@ -3,6 +3,7 @@
 <head>
   <title>SVG</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 </head>
 <body>
@@ -11,139 +12,154 @@
     <div class="container-fluid" style="background-color:#fb6946;">
       <div class="navbar-header" style="display:inline-block">
         <a class="navbar-brand" style="color:FFFFFF;" href="/projects">SVG Parser</a>
-      </div>
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-        <a href="/logout"><button style="float:right;" class="btn btn-warning navbar-btn" type="button">Logout</button></a>
       </div>   
     </div>
   </nav>
 
-  <div class="container" style="width:100%; margin-top:15px; display:flex;flex-direction:row;justify-content: center;">
-    <div style="width:70%; display:inline-block;text-align:center">
-      {% include url %}
+  <div>
+    <div class="container-fluid" style="margin-top:10px">
+      <div class="col-sm-3" style="font-size:18px;">
+        <span class="glyphicon glyphicon-chevron-left"></span><a href="#" style="text-decoration:none;color:#000000;">Back to Dashboard</a>
+      </div>
+      <div class="col-sm-6" style="font-size:18px;">
+        {{ artboard }}
+      </div>
+      <div class="col-sm-3">
+        <div style="font-size:12px">
+          <input type="text" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:200px;
+          text-align:center;border-radius:20px;"><span class="glyphicon glyphicon-search"></span>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" style="margin-top:25px;">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6">
+        {% include url %}
 
-      <script type="text/javascript">
-        var jEscape = function(jquery) {
-          jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
-          jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
-          jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
-          jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
-          jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
-          jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
-          jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
-          jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
-          jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
-          jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
-          jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
-          jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
-          jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
-          jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
-          jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
-          return jquery;
-        };
+        <script type="text/javascript">
+          var jEscape = function(jquery) {
+            jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
+            jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
+            jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
+            jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
+            jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
+            jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
+            jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
+            jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
+            jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
+            jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
+            jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
+            jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
+            jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
+            jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
+            jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
+            return jquery;
+          };
 
-        var obj = {{ annotations|safe }};
-        console.log(obj);
-        var object;
-        var count = obj[0];
-        var full_list = '';
-        var current_idq = ''
-        for(var i = 0; i < obj.length; i++) {
-          if (obj[i]['type'] === 'text') {
-            id = obj[i]['id'];
-            for (var j = i + 1; j < obj.length; j++) {
-              if (obj[j]['type'] != 'tspan') {
-                break;
-              }
-              else {
-                document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
-                count++;
-              }
-            }
-          }
-        }
-        $('svg').on('mouseover', function(e){
-          $(current_idq).removeAttr('style');
-          var parent = '';
-          outer = e.target.outerHTML;
-          console.log('element: ', outer.substring(0, 30));
-          outer = outer.split(' ');
-          for (var i=0; i < outer.length; i++){
-            if (outer[i].startsWith('parent')) {
-              parent = outer[i].split("\"")[1];
-            }
-          }
-          if (parent !== '') {
-            idq = jEscape(parent);
-            idq = '#' + idq;
-            current_idq = idq
-            $(idq).css('stroke', 'orange');
-            for (var i = 0; i < obj.length; i++) {
-              console.log(obj[i]['id'], parent)
-              if (obj[i]['id'] === parent) {
-                displayAnnotations(obj[i]);
-                break;
-              }
-            }
-            if (obj[i]['type'] == 'text') {
+          var obj = {{ annotations|safe }};
+          console.log(obj);
+          var object;
+          var count = obj[0];
+          var full_list = '';
+          var current_idq = ''
+          for(var i = 0; i < obj.length; i++) {
+            if (obj[i]['type'] === 'text') {
+              id = obj[i]['id'];
               for (var j = i + 1; j < obj.length; j++) {
                 if (obj[j]['type'] != 'tspan') {
-                  full_list = ''
                   break;
                 }
                 else {
-                  console.log(obj[j]);
-                  object = obj[j];
-                  displayAnnotations(object);
+                  document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
+                  count++;
                 }
               }
             }
           }
-          else {
-            id = ''
+          $('svg').on('mouseover', function(e){
+            $(current_idq).removeAttr('style');
+            var parent = '';
+            outer = e.target.outerHTML;
+            console.log('element: ', outer.substring(0, 30));
+            outer = outer.split(' ');
             for (var i=0; i < outer.length; i++){
-              if (outer[i].startsWith('id')) {
-                var id = outer[i].split('\"')[1];
-                console.log(id);
-                break;
+              if (outer[i].startsWith('parent')) {
+                parent = outer[i].split("\"")[1];
               }
             }
-            if (id !== '') {
-              idq = jEscape(id)
+            if (parent !== '') {
+              idq = jEscape(parent);
               idq = '#' + idq;
               current_idq = idq
               $(idq).css('stroke', 'orange');
               for (var i = 0; i < obj.length; i++) {
-                if (obj[i]['id'] === id) {
-                  console.log(obj[i]);
-                  object = obj[i];
-                  displayAnnotations(object);
-                  full_list = '';
+                console.log(obj[i]['id'], parent)
+                if (obj[i]['id'] === parent) {
+                  displayAnnotations(obj[i]);
                   break;
                 }
               }
-            }
-          }
-          function displayAnnotations(object) {
-            for (var key in object) {
-              if (key === 'type' || key == 'id') {
-                continue;
+              if (obj[i]['type'] == 'text') {
+                for (var j = i + 1; j < obj.length; j++) {
+                  if (obj[j]['type'] != 'tspan') {
+                    full_list = ''
+                    break;
+                  }
+                  else {
+                    console.log(obj[j]);
+                    object = obj[j];
+                    displayAnnotations(object);
+                  }
+                }
               }
-              if (object.hasOwnProperty(key)) {
-                full_list = full_list + '<li>' + key + ': ' + object[key] + '</li>';
+            }
+            else {
+              id = ''
+              for (var i=0; i < outer.length; i++){
+                if (outer[i].startsWith('id')) {
+                  var id = outer[i].split('\"')[1];
+                  console.log(id);
+                  break;
+                }
+              }
+              if (id !== '') {
+                idq = jEscape(id)
+                idq = '#' + idq;
+                current_idq = idq
+                $(idq).css('stroke', 'orange');
+                for (var i = 0; i < obj.length; i++) {
+                  if (obj[i]['id'] === id) {
+                    console.log(obj[i]);
+                    object = obj[i];
+                    displayAnnotations(object);
+                    full_list = '';
+                    break;
+                  }
+                }
               }
             }
-            full_list += '<br />';
-            $("#annotations").html(full_list);
-          }
-          full_list = '';
-        });
-      </script>
+            function displayAnnotations(object) {
+              for (var key in object) {
+                if (key === 'type' || key == 'id') {
+                  continue;
+                }
+                if (object.hasOwnProperty(key)) {
+                  value = object[key];
+                  key = key.bold();
+                  full_list = full_list + '<li>' + key + ': ' + value + '</li>';
+                }
+              }
+              full_list += '<br />';
+              $("#annotations").html(full_list);
+            }
+            full_list = '';
+          });
+        </script>
+      </div>
+      <div class="col-sm-3 annotate" id="annotations" style="font-size:18px;height:650px;overflow:scroll;">
+      </div>
     </div>
-
-    <div id="annotations" style="width:30%; display:inline-block">
-    </div>
-
   </div>
 </body>
 </html>

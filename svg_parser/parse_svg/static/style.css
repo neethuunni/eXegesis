@@ -91,3 +91,10 @@ body {
 .glyphicon-cog {
 	font-size: 30px;
 }
+
+div.annotate li {
+	background: #ffffff;
+}
+div.annotate li:nth-child(odd) { 
+	background: #f4f4f4; 
+}

@@ -7,6 +7,21 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
+<script>
+  function search() {
+    var input = document.getElementById('search');
+    var filter = input.value.toUpperCase();
+    var divs =document.getElementsByClassName("col-md-3");
+    for (i = 0; i < divs.length; i++) {
+      div = divs[i]
+      if (div.id.toUpperCase().indexOf(filter) > -1) {
+        div.style.display = "";
+      } else {
+        div.style.display = "none";
+      }
+    }
+  }
+</script>
 <body>
   <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
     <div class="container-fluid" style="margin:auto;display:table;">
@@ -37,8 +52,8 @@
 
       <div class="col-sm-3" style="margin-top:25px;text-align:right;padding-right:40px;">
         <div style="font-size:12px">
-          <input type="text" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:200px;
-          text-align:center;border-radius:20px;"><span class="glyphicon glyphicon-search"></span>
+          <input type="text" id="search" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:200px;
+          text-align:center;border-radius:20px;" onkeyup="search();"><span class="glyphicon glyphicon-search"></span>
         </div>
         <div style="font-size:12px;margin-top:10px">
           OWNER: <strong>{{ owner }}</strong>
@@ -67,7 +82,7 @@
       <div class="container-fluid" style="padding-top:20px">
         {% if artboards %}
         {% for artboard in artboards %}
-        <div class="col-md-3" style="text-align:center;padding:15px">
+        <div class="col-md-3" id="{{ artboard.artboard }}" style="text-align:center;padding:15px">
           <div style="height:306px;width:300px;margin:auto; position: relative;">
             <a href='/svg?url={{artboard.location}}'>
               <div style="background-image:url(/{{ artboard.location }});height:306px;width:300px;position:relative;">
