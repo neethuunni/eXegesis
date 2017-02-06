@@ -13,4 +13,3 @@ function displayDiv(screen) {
         document.getElementById('ios').style.display = "none";
     }
 }
-

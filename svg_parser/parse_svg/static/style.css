@@ -27,8 +27,6 @@ body {
 
 .btn-lg.round {
 	border-radius: 50px;
-	width: 471px;
-	height: 100px;
 	font-size: 25px;
 	font-color: #ffffff;
 	margin-top: 85px;
@@ -63,8 +61,8 @@ body {
 	background-color: #fd3c16;
 	border-radius: 38px;
 	font-size: 24px;
-	height: 75px;
-	width: 235px;
+	height: 60px;
+	width: 200px;
 	color: #ffffff;
 }
 
@@ -72,8 +70,8 @@ body {
 	background-color: #c8c8c8;
 	border-radius: 38px;
 	font-size: 24px;
-	height: 75px;
-	width: 235px;
+	height: 60px;
+	width: 200px;
 	color: #a6a3a3;
 }
 

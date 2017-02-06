@@ -12,14 +12,40 @@
   <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
     <div class="container-fluid" style="margin:auto;display:table;">
       <div class="navbar-header" style="display:inline-block;">
-        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="#">Projects</a>
+      <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
       </div>   
     </div>
   </nav>
 
+  <script type="text/javascript">
+    function edit(project) {
+      $('#myModal').modal('show');
+      proj = {{proj|safe}}
+      project = project.id;
+      var update = false;
+      for(var i=0; i<proj.length; i++) {
+        if (project == proj[i].project) {
+          var screen = proj[i].screen;
+          var density = proj[i].density;
+          var projectName = proj[i].project;
+          var description = proj[i].description;
+          break;
+        }
+      }
+      $('input[name=screen][value=' + screen + ']').attr('checked', 'checked');
+      displayDiv(screen);
+      $('input[name=density][value=' + density + ']').attr('checked', 'checked');
+      $('#project-name').val(projectName);
+      $('#project-description').val(description);
+      $('#header').html('Update Project');
+      $('#modal-btn').html('UPDATE');
+      $('#create-update').attr('action', '/update_project/?project=' + projectName);
+    }
+  </script>
+
   <div class="container" >
     <!-- Trigger the modal with a button -->
-    <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
+    <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px;width: 350px;height:75px;" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog modal-lg">
@@ -27,10 +53,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">New Project</h4>
+            <h4 class="modal-title" id="header">New Project</h4>
           </div>
           <div class="modal-body">
-            <form class = "form-main-class" action="/create_project/" method="post">
+            <form class = "form-main-class" action="/create_project/" method="post" id="create-update">
               {% csrf_token %}
               <div>
                 <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" />
@@ -85,7 +111,7 @@
             </div>
             <div class="modal-footer">
               <div class="col-sm-6" style="text-align:right">
-                <button  class="btn btn-default create" type="submit">Create</button>
+                <button  class="btn btn-default create" type="submit" id="modal-btn">Create</button>
               </div>
               <div class="col-sm-6" style="text-align:left">
                 <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
@@ -100,16 +126,16 @@
   <div style="margin-top:50px;">
     {% if projects %}
     {% for project in projects %}
-    <div class="col-md-3">
-      <div style="height:306px;width:300px;border:1px solid;border-color:#a6a3a3;position:relative;left:calc(50% - 150px);">
+    <div class="col-md-3" style="padding-bottom:15px;">
+      <div style="height:255px;width:250px;border:1px solid;border-color:#a6a3a3;position:relative;margin:auto;padding:5px,0px;">
         <a href='/artboards?project={{project.project}}' style="text-decoration:none;">
-          <div style="background-image:url(/{{ project.thumbnail }});height:152px;width:299px">   
+          <div style="background-image:url(/{{ project.thumbnail }});height:127px;width:248px">   
           </div>
-          <div class="caption" style="height:152px;width:299px;padding-left:17px;padding-top:23px;">
+          <div class="caption" style="height:127px;width:248px;padding-left:17px;padding-top:23px;">
             <div style="font-size:16px;color:#fb6946;">{{ project.project }}</div>
-            <div style="font-size:8px;color:#000000;">line 1</div>
-            <div style="font-size:8px;color:#000000;">line 2</div>
-            <div style="font-size:8px;color:#000000;">line 3</div>
+            <div style="font-size:10px;color:#000000;">Type: {{ project.screen }}, Density: {{ project.density }}</div>
+            <div style="font-size:10px;color:#000000;">Created: {{ project.created }}</div>
+            <div style="font-size:10px;color:#000000;">Last updated: {{ project.last_updated }}</div>
           </div>
         </a>
         <div class="dropdown" style="position:absolute;top:160px;right:10px;">
@@ -117,9 +143,9 @@
             <span class="glyphicon glyphicon-cog" style="font-size:15px;color:#ffffff;margin-top:5px;">
             </span>
           </button>
-          <ul class="dropdown-menu" style="right:0;left:inherit;">                      
+          <ul class="dropdown-menu inline" style="right:0;left:inherit;">                      
             <li> <a href="#" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
-            <li><a href="#">EDIT</a></li>
+            <li><a href="#" onclick="edit({{project.project}})">EDIT</a></li>
             <li><a href="/delete_project?project={{ project.project }}">DELETE</a></li>
           </ul>  
         </div>
@@ -139,7 +165,7 @@
                 <input type="checkbox" name="share" value="share">This user can share with others<br>
                 <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
                 <input class="input-class" type="text" id="project-name" name="project-name" value="{{ project.project }}" style="display:none;" /><br>
-                <button  class="list-btn-user" type="submit">SHARE</button>
+                <button  class="btn" type="submit">SHARE</button>
               </form>
             </div>
             <div class="modal-footer">

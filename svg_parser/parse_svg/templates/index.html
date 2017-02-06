@@ -8,10 +8,10 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse" style="margin-bottom:0;">
-    <div class="container-fluid" style="background-color:#fb6946;">
-      <div class="navbar-header" style="display:inline-block">
-        <a class="navbar-brand" style="color:FFFFFF;" href="/projects">SVG Parser</a>
+  <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
+    <div class="container-fluid" style="margin:auto;display:table;">
+      <div class="navbar-header" style="display:inline-block;">
+        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
       </div>   
     </div>
   </nav>
@@ -19,10 +19,10 @@
   <div>
     <div class="container-fluid" style="margin-top:10px">
       <div class="col-sm-3" style="font-size:18px;">
-        <span class="glyphicon glyphicon-chevron-left"></span><a href="#" style="text-decoration:none;color:#000000;">Back to Dashboard</a>
+        <span class="glyphicon glyphicon-chevron-left"></span><a href="javascript:history.back()" style="text-decoration:none;color:#000000;">Back to Dashboard</a>
       </div>
       <div class="col-sm-6" style="font-size:18px;">
-        {{ artboard }}
+        <strong>{{ artboard }}</strong>
       </div>
       <div class="col-sm-3">
         <div style="font-size:12px">
@@ -34,7 +34,7 @@
     <div class="container-fluid" style="margin-top:25px;">
       <div class="col-sm-3">
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-6" id="image">
         {% include url %}
 
         <script type="text/javascript">
@@ -54,6 +54,8 @@
             jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
             jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
             jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
+            jquery = jquery.replace(new RegExp("\\<", "g"), "\\<");
+            jquery = jquery.replace(new RegExp("\\>", "g"), "\\>");
             return jquery;
           };
 
@@ -155,11 +157,34 @@
             }
             full_list = '';
           });
+
+          function zoomin() {
+            $("#image").width(
+              $("#image").width() * 1.2
+              );
+
+            $("#image").height(
+              $("#image").height() * 1.2
+              );
+          }
+
+          function zoomout() {
+            $("#image").width(
+              $("#image").width() * 0.5
+              );
+
+            $("#image").height(
+              $("#image").height() * 0.5
+              );
+          }
+
         </script>
       </div>
-      <div class="col-sm-3 annotate" id="annotations" style="font-size:18px;height:650px;overflow:scroll;">
+      <div class="col-sm-3 annotate" id="annotations" style="font-size:14px;height:650px;overflow:scroll;">
       </div>
     </div>
   </div>
+  <button id="zoom-in" onclick="zoomin()">zoom in</button>
+  <button id="zoom-out" onclick="zoomout()">zoom out</button>
 </body>
 </html>

@@ -7,7 +7,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-<script>
+<script type="text/javascript">
   function search() {
     var input = document.getElementById('search');
     var filter = input.value.toUpperCase();
@@ -34,7 +34,7 @@
     <div class="container-fluid">
 
       <div class="col-sm-3" style="margin-top:28px;padding-left:40px;">
-        <div style="font-size:12px">
+        <div style="font-size:10px">
           <div><strong>Type: {{ screen }}</strong></div>
           <div>Density: {{ density }}</div>
           <div>Created:  {{ created }}</div>
@@ -46,14 +46,13 @@
       </div>   
 
       <div class="col-sm-6" style="margin-top:80px;text-align:center;">
-        <button class="btn-warning" style="background-color:#ffbd36;color:black;font-size:30px;height:58px;width:240px;">DASHBOARD</button>
-        <button style="font-size:30px;background-color:#ffffff;border:none;">STYLEGUIDE</button>
+        <button class="btn-warning" style="background-color:#ffbd36;color:black;font-size:25px;height:50px;width:240px;">DASHBOARD</button>
+        <button style="font-size:25px;background-color:#ffffff;border:none;">STYLEGUIDE</button>
       </div>
 
       <div class="col-sm-3" style="margin-top:25px;text-align:right;padding-right:40px;">
         <div style="font-size:12px">
-          <input type="text" id="search" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:200px;
-          text-align:center;border-radius:20px;" onkeyup="search();"><span class="glyphicon glyphicon-search"></span>
+          <input type="text" id="search" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:175px;text-align:center;border-radius:20px;font-size:12px;" onkeyup="search();"><span class="glyphicon glyphicon-search"></span>
         </div>
         <div style="font-size:12px;margin-top:10px">
           OWNER: <strong>{{ owner }}</strong>
@@ -61,7 +60,7 @@
         <div style="margin-top:10px;">
           <div class="col-sm-6" style="padding:none">
             <div class="dropdown">
-              <button class="btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color:#ffffff;border:none;color:#000000;padding:10px 0px;font-size:12px">VIEW MEMBERS
+              <button class="btn-success dropdown-toggle" type="button" data-toggle="dropdown" style="background-color:#ffffff;border:none;color:#000000;padding:10px 0px;font-size:9px">VIEW MEMBERS
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu" data-toggle="modal" data-target="#">
                   {% if shared_members %}
@@ -73,7 +72,7 @@
               </div>
             </div>
             <div class="col-sm-6" style="padding-right:0px;" data-toggle="modal" data-target="#myModal">
-              <button class="btn-warning" style="background-color:#ffbd36;color:black;height:37px;width:136px;font-size:20px;">SHARE</button>
+              <button class="btn-warning" style="background-color:#ffbd36;color:black;height:30px;width:125px;font-size:16px;">SHARE</button>
             </div>
           </div>
         </div>
@@ -83,9 +82,9 @@
         {% if artboards %}
         {% for artboard in artboards %}
         <div class="col-md-3" id="{{ artboard.artboard }}" style="text-align:center;padding:15px">
-          <div style="height:306px;width:300px;margin:auto; position: relative;">
+          <div style="height:255px;width:250px;margin:auto; position: relative;">
             <a href='/svg?url={{artboard.location}}'>
-              <div style="background-image:url(/{{ artboard.location }});height:306px;width:300px;position:relative;">
+              <div style="background-image:url(/{{ artboard.location }});height:255px;width:250px;position:relative;">
                 <div class="caption" style="position:absolute;bottom:0;width:100%">
                   <div>
                     <button class="btn art-name" style="width:98%;border-radius:20px;background-color:#f5f5f5;color:#000000;">{{ artboard.artboard }}</button>
@@ -99,14 +98,14 @@
                 </span>
               </button>
               <ul class="dropdown-menu" style="right: 0; left: inherit;">                      
-                <li> <a href="#" data-toggle="modal" data-target="#{{ artboard.artboard }}">RENAME</a></li>
+                <li> <a href="#" data-toggle="modal" data-target="#rename-{{ artboard.artboard }}">RENAME</a></li>
                 <li><a href="#">UPDATE</a></li>
-                <li><a href="#">DOWNLOAD</a></li>
+                <li><a href="/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
                 <li><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
               </ul>  
             </div>
           </div>
-          <div class="modal fade" id="{{ artboard.artboard }}" role="dialog">
+          <div class="modal fade" id="rename-{{ artboard.artboard }}" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
               <div class="modal-content">

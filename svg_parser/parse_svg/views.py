@@ -12,6 +12,8 @@ from django.core.mail import EmailMessage
 import jwt
 from random import randint
 from datetime import datetime
+import cairosvg
+from django.http import HttpResponse
 
 ET.register_namespace('', "http://www.w3.org/2000/svg")
 ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
@@ -214,7 +216,9 @@ def projects(request):
 	request.session.modified = True
 	all_projects = Project.objects.filter(email=email)
 	print 'Username projects: ', user
-	return render(request, 'projects.html', {'projects': all_projects, 'user': user})
+	proj = Project.objects.filter(email=email).values('project', 'density', 'screen', 'description')
+	proj = json.dumps(list(proj))
+	return render(request, 'projects.html', {'projects': all_projects, 'user': user, 'proj': proj})
 
 def create_project(request):
 	email = request.user.email
@@ -349,7 +353,7 @@ def share_project(request):
 		share = True if share else False
 		edit = True if edit else False
 		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
-		url = 'localhost:8000/verify_share?token=' + encoded
+		url = '10.7.30.2.xip.io:8000/verify_share?token=' + encoded
 		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
 		mail.send(fail_silently=False)
 		return redirect(redirection)
@@ -361,7 +365,7 @@ def share_project(request):
 		edit = True if edit else False
 		project = request.POST.get('project-name')
 		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
-		url = 'localhost:8000/verify_share?token=' + encoded
+		url = '10.7.30.2.xip.io:8000/verify_share?token=' + encoded
 		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
 		mail.send(fail_silently=False)
 		return redirect('/projects')
@@ -429,3 +433,29 @@ def delete_project(request):
 	Project.objects.get(project=project, email=email).delete()
 	redirection = '/projects'
 	return redirect(redirection)
+
+def download_artboard(request):
+	print 'download_artboard'
+	url = request.GET.get('artboard')
+	name = url.replace('svg', 'png')
+	print 'name:', name
+	cairosvg.svg2png(url=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url, write_to=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name)
+	
+	with open(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name, 'rb') as png:
+		response = HttpResponse(png.read())
+		response['content_type'] = 'image/png'
+		response['Content-Disposition'] = 'attachment;filename=file.png'
+		return response
+
+def update_project(request):
+	project = request.GET.get('project')
+	print 'project: ', project
+	project_name = request.POST.get('project-name')
+	project_description = request.POST.get('project-description')
+	screen = request.POST.get('screen')
+	density = request.POST.get('density')
+	if screen == 'web':
+		density = None
+	last_updated = datetime.now()
+	Project.objects.filter(project=project).update(project=project_name, description=project_description, density=density, screen=screen, last_updated=last_updated)
+	return redirect('/projects')
