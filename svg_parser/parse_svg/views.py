@@ -5,7 +5,7 @@ from svg_parser.settings import EMAIL_SUBJECT, EMAIL_MESSAGE, EMAIL_HOST_USER
 from svg_parser import settings
 import os
 import json
-from models import Project, ArtBoard
+from models import Project, ArtBoard, Revision
 import uuid
 import zipfile
 from django.core.mail import EmailMessage
@@ -266,12 +266,16 @@ def artboards(request):
 
 def svg_images(request):
 	defs_elms = []
+	arts = []
 	project_uuid = request.POST.get('project-uuid')
 	project = Project.objects.get(uuid=project_uuid)
 	project_name = project.project
 	# project_name = request.session['project']
 	# redirection = '/artboards?project=' + project_name
 	redirection = '/projects'
+	artboards = ArtBoard.objects.filter(project__project__contains=project_name)
+	for artboard in artboards:
+		arts.append(artboard.artboard)
 	images_path = os.path.join('parse_svg', 'templates', 'uploads')
 	if not os.path.exists(images_path):
            os.makedirs(images_path)
@@ -315,8 +319,15 @@ def svg_images(request):
 					print 'email: ', request.user.email
 					project = Project.objects.get(project=project_name, email=request.user.email)
 					file = file.split('.')[0]
-					new_entry = ArtBoard(project=project, artboard=file, location=url, uuid=uuid_name)
+					if file in arts:
+						old_art = ArtBoard.objects.get(artboard=file, project__project__contains=project_name, latest=True)
+						print 'old art', old_art
+						ArtBoard.objects.filter(artboard=file, project__project__contains=project_name).update(latest=False)
+						revision_entry = Revision(name=file, artboard=old_art)
+						revision_entry.save()
+					new_entry = ArtBoard(project=project, artboard=file, location=url, uuid=uuid_name, latest=True)
 					new_entry.save()
+					Project.objects.filter(project=project_name).update(last_updated=datetime.now())
 		else:
 			img_data = f.read()
 			uuid_name = uuid.uuid4()
@@ -344,8 +355,16 @@ def svg_images(request):
 			Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
 			project = Project.objects.get(project=project_name, email=request.user.email)
 			filename = filename.split('.')[0]
-			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name)
+			if filename in arts:
+				print 'same', filename
+				old_art = ArtBoard.objects.get(artboard=filename, project__project__contains=project_name, latest=True)
+				print 'old art', old_art
+				ArtBoard.objects.filter(artboard=filename, project__project__contains=project_name).update(latest=False)
+				revision_entry = Revision(name=filename, artboard=old_art)
+				revision_entry.save()
+			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True)
 			new_entry.save()
+			Project.objects.filter(project=project_name).update(last_updated=datetime.now())
 	return redirect(redirection)
 
 def share_project(request):
@@ -452,8 +471,9 @@ def download_artboard(request):
 		response['Content-Disposition'] = 'attachment;filename=file.png'
 		return response
 
-def update_project(request):
-	for f in request.FILES.getlist('svgfile'):
-		filename = f.name
-		print 'filename: ', filename
-	print 'uuid: ', request.POST.get('project-uuid')
+def revisions(request):
+	artboard_name = request.GET.get('artboard')
+	project_name = request.session['project']
+	revisions = Revision.objects.filter(artboard__project__project__contains=project_name, artboard__artboard__contains=artboard_name)
+	print 'revisions: ', revisions
+	return render(request, 'revisions.html', {'revisions': revisions})

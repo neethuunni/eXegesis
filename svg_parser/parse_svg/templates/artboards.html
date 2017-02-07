@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Home</title>
+  <title>Artboards</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../static/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -81,6 +81,7 @@
       <div class="container-fluid" style="padding-top:20px">
         {% if artboards %}
         {% for artboard in artboards %}
+        {% if artboard.latest %}
         <div class="col-md-3" id="{{ artboard.artboard }}" style="text-align:center;padding:15px">
           <div style="height:255px;width:250px;margin:auto; position: relative;">
             <a href='/svg?url={{artboard.location}}'>
@@ -128,6 +129,7 @@
             </div>
           </div>
         </div>
+        {% endif %}
         {% endfor %}
         {% endif %}
       </div>
