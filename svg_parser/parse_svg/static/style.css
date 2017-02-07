@@ -12,6 +12,15 @@
 body {
 	font-family: Gotham;
 }
+
+input {
+	outline: none;
+}
+
+button {
+	outline: none;
+}
+
 .btn-primary.outline {
 	background-color: #fd3c16;
 }

@@ -229,7 +229,8 @@ def create_project(request):
 	screen = request.POST.get('screen')
 	density = request.POST.get('density')
 	created = datetime.now()
-	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created)
+	uuid_name = uuid.uuid4()
+	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
 	new_project.save()
 	return redirect('/projects')
 
@@ -265,8 +266,12 @@ def artboards(request):
 
 def svg_images(request):
 	defs_elms = []
-	project_name = request.session['project']
-	redirection = '/artboards?project=' + project_name
+	project_uuid = request.POST.get('project-uuid')
+	project = Project.objects.get(uuid=project_uuid)
+	project_name = project.project
+	# project_name = request.session['project']
+	# redirection = '/artboards?project=' + project_name
+	redirection = '/projects'
 	images_path = os.path.join('parse_svg', 'templates', 'uploads')
 	if not os.path.exists(images_path):
            os.makedirs(images_path)
@@ -310,7 +315,7 @@ def svg_images(request):
 					print 'email: ', request.user.email
 					project = Project.objects.get(project=project_name, email=request.user.email)
 					file = file.split('.')[0]
-					new_entry = ArtBoard(project=project, artboard=file, location=url)
+					new_entry = ArtBoard(project=project, artboard=file, location=url, uuid=uuid_name)
 					new_entry.save()
 		else:
 			img_data = f.read()
@@ -339,7 +344,7 @@ def svg_images(request):
 			Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
 			project = Project.objects.get(project=project_name, email=request.user.email)
 			filename = filename.split('.')[0]
-			new_entry = ArtBoard(project=project, artboard=filename, location=url)
+			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name)
 			new_entry.save()
 	return redirect(redirection)
 
@@ -448,14 +453,7 @@ def download_artboard(request):
 		return response
 
 def update_project(request):
-	project = request.GET.get('project')
-	print 'project: ', project
-	project_name = request.POST.get('project-name')
-	project_description = request.POST.get('project-description')
-	screen = request.POST.get('screen')
-	density = request.POST.get('density')
-	if screen == 'web':
-		density = None
-	last_updated = datetime.now()
-	Project.objects.filter(project=project).update(project=project_name, description=project_description, density=density, screen=screen, last_updated=last_updated)
-	return redirect('/projects')
+	for f in request.FILES.getlist('svgfile'):
+		filename = f.name
+		print 'filename: ', filename
+	print 'uuid: ', request.POST.get('project-uuid')

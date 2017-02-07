@@ -16,7 +16,7 @@
     </div>
   </nav>
 
-  <div>
+  <div >
     <div class="container-fluid" style="margin-top:10px">
       <div class="col-sm-3" style="font-size:18px;">
         <span class="glyphicon glyphicon-chevron-left"></span><a href="javascript:history.back()" style="text-decoration:none;color:#000000;">Back to Dashboard</a>
@@ -34,7 +34,7 @@
     <div class="container-fluid" style="margin-top:25px;">
       <div class="col-sm-3">
       </div>
-      <div class="col-sm-6" id="image">
+      <div class="col-sm-6" id="image" style="overflow:auto;width:47%;height:100vh;">
         {% include url %}
 
         <script type="text/javascript">
@@ -159,22 +159,22 @@
           });
 
           function zoomin() {
-            $("#image").width(
-              $("#image").width() * 1.2
+            $("svg").width(
+              $("svg").width() * 1.2
               );
 
-            $("#image").height(
-              $("#image").height() * 1.2
+            $("svg").height(
+              $("svg").height() * 1.2
               );
           }
 
           function zoomout() {
-            $("#image").width(
-              $("#image").width() * 0.5
+            $("svg").width(
+              $("svg").width() * 0.5
               );
 
-            $("#image").height(
-              $("#image").height() * 0.5
+            $("svg").height(
+              $("svg").height() * 0.5
               );
           }
 
@@ -184,7 +184,9 @@
       </div>
     </div>
   </div>
-  <button id="zoom-in" onclick="zoomin()">zoom in</button>
-  <button id="zoom-out" onclick="zoomout()">zoom out</button>
+  <div style="position:fixed;bottom:10px;left:10px;">
+    <button class="btn" id="zoom-in" onclick="zoomin()"><span class="glyphicon glyphicon-plus"></span></button>
+    <button class="btn" id="zoom-out" onclick="zoomout()"><span class="glyphicon glyphicon-minus"></span></button>
+  </div>
 </body>
 </html>

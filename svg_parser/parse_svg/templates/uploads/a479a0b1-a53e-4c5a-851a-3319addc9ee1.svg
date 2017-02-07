@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="667px" version="1.1" viewBox="0 0 375 667" width="375px">
+    
+    <title />
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient id="linearGradient-1" x1="0%" x2="100%" y1="52.1660686%" y2="52.1660699%">
+            <stop offset="0%" stop-color="#962863" />
+            <stop offset="100%" stop-color="#85305E" />
+        </linearGradient>
+        <linearGradient id="linearGradient-2" x1="0%" x2="100%" y1="52.1660686%" y2="52.1660699%">
+            <stop offset="0%" stop-color="#BDA665" />
+            <stop offset="100%" stop-color="#B99E51" />
+        </linearGradient>
+        <filter filterUnits="objectBoundingBox" height="200%" id="filter-3" width="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="50" />
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" id="898c725a" stroke="none" stroke-width="1">
+        <g id="6411ad14">
+            <rect fill="#F6F1E7" fill-opacity="0.45" height="617" id="6ac96255" width="375" x="0" y="50" />
+            <g id="7f0d52a2" transform="translate(-7.000000, 51.000000)">
+                <rect fill="#D8D8D8" height="144" id="9179e9fb" width="375" x="7" y="0" />
+                <ellipse cx="160.5" cy="76.5" fill="#FFFFFF" id="63f04089" opacity="0.75" rx="160.5" ry="39.5" />
+                <text fill="#000000" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="e422824a" letter-spacing="-0.0216666684">
+                    <tspan x="54" y="42">Phone: +91 22 30254900</tspan>
+                    <tspan x="54" y="63">Email: care.in@malabargoldanddiamonds.com</tspan>
+                    <tspan x="54" y="84">201, Landmark Building, New Link Road,</tspan>
+                    <tspan x="54" y="105">Andheri (W), Mumbai - 400053</tspan>
+                </text>
+                <polygon fill="url(#linearGradient-1)" id="60e2aa88" points="7 0 34.1416358 0 34.1416358 43.7726024 44 74 34.1416358 104.235546 34.1416358 144 7 144" />
+                <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="5015eeb2" letter-spacing="-0.0216666684" transform="translate(20.000000, 72.000000) rotate(-90.000000) translate(-20.000000, -72.000000) ">
+                    <tspan x="-32.5532927" y="77">Customer Service</tspan>
+                </text>
+            </g>
+            <g id="f1182658" transform="translate(0.000000, 195.000000)">
+                <rect fill="#D8D8D8" fill-opacity="0.6" height="124" id="4d3471e2" width="375" x="0" y="1" />
+                <ellipse cx="161.5" cy="64" fill="#FFFFFF" id="bceeac5f" opacity="0.75" rx="157.5" ry="31" />
+                <text fill="#000000" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="27f10d2d" letter-spacing="-0.0216666684">
+                    <tspan x="48" y="37">Malabar Gate, Ram Mohan Road</tspan>
+                    <tspan x="48" y="58">Calicut-673004,Kerala,India</tspan>
+                    <tspan x="48" y="79">Phone :+91 495 2726916</tspan>
+                    <tspan x="48" y="100">Fax: +91 495 2724533</tspan>
+                </text>
+                <polygon fill="url(#linearGradient-2)" id="ec23c6f5" points="0 1 27.1416358 1 27.1416358 34.7726024 37 65 27.1416358 95.235546 27.1416358 125 0 125" />
+                <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="290c3e8e" letter-spacing="-0.0216666684" transform="translate(12.500000, 63.000000) rotate(-90.000000) translate(-12.500000, -63.000000) ">
+                    <tspan x="-1.76036585" y="68">India</tspan>
+                </text>
+            </g>
+            <g id="eb23a7e8" transform="translate(0.000000, 321.000000)">
+                <rect fill="#D8D8D8" height="123.774955" id="eef2e4e1" width="375" x="0" y="0.226860254" />
+                <ellipse cx="161.5" cy="63" fill="#FFFFFF" id="1e41b2a9" opacity="0.75" rx="157.5" ry="31" />
+                <text fill="#000000" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="b44d9236" letter-spacing="-0.0216666684">
+                    <tspan x="48" y="37.1833031">Corporate Office - International Operations.</tspan>
+                    <tspan x="48" y="58.1833031">Al Gurg Tower 3, Creek Road, Deira, Dubai, UAE.</tspan>
+                    <tspan x="48" y="79.1833031">Toll Free Number: 800MALABAR(6252227)</tspan>
+                    <tspan x="48" y="100.183303">Phone :+971425 66 916</tspan>
+                </text>
+                <polygon fill="url(#linearGradient-1)" id="39fe398b" points="0 0.226860254 27.1416358 0.226860254 27.1416358 33.9381693 37 64.1107078 27.1416358 94.2913799 27.1416358 124.001815 0 124.001815" />
+                <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="8c4a6fe0" letter-spacing="-0.0216666684" transform="translate(13.000000, 62.627949) rotate(-90.000000) translate(-13.000000, -62.627949) ">
+                    <tspan x="-21.7522764" y="67.6279492">Middle East</tspan>
+                </text>
+            </g>
+            <g id="b3fc20a9" transform="translate(0.000000, 446.000000)">
+                <rect fill="#D8D8D8" fill-opacity="0.6" height="124" id="2d377391" width="375" x="0" y="0" />
+                <ellipse cx="161.5" cy="63" fill="#FFFFFF" id="61b92083" opacity="0.75" rx="157.5" ry="31" />
+                <polygon fill="url(#linearGradient-2)" id="480e4c23" points="0 1 27.1416358 1 27.1416358 34.5002427 37 64.483871 27.1416358 94.475582 27.1416358 124 0 124" />
+                <text fill="#000000" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="51ec039a" letter-spacing="-0.0216666684">
+                    <tspan x="48" y="37">Malabar Gold And Diamonds,</tspan>
+                    <tspan x="48" y="58">Arya Samaj Building, Opp Mustafa Center, Singapore</tspan>
+                    <tspan x="48" y="79">Phone :+65 62949916</tspan>
+                    <tspan x="48" y="100">Fax: +65 62952917</tspan>
+                </text>
+                <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="13" font-weight="normal" id="7c895989" letter-spacing="-0.0216666684" transform="translate(13.000000, 62.500000) rotate(-90.000000) translate(-13.000000, -62.500000) ">
+                    <tspan x="-25.6345732" y="67.5">Far East Asia</tspan>
+                </text>
+            </g>
+            <g id="58447ede" transform="translate(0.000000, -97.000000)">
+                <g id="1765fa29">
+                    <rect fill="#722047" height="51.0838203" id="605c7a8d" width="375" x="0" y="96.4830404" />
+                    <ellipse cx="187.5" cy="265.074458" fill="#D8D8D8" fill-opacity="0.2" filter="url(#filter-3)" id="a935685e" rx="187.5" ry="265.074458" />
+                </g>
+                <g id="148e18d8" transform="translate(10.000000, 118.000000)">
+                    <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="12" font-weight="normal" id="0d9d95b5" letter-spacing="-0.0200000014">
+                        <tspan x="5.6497561" y="12">Back</tspan>
+                    </text>
+                    <polyline id="e0b99164" points="4.83118965 3 0 7.83118965 4.8954521 11.8101948" stroke="#FFFFFF" />
+                </g>
+                <g fill="#FFFFFF" id="24ad489f" transform="translate(314.000000, 116.000000)">
+                    <g id="5e7bb7b7" transform="translate(0.197728, 0.319382)">
+                        <g id="b707731d">
+                            <path d="M15.2792801,12.2577638 L15.1003025,12.1661024 C13.4162106,11.3033378 13.1284674,10.1431049 13.0844805,9.71641738 L13.0935704,5.9166801 C12.8686208,3.52901627 11.0817709,1.65147933 8.75642121,1.18271682 L8.75642121,1.08060009 C8.75647345,0.483734886 8.25752001,0 7.64347974,0 C7.02870809,0 6.53079947,0.483734886 6.53079947,1.08065084 L6.53079947,1.17200776 C4.01842709,1.66421854 2.1194681,3.82420063 2.1194681,6.40858636 C2.1194681,6.56744589 2.1422974,9.43656068 2.1443348,9.68804598 C2.08122771,10.27877 1.74108681,11.3695208 0.186604719,12.1661024 L0.00762718056,12.2577638 L0.00762718056,14.8352978 L5.34665357,14.8352978 C5.63575506,15.6067055 6.55430791,16.171342 7.64347974,16.171342 C8.73228588,16.171342 9.65089097,15.6073653 9.93999246,14.8352978 L15.2790188,14.8352978 L15.2792801,12.2577638 L15.2792801,12.2577638 L15.2792801,12.2577638 Z M14.6077747,14.1829079 L0.679132515,14.1829079 L0.679132515,12.6475534 C2.37362038,11.7077952 2.74531483,10.427225 2.81411618,9.73372444 L2.81578789,9.69982087 C2.81578789,9.69982087 2.79092119,6.57429766 2.79092119,6.40792656 C2.79092119,3.82161218 4.95646582,1.71801761 7.61824735,1.71801761 C10.1303063,1.71801761 12.1964364,3.54794745 12.4237368,5.94408718 L12.415326,9.74544857 C12.4690297,10.2921182 12.7937073,11.6435408 14.6080882,12.6468936 L14.6080882,14.1829079 L14.6077747,14.1829079 L14.6077747,14.1829079 Z" id="59ca80f1" />
+                            <text font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="7" font-weight="normal" id="8cd93b2c" letter-spacing="-0.0116666667">
+                                <tspan x="3.76381562" y="11.156808">15</tspan>
+                            </text>
+                        </g>
+                    </g>
+                </g>
+                <path d="M352.226057,129.452114 C353.744607,129.452114 355.125108,128.913719 356.201898,128.002588 L361.03365,132.83434 C361.14409,132.94478 361.28214,133 361.433995,133 C361.58585,133 361.7239,132.94478 361.83434,132.83434 C362.05522,132.61346 362.05522,132.25453 361.83434,132.03365 L357.002588,127.201898 C357.899914,126.125108 358.452114,124.730802 358.452114,123.226057 C358.452114,119.788611 355.663503,117 352.226057,117 C348.802416,117 346,119.802416 346,123.226057 C346,126.663503 348.802416,129.452114 352.226057,129.452114 L352.226057,129.452114 Z M352.226057,118.13201 C355.042278,118.13201 357.320104,120.423641 357.320104,123.226057 C357.320104,126.042278 355.042278,128.320104 352.226057,128.320104 C349.409836,128.320104 347.13201,126.028473 347.13201,123.226057 C347.13201,120.423641 349.423641,118.13201 352.226057,118.13201 L352.226057,118.13201 Z" fill="#FFFFFF" id="85f92bbb" />
+                <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="17" font-weight="normal" id="8d8199e6" letter-spacing="-0.0283333361">
+                    <tspan x="143.037182" y="130">Contact Us</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

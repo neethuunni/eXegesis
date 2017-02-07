@@ -98,14 +98,14 @@
                 </span>
               </button>
               <ul class="dropdown-menu" style="right: 0; left: inherit;">                      
-                <li> <a href="#" data-toggle="modal" data-target="#rename-{{ artboard.artboard }}">RENAME</a></li>
+                <li> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
                 <li><a href="#">UPDATE</a></li>
                 <li><a href="/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
                 <li><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
               </ul>  
             </div>
           </div>
-          <div class="modal fade" id="rename-{{ artboard.artboard }}" role="dialog">
+          <div class="modal fade" id="{{ artboard.uuid }}" role="dialog">
             <div class="modal-dialog">
               <!-- Modal content-->
               <div class="modal-content">
@@ -132,7 +132,7 @@
         {% endif %}
       </div>
 
-      {% if edit %}
+<!--       {% if edit %}
       <div class = "container" style="margin-top:30px;">
         <form class = "form-main-class" action="/svg_images/" method="post" enctype="multipart/form-data">
          {% csrf_token %}
@@ -141,7 +141,7 @@
          <button  class="list-btn-user" type="submit">Upload</button>
        </form>
      </div>
-     {% endif %}
+     {% endif %} -->
 
      <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog">

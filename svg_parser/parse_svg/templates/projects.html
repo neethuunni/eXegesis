@@ -12,34 +12,18 @@
   <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
     <div class="container-fluid" style="margin:auto;display:table;">
       <div class="navbar-header" style="display:inline-block;">
-      <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
+        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
       </div>   
     </div>
   </nav>
 
   <script type="text/javascript">
     function edit(project) {
-      $('#myModal').modal('show');
-      proj = {{proj|safe}}
-      project = project.id;
-      var update = false;
-      for(var i=0; i<proj.length; i++) {
-        if (project == proj[i].project) {
-          var screen = proj[i].screen;
-          var density = proj[i].density;
-          var projectName = proj[i].project;
-          var description = proj[i].description;
-          break;
-        }
-      }
-      $('input[name=screen][value=' + screen + ']').attr('checked', 'checked');
-      displayDiv(screen);
-      $('input[name=density][value=' + density + ']').attr('checked', 'checked');
-      $('#project-name').val(projectName);
-      $('#project-description').val(description);
-      $('#header').html('Update Project');
-      $('#modal-btn').html('UPDATE');
-      $('#create-update').attr('action', '/update_project/?project=' + projectName);
+      $('#project-uuid').val(project);
+      $('#svgfile').click();
+      document.getElementById("svgfile").onchange = function() {
+        document.getElementById("update-project").submit();
+      };
     }
   </script>
 
@@ -145,7 +129,7 @@
           </button>
           <ul class="dropdown-menu inline" style="right:0;left:inherit;">                      
             <li> <a href="#" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
-            <li><a href="#" onclick="edit({{project.project}})">EDIT</a></li>
+            <li><a href="#" onclick="edit('{{project.uuid}}');">UPDATE</a></li>
             <li><a href="/delete_project?project={{ project.project }}">DELETE</a></li>
           </ul>  
         </div>
@@ -178,5 +162,13 @@
     {% endfor %}
     {% endif %}
   </div>
+  <div class = "container" style="margin-top:30px;visibility:hidden;">
+    <form class = "form-main-class" id='update-project' action="/svg_images/" method="post" enctype="multipart/form-data">
+     {% csrf_token %}
+     <input class="input-class" type="file" id="svgfile" name="svgfile" multiple />
+     <input type="text" id="project-uuid" name="project-uuid" value="">
+     <button  class="list-btn-user" type="submit">Upload</button>
+   </form>
+ </div>
 </body>
 </html>

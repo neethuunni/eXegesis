@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="667px" version="1.1" viewBox="0 0 375 667" width="375px">
+    
+    <title />
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter filterUnits="objectBoundingBox" height="200%" id="filter-1" width="200%" x="-50%" y="-50%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="50" />
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" id="a8380895" stroke="none" stroke-width="1">
+        <g id="16ad6ff6">
+            <g id="10fc6337" transform="translate(0.000000, -97.000000)">
+                <rect fill="#76284D" height="50.8875878" id="063bb15c" width="375" x="0" y="96.1124122" />
+                <ellipse cx="187.5" cy="264.056206" fill="#D8D8D8" fill-opacity="0.2" filter="url(#filter-1)" id="392012df" rx="187.5" ry="264.056206" />
+            </g>
+            <g id="7321b220" stroke="#FFFFFF" transform="translate(10.000000, 21.000000)">
+                <polyline id="7b2d5af0" points="4.83118965 3 0 7.83118965 4.8954521 11.8101948" />
+            </g>
+            <path d="M0,50.25 L375,50.25" id="7b743ce9" opacity="0.5" stroke="#A75481" stroke-linecap="square" stroke-width="0.5" />
+            <g fill="#FFFFFF" id="f0f180c2" transform="translate(314.000000, 19.000000)">
+                <g id="d9a84f1b" transform="translate(0.197728, 0.319382)">
+                    <g id="521aec45">
+                        <path d="M15.2792801,12.2577638 L15.1003025,12.1661024 C13.4162106,11.3033378 13.1284674,10.1431049 13.0844805,9.71641738 L13.0935704,5.9166801 C12.8686208,3.52901627 11.0817709,1.65147933 8.75642121,1.18271682 L8.75642121,1.08060009 C8.75647345,0.483734886 8.25752001,0 7.64347974,0 C7.02870809,0 6.53079947,0.483734886 6.53079947,1.08065084 L6.53079947,1.17200776 C4.01842709,1.66421854 2.1194681,3.82420063 2.1194681,6.40858636 C2.1194681,6.56744589 2.1422974,9.43656068 2.1443348,9.68804598 C2.08122771,10.27877 1.74108681,11.3695208 0.186604719,12.1661024 L0.00762718056,12.2577638 L0.00762718056,14.8352978 L5.34665357,14.8352978 C5.63575506,15.6067055 6.55430791,16.171342 7.64347974,16.171342 C8.73228588,16.171342 9.65089097,15.6073653 9.93999246,14.8352978 L15.2790188,14.8352978 L15.2792801,12.2577638 L15.2792801,12.2577638 L15.2792801,12.2577638 Z M14.6077747,14.1829079 L0.679132515,14.1829079 L0.679132515,12.6475534 C2.37362038,11.7077952 2.74531483,10.427225 2.81411618,9.73372444 L2.81578789,9.69982087 C2.81578789,9.69982087 2.79092119,6.57429766 2.79092119,6.40792656 C2.79092119,3.82161218 4.95646582,1.71801761 7.61824735,1.71801761 C10.1303063,1.71801761 12.1964364,3.54794745 12.4237368,5.94408718 L12.415326,9.74544857 C12.4690297,10.2921182 12.7937073,11.6435408 14.6080882,12.6468936 L14.6080882,14.1829079 L14.6077747,14.1829079 L14.6077747,14.1829079 Z" id="94102413" />
+                        <text font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="7" font-weight="normal" id="7a1d7bb3" letter-spacing="-0.0116666667">
+                            <tspan x="3.76381562" y="11.156808">15</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+            <path d="M352.226057,32.4521139 C353.744607,32.4521139 355.125108,31.9137187 356.201898,31.0025884 L361.03365,35.8343399 C361.14409,35.94478 361.28214,36 361.433995,36 C361.58585,36 361.7239,35.94478 361.83434,35.8343399 C362.05522,35.6134599 362.05522,35.2545298 361.83434,35.0336497 L357.002588,30.2018982 C357.899914,29.1251079 358.452114,27.7308024 358.452114,26.2260569 C358.452114,22.7886109 355.663503,20 352.226057,20 C348.802416,20 346,22.8024159 346,26.2260569 C346,29.663503 348.802416,32.4521139 352.226057,32.4521139 L352.226057,32.4521139 Z M352.226057,21.1320104 C355.042278,21.1320104 357.320104,23.4236411 357.320104,26.2260569 C357.320104,29.0422778 355.042278,31.3201035 352.226057,31.3201035 C349.409836,31.3201035 347.13201,29.0284728 347.13201,26.2260569 C347.13201,23.4236411 349.423641,21.1320104 352.226057,21.1320104 L352.226057,21.1320104 Z" fill="#FFFFFF" id="d2b95207" />
+            <text fill="#FFFFFF" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="17" font-weight="normal" id="7ee5af1b" letter-spacing="-0.0283333361">
+                <tspan x="101.435902" y="34">14 Days Return Policy</tspan>
+            </text>
+            <rect fill="#F6F1E7" fill-opacity="0.45" height="617" id="1e59ff3f" width="375" x="0" y="50" />
+            <g id="ca2a5adb" transform="translate(20.000000, 186.000000)">
+                <text fill="#0E0E0E" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="14" font-weight="normal" id="f3956907" letter-spacing="-0.0233333353">
+                    <tspan x="0" y="14">    If our customers do not like the Jewellery and </tspan>
+                    <tspan x="0" y="31">solitaire purchase from us, they can send it back to </tspan>
+                    <tspan x="0" y="48">us within 14days from the date of delivery. We will </tspan>
+                    <tspan x="0" y="65">make sure to refund the entire amount back to </tspan>
+                    <tspan x="0" y="82">customer&#8217;s account within 10 working days.</tspan>
+                    <tspan x="0" y="109">    The amount of the product refund, should not </tspan>
+                    <tspan x="0" y="126">exceed more than Rs. 2,00,000, in case of Jewellery </tspan>
+                    <tspan x="0" y="143">and Rs. 5,00,000, in case of solitaire diamonds. For </tspan>
+                    <tspan x="0" y="160">amount higher than the prescribed limit, our buyback </tspan>
+                    <tspan x="0" y="177">policy is applicable.</tspan>
+                    <tspan x="0" y="204">    The 14 days refund policy is not applicable on </tspan>
+                    <tspan x="0" y="221">Gold Coins; however our buyback policy is </tspan>
+                    <tspan x="0" y="238">applicable for the same.</tspan>
+                    <tspan x="0" y="265">    Refund request can be done by informing our </tspan>
+                    <tspan x="0" y="282">customer care team via email or call. We will thereby </tspan>
+                    <tspan x="0" y="299">collect the product from the provided shipping </tspan>
+                    <tspan x="0" y="316">address and initiate the refund process immediately.</tspan>
+                    <tspan x="0" y="343">    Product should be accompanied with Original </tspan>
+                    <tspan x="0" y="360">Product Certificate and Original/Copy of Invoice for </tspan>
+                    <tspan x="0" y="377">the refund to be initiated within 14 Days.</tspan>
+                    <tspan x="0" y="404">    In case, if a customer cannot produce the original </tspan>
+                    <tspan x="0" y="421">certificate of the product, we will send the jewellery/</tspan>
+                    <tspan x="0" y="438">solitaire to the Lab for recertification and the </tspan>
+                    <tspan x="0" y="455">shipping along with the certification cost shall be </tspan>
+                    <tspan x="0" y="472">borne by the customer. The certification cost of </tspan>
+                    <tspan x="0" y="489">diamond jewellery is Rs. 500 and for Solitaire </tspan>
+                    <tspan x="0" y="506">diamond is Rs. 3000.</tspan>
+                    <tspan x="0" y="533">    During the quality check of the product by our </tspan>
+                    <tspan x="0" y="550">quality check team, any product which show signs </tspan>
+                    <tspan x="0" y="567">of wear and tear , or have been resized, altered, </tspan>
+                    <tspan x="0" y="584">damaged cannot be accepted under 14days refund </tspan>
+                    <tspan x="0" y="601">policy and for that our buyback policy is applicable.</tspan>
+                    <tspan x="0" y="628">    This refund facility is not available at any of our </tspan>
+                    <tspan x="0" y="645">stores</tspan>
+                    <tspan x="0" y="672">    This policy is not applicable for products that are </tspan>
+                    <tspan x="0" y="689">ordered with specific indications like customization, </tspan>
+                    <tspan x="0" y="706">engraving, and purchase using promotion code or by </tspan>
+                    <tspan x="0" y="723">discount coupon.</tspan>
+                    <tspan x="0" y="750" />
+                </text>
+                <polygon fill="#942361" id="83c81863" points="4.85535572 7 7.73417185 13 1.97653959 13" transform="translate(4.855356, 10.000000) rotate(90.000000) translate(-4.855356, -10.000000) " />
+                <polygon fill="#942361" id="ae7e9a05" points="4.85535572 102 7.73417185 108 1.97653959 108" transform="translate(4.855356, 105.000000) rotate(90.000000) translate(-4.855356, -105.000000) " />
+                <polygon fill="#942361" id="8a84e70c" points="4.85535572 197 7.73417185 203 1.97653959 203" transform="translate(4.855356, 200.000000) rotate(90.000000) translate(-4.855356, -200.000000) " />
+                <polygon fill="#942361" id="edcf9c85" points="4.85535572 257 7.73417185 263 1.97653959 263" transform="translate(4.855356, 260.000000) rotate(90.000000) translate(-4.855356, -260.000000) " />
+            </g>
+            <g id="63c7baf9" transform="translate(0.000000, 509.000000)">
+                <rect fill="#F6F1E7" height="126" id="890df00c" width="382.826913" x="0" y="31" />
+                <g id="81248c39" transform="translate(13.000000, 42.000000)">
+                    <g fill="#010101" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="7" font-weight="normal" id="4b427b85" letter-spacing="-0.0116666658" transform="translate(0.301370, 98.000000)">
+                        <g id="160abb7d" transform="translate(257.684932, 0.000000)">
+                            <text id="d582a35f">
+                                <tspan x="20.3956629" y="7">Easy Exchange</tspan>
+                            </text>
+                        </g>
+                        <g id="3207a12c">
+                            <text id="94806374">
+                                <tspan x="6.32294046" y="7">Only Certified Jewellery</tspan>
+                            </text>
+                        </g>
+                        <g id="8094f13f" transform="translate(132.534247, 0.000000)">
+                            <text id="6a8707e8">
+                                <tspan x="10.2362727" y="7">Product Detail Pricing</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g fill="#010101" font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-size="7" font-weight="normal" id="4e372ec7" letter-spacing="-0.0116666658" transform="translate(12.849315, 38.000000)">
+                        <g id="1540ab64" opacity="0.3" transform="translate(260.739726, 0.000000)">
+                            <text id="bf5148a4">
+                                <tspan x="3.24669757" y="7">14 Days Return</tspan>
+                            </text>
+                        </g>
+                        <g id="5dd78582" transform="translate(123.068493, 0.000000)">
+                            <text id="b2916f67">
+                                <tspan x="5.16015758" y="7">Free Product Insurance</tspan>
+                            </text>
+                        </g>
+                        <g id="8dc3ad36">
+                            <text id="3faa2b31">
+                                <tspan x="12.1984956" y="7">Lifetime Product </tspan>
+                                <tspan x="26.510081" y="15">Service</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g id="13cbf53d" stroke="#A8976D" transform="translate(160.000000, 0.000000)">
+                        <ellipse cx="17.4578121" cy="17.260351" fill="#FFFFFF" id="f3385a2b" rx="17.3250531" ry="17.260351" />
+                        <path d="M7.36812603,15.0780077 C7.36812603,15.0780077 9.89054756,5.48892387 19.7147156,7.40674065 C19.7147156,7.40674065 25.8216309,8.39871484 27.6138777,15.0780077 C27.6138777,15.0780077 25.2905948,12.1682168 23.6974864,15.540929 C23.6974864,15.540929 21.3078239,12.1020852 19.5155771,15.540929 C19.5155771,15.540929 17.7897097,11.9698219 15.4000472,15.540929 C15.4000472,15.540929 13.8069389,12.3666116 11.2181378,15.540929 C11.2845173,15.540929 10.2888246,12.4327432 7.36812603,15.0780077 Z" fill="#A8976D" id="737b888b" />
+                        <path d="M17.4578121,14.2182968 L17.4578121,26.1219871 C17.4578121,26.1219871 17.3250531,27.4446194 16.2629809,27.0478297 C16.2629809,27.0478297 15.7319448,26.7171716 15.7983243,25.8574607" id="ec9ed9ca" />
+                    </g>
+                    <g id="e3813377" transform="translate(160.000000, 60.000000)">
+                        <ellipse cx="17.3250531" cy="17.260351" fill="#FFFFFF" id="aada5387" rx="17.3250531" ry="17.260351" stroke="#A8976D" />
+                        <path d="M26.1689875,27.3987148 C26.1689875,27.3987148 28.0939934,27.6632413 27.7620958,25.5470297 L20.1948312,19 L19,20.190369 L26.1689875,27.3987148 Z" fill="#A8976D" id="dec9262b" />
+                        <g id="11c7133d" transform="translate(8.000000, 9.000000)">
+                            <ellipse cx="6.90346944" cy="6.87768774" fill="#A8976D" id="b67879ae" rx="6.90346944" ry="6.87768774" />
+                            <ellipse cx="6.64225867" cy="6.6211871" fill="#FFFFFF" id="649f993a" rx="5.64225867" ry="5.6211871" />
+                        </g>
+                    </g>
+                    <g id="3035e2ff" opacity="0.3" transform="translate(284.000000, 0.000000)">
+                        <ellipse cx="17.3250531" cy="17.260351" fill="#FFFFFF" id="8a6dfd69" rx="17.3250531" ry="17.260351" stroke="#A8976D" />
+                        <g id="7ac098eb" transform="translate(8.325053, 7.760351)">
+                            <g fill="#A8976D" id="9f957fd9">
+                                <path d="M0,16.2612221 L0,4.2914002 C0,4.2914002 0,1.64613568 3.18621666,2.17518859 L3.18621666,4.02687375 C3.18621666,4.02687375 4.51380694,5.8124273 6.04053576,4.15913697 L6.04053576,2.04292536 L11.0853788,2.04292536 L11.0853788,3.7623473 C11.0853788,3.7623473 12.0810715,5.61403246 14.0724569,4.09300536 L14.0724569,2.10905697 C14.0724569,2.10905697 17.3914326,1.24934601 17.3914326,4.35753181 L17.3914326,16.5257486 C17.3914326,16.5257486 17.5241916,18.0467757 15.2672882,18.0467757 L1.52672882,18.0467757 C1.52672882,18.1790389 0,18.1790389 0,16.2612221 Z" id="f0c9944d" stroke="#A8976D" />
+                                <path d="M4.66379514,0 C4.99569271,0 5.32759028,0.264526452 5.32759028,0.661316129 L5.32759028,2.84365936 C5.32759028,3.17431742 5.06207222,3.50497548 4.66379514,3.50497548 L4.66379514,3.50497548 C4.33189757,3.50497548 4,3.24044903 4,2.84365936 L4,0.661316129 C4,0.264526452 4.26551806,0 4.66379514,0 L4.66379514,0 Z" id="7daba3de" />
+                            </g>
+                            <rect fill="#FFFFFF" height="9.85361033" id="40985ef7" width="14.8690111" x="1" y="7" />
+                            <text fill="#A8976D" font-family="Helvetica" font-size="11.2687" font-weight="normal" id="09b28490">
+                                <tspan x="2" y="16">14</tspan>
+                            </text>
+                        </g>
+                    </g>
+                    <g id="65cd5cae" transform="translate(284.000000, 60.000000)">
+                        <ellipse cx="17.3250531" cy="17.260351" fill="#FFFFFF" id="7d4e66ec" rx="17.3250531" ry="17.260351" stroke="#A8976D" />
+                        <path d="M14.2165961,17.660596 C14.2165961,17.660596 11.9596927,13.7588309 15.743325,12.5684618 C15.743325,12.5684618 17.3364333,12.1055405 18.332126,13.9572257 L16.8053972,14.7508051 L22.3148968,16.5363586 C22.3148968,16.5363586 22.7131739,16.7347534 22.8459329,16.3379638 L24.7709388,10.9813031 L23.3105895,11.7087509 C23.3105895,11.7087509 18.7967826,7.47632764 14.2165961,9.59253925 C14.2165961,9.59253925 7.51226524,11.9071457 9.30451211,19.8429393 C9.30451211,19.7768076 9.90192774,15.6766476 14.2165961,17.660596 Z" fill="#A8976D" id="b7bf4abf" />
+                        <path d="M24.9310833,14 C24.5328062,19.8857136 20.0853788,17.3727123 20.0853788,17.3727123 C20.0853788,17.3727123 22.4086618,21.8696619 18.4922705,22.6632413 C18.4922705,22.6632413 16.4345055,22.8616361 15.7707104,21.2744774 L17.3638187,20.4808981 L11.6551806,18.6292129 C11.6551806,18.6292129 11.190524,18.4308181 10.9913854,18.8937394 L9,24.4487948 L10.5267288,23.6552155 C10.5267288,23.6552155 15.1732948,28.0199019 20.0189993,25.7714271 C20.0189993,25.8375587 27.7190229,23.1261626 24.9310833,14" fill="#A8976D" id="d4c65519" />
+                    </g>
+                    <g id="3142cc29" transform="translate(31.000000, 0.000000)">
+                        <ellipse cx="17.5905712" cy="17.260351" fill="#FFFFFF" id="ffcc07eb" rx="17.3250531" ry="17.260351" stroke="#A8976D" />
+                        <rect fill="#A8976D" height="4.6292129" id="46c7de2b" width="7.76640312" x="9.02761388" y="13.5569806" />
+                        <rect fill="#A8976D" height="4.6292129" id="ca46abcf" width="7.76640312" x="18.0552278" y="13.5569806" />
+                        <rect fill="#A8976D" height="6.67929291" id="bb8656a3" width="6.57157187" x="10.2888246" y="19.5088258" />
+                        <rect fill="#A8976D" height="6.67929291" id="f2700969" width="6.57157187" x="18.0552278" y="19.5088258" />
+                        <path d="M14.337975,13.4247174 C14.337975,13.4247174 10.4215837,12.9617961 11.4172764,9.85361033 C11.4172764,9.85361033 11.6827944,9.1922942 12.3465896,8.59710968 C13.4086618,7.6712671 15.2672882,7.07608258 16.5284989,9.85361033 C16.5284989,9.85361033 16.794017,10.3165316 17.1259146,12.6972697 L18.1216073,12.6972697 C18.1216073,12.6972697 17.9888482,8.72937291 20.7104083,7.93579355 C20.7104083,7.93579355 22.1043781,7.53900387 23.1664503,8.79550452 C23.6311069,9.39068904 24.2949021,10.7794529 23.4983479,11.8375587 C23.5647274,11.8375587 22.1043781,14.35056 14.337975,13.4247174 Z" fill="#A8976D" id="0c638886" />
+                        <path d="M15.9310833,12.4327432 C15.9310833,12.4327432 15.9310833,9.32455742 13.9396979,9.25842581 C13.9396979,9.25842581 12.6121076,9.25842581 12.2802101,10.9117161 C12.2802101,10.9117161 12.0810715,12.6972697 15.9310833,12.4327432 Z" fill="#FFFFFF" id="aeb339a5" />
+                        <path d="M19.3164385,12.4327432 C19.3164385,12.4327432 21.9052396,12.9617961 22.7017937,11.110111 C22.7017937,11.110111 23.1000708,9.91974194 21.7724805,9.25842581 C21.7724805,9.25842581 19.5819566,8.46484645 19.3164385,12.4327432 Z" fill="#FFFFFF" id="0ede39e2" />
+                    </g>
+                    <g id="9a12e74f" transform="translate(31.000000, 60.000000)">
+                        <ellipse cx="17.3250531" cy="17.260351" fill="#FFFFFF" id="2995a7b2" rx="17.3250531" ry="17.260351" stroke="#A8976D" />
+                        <g id="acc4fc22" transform="translate(10.000000, 9.000000)">
+                            <path d="M12.6784871,0.396789678 L1.12845173,0.396789678 C1.12845173,0.396789678 0.132759028,0.396789678 0.132759028,1.19036903 L0.132759028,16.5329032 L9.42589096,16.5329032 L9.42589096,15.7393239 L1.19483125,15.7393239 L1.19483125,1.5210271 L10.8862403,1.5210271 L10.8862403,5.68731871 C10.8862403,5.68731871 11.4172764,5.15826581 12.6121076,5.29052903 L12.6121076,0.396789678 L12.6784871,0.396789678 Z" fill="#A8976D" id="977401ef" />
+                            <path d="M10.4215837,16.2683768 L10.4215837,11.7714271 L11.0853788,11.2423742 C11.0853788,11.2423742 12.3465896,12.1020852 13.5414208,11.6391639 L14.5371135,11.6391639 L14.5371135,16.2683768 L12.4793486,14.8796129 L10.4215837,16.2683768 Z" fill="#A8976D" id="2503999b" />
+                            <path d="M12.4793486,6.21637161 C14.2715955,6.21637161 15.6655653,7.60513549 15.6655653,9.39068904 C15.6655653,11.110111 14.205216,12.5650065 12.4793486,12.5650065 C10.6871017,12.5650065 9.29313193,11.110111 9.29313193,9.39068904 C9.29313193,7.60513549 10.6871017,6.21637161 12.4793486,6.21637161" fill="#A8976D" id="aedb944c" />
+                            <rect fill="#A8976D" height="0.991974194" id="ea087519" width="6.63795138" x="2.52242152" y="2.90979097" />
+                            <rect fill="#A8976D" height="0.991974194" id="65e4b0a2" width="6.63795138" x="2.52242152" y="4.36468645" />
+                            <path d="M12.4793486,7.34060903 C13.6078003,7.34060903 14.5371135,8.26645162 14.5371135,9.39068904 C14.5371135,10.5149265 13.6078003,11.440769 12.4793486,11.440769 C11.3508969,11.440769 10.4215837,10.5149265 10.4215837,9.39068904 C10.4215837,8.26645162 11.3508969,7.34060903 12.4793486,7.34060903" fill="#FFFFFF" id="f4754a2b" />
+                            <ellipse cx="12.4129691" cy="9.39068904" fill="#A8976D" id="fa27c97c" rx="0.995692707" ry="0.991974194" />
+                        </g>
+                    </g>
+                </g>
+                <g font-family=".HelveticaNeueDeskInterface-Regular, .Helvetica Neue DeskInterface" font-weight="normal" id="7499ac30" transform="translate(11.356164, 0.000000)">
+                    <text fill="#7B3154" font-size="8" id="9f784055" letter-spacing="-0.0133333318">
+                        <tspan x="0" y="25">Exclusive benefits when you purchase from online</tspan>
+                    </text>
+                    <text fill="#7A3054" font-size="16" id="f682de05" letter-spacing="-0.0266666636">
+                        <tspan x="0" y="15">MALABAR</tspan>
+                        <tspan letter-spacing="-0.0328205079" x="76.9027642" y="15"> ASSURANCE</tspan>
+                    </text>
+                </g>
+            </g>
+            <g id="06db1eb7" transform="translate(133.000000, 61.000000)">
+                <ellipse cx="54.8418947" cy="54.6370822" fill="#FFFFFF" id="2556d0d9" rx="54.8418947" ry="54.6370822" stroke="#A8976D" stroke-width="3" />
+                <g id="45caa21d" transform="translate(26.352686, 24.565140)">
+                    <g fill="#A8976D" id="93f5646e">
+                        <path d="M0,51.4743722 L0,13.5842884 C0,13.5842884 0,5.21078921 10.0858657,6.88548905 L10.0858657,12.7469385 C10.0858657,12.7469385 14.2883097,18.3990504 19.1211204,13.1656134 L19.1211204,6.46681409 L35.0904077,6.46681409 L35.0904077,11.9095886 C35.0904077,11.9095886 38.2422408,17.771038 44.5459068,12.956276 L44.5459068,6.67615157 C44.5459068,6.67615157 55.0520169,3.95476434 55.0520169,13.7936259 L55.0520169,52.3117222 C55.0520169,52.3117222 55.4722613,57.1264842 48.3281065,57.1264842 L4.83281065,57.1264842 C4.83281065,57.5451592 0,57.5451592 0,51.4743722 Z" id="b8ca1350" stroke="#A8976D" />
+                        <path d="M14.7630925,0 C15.8137035,0 16.8643145,0.837349919 16.8643145,2.0933748 L16.8643145,9.00151163 C16.8643145,10.048199 16.0238257,11.0948864 14.7630925,11.0948864 L14.7630925,11.0948864 C13.7124815,11.0948864 12.6618705,10.2575365 12.6618705,9.00151163 L12.6618705,2.0933748 C12.6618705,0.837349919 13.5023593,0 14.7630925,0 L14.7630925,0 Z" id="0f1af39f" />
+                    </g>
+                    <rect fill="#FFFFFF" height="31.1912845" id="83c9b1ad" width="47.0673732" x="3.16546763" y="22.1582734" />
+                    <text fill="#A8976D" font-family="Helvetica" font-size="30" font-weight="normal" id="de611f32">
+                        <tspan x="10.3336063" y="47.9928058">14</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
