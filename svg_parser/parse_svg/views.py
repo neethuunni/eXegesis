@@ -5,7 +5,7 @@ from svg_parser.settings import EMAIL_SUBJECT, EMAIL_MESSAGE, EMAIL_HOST_USER
 from svg_parser import settings
 import os
 import json
-from models import Project, ArtBoard, Revision
+from models import Project, ArtBoard, Revision, Note
 import uuid
 import zipfile
 from django.core.mail import EmailMessage
@@ -424,7 +424,8 @@ def index(request):
 		print i
 	artboard = ArtBoard.objects.get(location=params)
 	artboard = artboard.artboard
-	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard})
+	notes = Note.objects.filter(artboard__location__contains=params)
+	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard, 'notes': notes})
 
 def logout(request):
 	auth_logout(request)
@@ -477,3 +478,20 @@ def revisions(request):
 	revisions = Revision.objects.filter(artboard__project__project__contains=project_name, artboard__artboard__contains=artboard_name)
 	print 'revisions: ', revisions
 	return render(request, 'revisions.html', {'revisions': revisions})
+
+def write_note(request):
+	note = request.POST.get('note')
+	print 'note: ', note
+	email = request.user.email
+	location = request.POST.get('location')
+	print 'location: ', location
+	artboard = ArtBoard.objects.get(location=location)
+	new_note = Note(email=email, note=note, artboard=artboard)
+	new_note.save()
+	redirection = '/svg/?url=' + location
+	return redirect(redirection)
+
+def view_notes(request):
+	location = request.POST.get('location')
+	notes = Note.objects.filter(artboard__location__contains=location)
+	print 'notes: ', notes

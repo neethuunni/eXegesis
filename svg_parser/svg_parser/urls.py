@@ -37,4 +37,5 @@ urlpatterns = [
     url(r'^delete_project/', views.delete_project),
     url(r'^download_artboard/', views.download_artboard),
     url(r'^revisions/', views.revisions),
+    url(r'^write_note/', views.write_note),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

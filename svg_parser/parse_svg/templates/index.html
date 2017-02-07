@@ -5,6 +5,7 @@
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="../static/style.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -188,6 +189,59 @@
     <button class="btn" id="zoom-in" onclick="zoomin()"><span class="glyphicon glyphicon-plus"></span></button>
     <button class="btn" id="zoom-out" onclick="zoomout()"><span class="glyphicon glyphicon-minus"></span></button>
     <a href="/revisions?artboard={{artboard}}" style="text-decoration:none"><button class="btn">View Revisions</button></a>
+  </div>
+  <div style="position:fixed;bottom:10px;right:400px;" data-toggle="modal" data-target="#write-note">
+    <button class="btn"><span class="glyphicon glyphicon-pencil"></span></button>
+  </div>
+  <div style="position:fixed;bottom:10px;right:450px;" data-toggle="modal" data-target="#view-notes">
+    <button class="btn"><span class="glyphicon glyphicon-eye-open"></span></button>
+  </div>
+
+  <div class="modal fade" id="write-note" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Write a note</h4>
+        </div>
+        <div class="modal-body">
+          <form class = "form-main-class" action="/write_note/" method="post">
+            {% csrf_token %}
+            <input class="input-class" type="text" id="note" name="note" placeholder="Write a note..." style="width:60%;" /><br>
+            <input class="input-class" type="text" id="location" name="location" value="{{url}}" style="width:60%;display:none" /><br>
+            <button  class="btn" type="submit" style="margin-top:10px;">WRITE</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="view-notes" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Notes</h4>
+        </div>
+        <div class="modal-body annotate">
+          {% if notes %}
+          <ul>
+            {% for note in notes %}
+            <li><strong>{{note.email}}: </strong>{{note.note}}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 </html>

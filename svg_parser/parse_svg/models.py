@@ -40,3 +40,11 @@ class Revision(models.Model):
 
 	def __str__(self):
 		return str(self.name) + ', ' + str(self.artboard)
+
+class Note(models.Model):
+	email = models.CharField(max_length=25)
+	note = models.CharField(max_length=200)
+	artboard = models.ForeignKey(ArtBoard)
+
+	def __str__(self):
+		return str(self.note) + ', ' + str(self.email)
