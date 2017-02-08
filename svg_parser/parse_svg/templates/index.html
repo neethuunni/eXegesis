@@ -80,7 +80,41 @@
               }
             }
           }
-          $('svg').on('mouseover', function(e){
+
+          $('svg').on('mouseover', function(e) {
+            $(current_idq).removeAttr('style');
+            var parent = '';
+            outer = e.target.outerHTML;
+            outer = outer.split(' ');
+            for (var i=0; i < outer.length; i++){
+              if (outer[i].startsWith('parent')) {
+                parent = outer[i].split("\"")[1];
+              }
+            }
+            if (parent !== '') {
+              idq = jEscape(parent);
+              idq = '#' + idq;
+              current_idq = idq
+              $(idq).css('stroke', 'orange');
+            }
+            else {
+              id = ''
+              for (var i=0; i < outer.length; i++){
+                if (outer[i].startsWith('id')) {
+                  var id = outer[i].split('\"')[1];
+                  break;
+                }
+              }
+              if (id !== '') {
+                idq = jEscape(id)
+                idq = '#' + idq;
+                current_idq = idq
+                $(idq).css('stroke', 'orange');
+              }
+            }
+          });
+
+          $('svg').on('click', function(e){
             $(current_idq).removeAttr('style');
             var parent = '';
             outer = e.target.outerHTML;
