@@ -495,3 +495,50 @@ def view_notes(request):
 	location = request.POST.get('location')
 	notes = Note.objects.filter(artboard__location__contains=location)
 	print 'notes: ', notes
+
+def update_artboard(request):
+	defs_elms = []
+	print 'update artboard'
+	project_name = request.session['project']
+	redirection = '/artboards?project=' + project_name
+	artboard_uuid = request.POST.get('artboard-uuid')
+	ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False)
+	old_art = ArtBoard.objects.get(project__project__contains=project_name, uuid=artboard_uuid)
+	revision = Revision(name=old_art.artboard, artboard=old_art)
+	revision.save()
+	images_path = os.path.join('parse_svg', 'templates', 'uploads')
+	if not os.path.exists(images_path):
+		os.makedirs(images_path)
+	for f in request.FILES.getlist('svgfile'):
+		filename = f.name
+		print 'filename: ', filename
+		img_data = f.read()
+		uuid_name = uuid.uuid4()
+		img_name = "%s.%s" % (uuid_name, 'svg')
+		image_path = 'uploads/' + img_name
+		url = image_path
+		with open(os.path.join(images_path, img_name), "wb") as image:
+		   image.write(img_data)
+		tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+		root = tree.getroot()
+		for child in root.iter():
+			if child.tag.split('}')[1] == 'defs':
+				for subchild in child.iter():
+					defs_elms.append(subchild)
+		for child in root.iter():
+			if child not in defs_elms:
+				attribute = child.attrib
+				if 'id' in child.attrib:
+					elem_id = check_for_id()
+					child.set('id', elem_id)
+				if child.tag.split('}')[1] == 'use' and 'id' not in attribute.keys() or child.tag.split('}')[1] == 'text' and 'id' not in attribute.keys():
+					elem_id = check_for_id()
+					child.set('id', elem_id)
+		tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+		Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
+		project = Project.objects.get(project=project_name, email=request.user.email)
+		filename = filename.split('.')[0]
+		new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True)
+		new_entry.save()
+		Project.objects.filter(project=project_name).update(last_updated=datetime.now())
+		return redirect(redirection)

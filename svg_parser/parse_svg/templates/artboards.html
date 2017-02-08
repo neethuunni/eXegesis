@@ -21,6 +21,13 @@
       }
     }
   }
+  function update(artboard) {
+    $('#artboard-uuid').val(artboard);
+    $('#svgfile').click();
+    document.getElementById("svgfile").onchange = function() {
+      document.getElementById("update-artboard").submit();
+    }
+  }
 </script>
 <body>
   <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
@@ -100,7 +107,7 @@
               </button>
               <ul class="dropdown-menu" style="right: 0; left: inherit;">                      
                 <li> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
-                <li><a href="#">UPDATE</a></li>
+                <li><a href="#" onclick="update('{{ artboard.uuid }}');">UPDATE</a></li>
                 <li><a href="/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
                 <li><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
               </ul>  
@@ -168,7 +175,14 @@
         </div>
       </div>
     </div>
-
-  </div>
+    <div class = "container" style="margin-top:30px;visibility:hidden;">
+      <form class = "form-main-class" id='update-artboard' action="/update_artboard/" method="post" enctype="multipart/form-data">
+       {% csrf_token %}
+       <input class="input-class" type="file" id="svgfile" name="svgfile"/>
+       <input type="text" id="artboard-uuid" name="artboard-uuid" value="">
+       <button  class="btn" type="submit">Upload</button>
+     </form>
+   </div>
+ </div>
 </body>
 </html>

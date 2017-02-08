@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^download_artboard/', views.download_artboard),
     url(r'^revisions/', views.revisions),
     url(r'^write_note/', views.write_note),
+    url(r'^update_artboard/', views.update_artboard),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
