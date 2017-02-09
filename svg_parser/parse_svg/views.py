@@ -237,7 +237,10 @@ def create_project(request):
 def artboards(request):
 	user = request.session['username']
 	print 'email: ', request.user.email
-	project_name = request.GET.get('project')
+	if 'project' in request.session.keys():
+		project_name = request.session['project']
+	else:
+		project_name = request.GET.get('project')
 	p = Project.objects.get(project=project_name, email=request.user.email)
 	description = p.description
 	thumbnail = p.thumbnail
