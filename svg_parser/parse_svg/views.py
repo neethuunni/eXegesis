@@ -75,7 +75,6 @@ def getSubChild(child):
 			if tag == 'tspan':
 				g_attributes.clear()
 				attribute['text'] = subchild.text
-			# print tag, attribute, translate, '\n'
 			attribute['type'] = tag
 			if g_attributes:
 				attribute.update(g_attributes)
@@ -97,7 +96,6 @@ def getSubChild(child):
 					break
 			id = id.replace('#', '')
 			defs_list = defs.copy()
-			print 'defs_list: ', defs_list
 			if 'id' in attribute.keys():
 				if id in defs_list.keys():
 					defs_list[id]['id'] = attribute['id']
@@ -215,7 +213,7 @@ def projects(request):
 	request.session['username'] = user
 	request.session.modified = True
 	all_projects = Project.objects.filter(email=email)
-	print 'Username projects: ', user
+	print 'Username in projects: ', user
 	proj = Project.objects.filter(email=email).values('project', 'density', 'screen', 'description')
 	proj = json.dumps(list(proj))
 	return render(request, 'projects.html', {'projects': all_projects, 'user': user, 'proj': proj})
@@ -236,7 +234,6 @@ def create_project(request):
 
 def artboards(request):
 	user = request.session['username']
-	print 'email: ', request.user.email
 	if 'project' in request.session.keys():
 		project_name = request.session['project']
 	else:
@@ -252,19 +249,13 @@ def artboards(request):
 	created = p.created
 	last_updated = p.last_updated
 	shared_members = Project.objects.filter(project=project_name, share=True)
-	print 'shared_members: ', shared_members
 	request.session['project'] = project_name
 	request.session['description'] = description
 	request.session['thumbnail'] = thumbnail
 	request.session['owner'] = owner
 	request.session.modified = True
-	print 'session values in artboard: ', request.session.keys(), request.session['project'], request.session['description']
 	project = Project.objects.filter(project=project_name, email=request.user.email)
 	artboards = ArtBoard.objects.filter(project__project__contains=project_name)
-	print 'project_name', project_name
-	print 'Username artboards: ', user
-	print 'project: ', project
-	print 'artboards: ', artboards
 	return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
 
 def svg_images(request):
@@ -318,13 +309,10 @@ def svg_images(request):
 					tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 
 					Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
-					print 'project: ', project_name
-					print 'email: ', request.user.email
 					project = Project.objects.get(project=project_name, email=request.user.email)
 					file = file.split('.')[0]
 					if file in arts:
 						old_art = ArtBoard.objects.get(artboard=file, project__project__contains=project_name, latest=True)
-						print 'old art', old_art
 						ArtBoard.objects.filter(artboard=file, project__project__contains=project_name).update(latest=False)
 						revision_entry = Revision(name=file, artboard=old_art)
 						revision_entry.save()
@@ -359,9 +347,7 @@ def svg_images(request):
 			project = Project.objects.get(project=project_name, email=request.user.email)
 			filename = filename.split('.')[0]
 			if filename in arts:
-				print 'same', filename
 				old_art = ArtBoard.objects.get(artboard=filename, project__project__contains=project_name, latest=True)
-				print 'old art', old_art
 				ArtBoard.objects.filter(artboard=filename, project__project__contains=project_name).update(latest=False)
 				revision_entry = Revision(name=filename, artboard=old_art)
 				revision_entry.save()
@@ -398,7 +384,6 @@ def share_project(request):
 		return redirect('/projects')
 
 def verify_share(request):
-	print 'session values in verify: ', request.session.keys()
 	token = request.GET.get('token')
 	decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
 	if decoded['code'] == 'verification_success':
@@ -417,14 +402,13 @@ def verify_share(request):
 
 def index(request):
 	params = request.GET.get('url')
-	print params
 	global annotations
 	annotations = []
 	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + params)
 	root = tree.getroot()
 	getChild(root)
-	for i in annotations:
-		print i
+	# for i in annotations:
+	# 	print i
 	artboard = ArtBoard.objects.get(location=params)
 	artboard = artboard.artboard
 	notes = Note.objects.filter(artboard__location__contains=params)
@@ -432,13 +416,17 @@ def index(request):
 
 def logout(request):
 	auth_logout(request)
-	print 'session keys: ', request.session.keys()
 	return redirect('/')
 
 def delete_artboard(request):
 	url = request.GET.get('artboard')
 	project = request.session['project']
 	email = request.user.email
+	artboard = ArtBoard.objects.get(location=url)
+	art_name =  artboard.artboard
+	revisions = Revision.objects.filter(name=art_name, artboard__project__project__contains=project)
+	for revision in revisions:
+		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + revision.artboard.location)
 	ArtBoard.objects.filter(location=url).delete()
 	redirection = '/artboards?project=' + project
 	os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
@@ -447,8 +435,6 @@ def delete_artboard(request):
 def rename_artboard(request):
 	url = request.POST.get('artboard')
 	new_name = request.POST.get('new-name')
-	print 'url', url
-	print 'new_name', new_name
 	project = request.session['project']
 	email = request.user.email
 	ArtBoard.objects.filter(location=url).update(artboard=new_name)
@@ -458,15 +444,16 @@ def rename_artboard(request):
 def delete_project(request):
 	project = request.GET.get('project')
 	email = request.user.email
+	artboards = ArtBoard.objects.filter(project__project__contains=project)
+	for artboard in artboards:
+		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + artboard.location)
 	Project.objects.get(project=project, email=email).delete()
 	redirection = '/projects'
 	return redirect(redirection)
 
 def download_artboard(request):
-	print 'download_artboard'
 	url = request.GET.get('artboard')
 	name = url.replace('svg', 'png')
-	print 'name:', name
 	cairosvg.svg2png(url=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url, write_to=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name)
 	
 	with open(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name, 'rb') as png:
@@ -479,15 +466,12 @@ def revisions(request):
 	artboard_name = request.GET.get('artboard')
 	project_name = request.session['project']
 	revisions = Revision.objects.filter(artboard__project__project__contains=project_name, artboard__artboard__contains=artboard_name)
-	print 'revisions: ', revisions
 	return render(request, 'revisions.html', {'revisions': revisions})
 
 def write_note(request):
 	note = request.POST.get('note')
-	print 'note: ', note
 	email = request.user.email
 	location = request.POST.get('location')
-	print 'location: ', location
 	artboard = ArtBoard.objects.get(location=location)
 	new_note = Note(email=email, note=note, artboard=artboard)
 	new_note.save()
@@ -497,11 +481,9 @@ def write_note(request):
 def view_notes(request):
 	location = request.POST.get('location')
 	notes = Note.objects.filter(artboard__location__contains=location)
-	print 'notes: ', notes
 
 def update_artboard(request):
 	defs_elms = []
-	print 'update artboard'
 	project_name = request.session['project']
 	redirection = '/artboards?project=' + project_name
 	artboard_uuid = request.POST.get('artboard-uuid')
