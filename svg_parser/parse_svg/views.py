@@ -14,6 +14,7 @@ from random import randint
 from datetime import datetime
 import cairosvg
 from django.http import HttpResponse
+import sys
 
 ET.register_namespace('', "http://www.w3.org/2000/svg")
 ET.register_namespace('xlink', "http://www.w3.org/1999/xlink")
@@ -204,61 +205,77 @@ def getChild(root):
 			getSubChild(child)
 
 def login(request):
-	return render(request, 'login.html')
+	try:
+		return render(request, 'login.html')
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def projects(request):
-	if request.user:
-		email = request.user.email
-	user = request.user.first_name + ' ' + request.user.last_name
-	request.session['username'] = user
-	request.session.modified = True
-	all_projects = Project.objects.filter(email=email)
-	print 'Username in projects: ', user
-	proj = Project.objects.filter(email=email).values('project', 'density', 'screen', 'description')
-	proj = json.dumps(list(proj))
-	return render(request, 'projects.html', {'projects': all_projects, 'user': user, 'proj': proj})
+	try:
+		if request.user:
+			email = request.user.email
+		user = request.user.first_name + ' ' + request.user.last_name
+		request.session['username'] = user
+		request.session.modified = True
+		all_projects = Project.objects.filter(email=email)
+		print 'Username in projects: ', user
+		proj = Project.objects.filter(email=email).values('project', 'density', 'screen', 'description')
+		proj = json.dumps(list(proj))
+		return render(request, 'projects.html', {'projects': all_projects, 'user': user, 'proj': proj})
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def create_project(request):
-	email = request.user.email
-	project_name = request.POST.get('project-name')
-	project_description = request.POST.get('project-description')
-	user = request.user.first_name + ' ' + request.user.last_name
-	thumbnail = 'static/project.jpg'
-	screen = request.POST.get('screen')
-	density = request.POST.get('density')
-	created = datetime.now()
-	uuid_name = uuid.uuid4()
-	new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
-	new_project.save()
-	return redirect('/projects')
+	try:
+		email = request.user.email
+		project_name = request.POST.get('project-name')
+		project_description = request.POST.get('project-description')
+		user = request.user.first_name + ' ' + request.user.last_name
+		thumbnail = 'static/project.jpg'
+		screen = request.POST.get('screen')
+		density = request.POST.get('density')
+		created = datetime.now()
+		uuid_name = uuid.uuid4()
+		new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
+		new_project.save()
+		return redirect('/projects')
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def artboards(request):
-	user = request.session['username']
-	if request.GET.get('project'):
-		project_name = request.GET.get('project')
-	else:
-		project_name = request.session['project']
-	print 'project_name: ', project_name
-	print 'email: ', request.user.email
-	p = Project.objects.get(project=project_name, email=request.user.email)
-	description = p.description
-	thumbnail = p.thumbnail
-	edit = p.edit
-	share = p.share
-	owner = p.owner
-	screen = p.screen
-	density = p.density
-	created = p.created
-	last_updated = p.last_updated
-	shared_members = Project.objects.filter(project=project_name, share=True)
-	request.session['project'] = project_name
-	request.session['description'] = description
-	request.session['thumbnail'] = thumbnail
-	request.session['owner'] = owner
-	request.session.modified = True
-	project = Project.objects.filter(project=project_name, email=request.user.email)
-	artboards = ArtBoard.objects.filter(project__project__contains=project_name)
-	return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
+	try:
+		user = request.session['username']
+		if request.GET.get('project'):
+			project_name = request.GET.get('project')
+		else:
+			project_name = request.session['project']
+		print 'project_name: ', project_name
+		print 'email: ', request.user.email
+		p = Project.objects.get(project=project_name, email=request.user.email)
+		description = p.description
+		thumbnail = p.thumbnail
+		edit = p.edit
+		share = p.share
+		owner = p.owner
+		screen = p.screen
+		density = p.density
+		created = p.created
+		last_updated = p.last_updated
+		shared_members = Project.objects.filter(project=project_name, share=True)
+		request.session['project'] = project_name
+		request.session['description'] = description
+		request.session['thumbnail'] = thumbnail
+		request.session['owner'] = owner
+		request.session.modified = True
+		project = Project.objects.filter(project=project_name, email=request.user.email)
+		artboards = ArtBoard.objects.filter(project__project__contains=project_name)
+		return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def svg_images(request):
 	defs_elms = []
@@ -386,148 +403,192 @@ def share_project(request):
 		return redirect('/projects')
 
 def verify_share(request):
-	token = request.GET.get('token')
-	decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
-	if decoded['code'] == 'verification_success':
-		project = decoded['project']
-		p = Project.objects.filter(project=project)[0]
-		description = p.description
-		thumbnail = p.thumbnail
-		owner = p.owner
-		created = p.created
-		last_updated = p.last_updated
-		screen = p.screen
-		density = p.density
-		new_user = Project(email=decoded['email'], project=project, description=description, share=decoded['share'], edit=decoded['edit'], thumbnail=thumbnail, owner=owner, created=created, last_updated=last_updated, density=density, screen=screen)
-		new_user.save()
-		return render(request, 'verified.html')
+	try:
+		token = request.GET.get('token')
+		decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
+		if decoded['code'] == 'verification_success':
+			project = decoded['project']
+			p = Project.objects.filter(project=project)[0]
+			description = p.description
+			thumbnail = p.thumbnail
+			owner = p.owner
+			created = p.created
+			last_updated = p.last_updated
+			screen = p.screen
+			density = p.density
+			new_user = Project(email=decoded['email'], project=project, description=description, share=decoded['share'], edit=decoded['edit'], thumbnail=thumbnail, owner=owner, created=created, last_updated=last_updated, density=density, screen=screen)
+			new_user.save()
+			return render(request, 'verified.html')
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def index(request):
-	params = request.GET.get('url')
-	global annotations
-	annotations = []
-	tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + params)
-	root = tree.getroot()
-	getChild(root)
-	# for i in annotations:
-	# 	print i
-	artboard = ArtBoard.objects.get(location=params)
-	artboard = artboard.artboard
-	notes = Note.objects.filter(artboard__location__contains=params)
-	return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard, 'notes': notes})
+	try:
+		params = request.GET.get('url')
+		global annotations
+		annotations = []
+		tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + params)
+		root = tree.getroot()
+		getChild(root)
+		# for i in annotations:
+		# 	print i
+		artboard = ArtBoard.objects.get(location=params)
+		artboard = artboard.artboard
+		notes = Note.objects.filter(artboard__location__contains=params)
+		return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard, 'notes': notes})
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def logout(request):
-	auth_logout(request)
-	return redirect('/')
+	try:
+		auth_logout(request)
+		return redirect('/')
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def delete_artboard(request):
-	url = request.GET.get('artboard')
-	project = request.session['project']
-	email = request.user.email
-	artboard = ArtBoard.objects.get(location=url)
-	art_name =  artboard.artboard
-	revisions = Revision.objects.filter(name=art_name, artboard__project__project__contains=project)
-	for revision in revisions:
-		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + revision.artboard.location)
-		ArtBoard.objects.filter(location=url).delete()
-	ArtBoard.objects.filter(location=revision.artboard.location).delete()
-	redirection = '/artboards?project=' + project
-	os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
-	return redirect(redirection)
+	try:
+		url = request.GET.get('artboard')
+		project = request.session['project']
+		email = request.user.email
+		artboard = ArtBoard.objects.get(location=url)
+		art_name =  artboard.artboard
+		revisions = Revision.objects.filter(name=art_name, artboard__project__project__contains=project)
+		for revision in revisions:
+			os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + revision.artboard.location)
+			ArtBoard.objects.filter(location=url).delete()
+		ArtBoard.objects.filter(location=revision.artboard.location).delete()
+		redirection = '/artboards?project=' + project
+		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+		return redirect(redirection)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def rename_artboard(request):
-	url = request.POST.get('artboard')
-	new_name = request.POST.get('new-name')
-	project = request.session['project']
-	email = request.user.email
-	ArtBoard.objects.filter(location=url).update(artboard=new_name)
-	redirection = '/artboards?project=' + project
-	return redirect(redirection)
+	try:
+		url = request.POST.get('artboard')
+		new_name = request.POST.get('new-name')
+		project = request.session['project']
+		email = request.user.email
+		ArtBoard.objects.filter(location=url).update(artboard=new_name)
+		redirection = '/artboards?project=' + project
+		return redirect(redirection)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def delete_project(request):
-	project = request.GET.get('project')
-	email = request.user.email
-	artboards = ArtBoard.objects.filter(project__project__contains=project)
-	print 'artboards: ', artboards
-	for artboard in artboards:
-		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + artboard.location)
-	Project.objects.get(project=project, email=email).delete()
-	redirection = '/projects'
-	return redirect(redirection)
+	try:
+		project = request.GET.get('project')
+		email = request.user.email
+		artboards = ArtBoard.objects.filter(project__project__contains=project)
+		print 'artboards: ', artboards
+		for artboard in artboards:
+			os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + artboard.location)
+		Project.objects.get(project=project, email=email).delete()
+		redirection = '/projects'
+		return redirect(redirection)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def download_artboard(request):
-	url = request.GET.get('artboard')
-	name = url.replace('svg', 'png')
-	cairosvg.svg2png(url=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url, write_to=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name)
-	
-	with open(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name, 'rb') as png:
-		response = HttpResponse(png.read())
-		response['content_type'] = 'image/png'
-		response['Content-Disposition'] = 'attachment;filename=file.png'
-		return response
+	try:
+		url = request.GET.get('artboard')
+		name = url.replace('svg', 'png')
+		cairosvg.svg2png(url=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url, write_to=os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name)
+		
+		with open(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + name, 'rb') as png:
+			response = HttpResponse(png.read())
+			response['content_type'] = 'image/png'
+			response['Content-Disposition'] = 'attachment;filename=file.png'
+			return response
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def revisions(request):
-	artboard_name = request.GET.get('artboard')
-	project_name = request.session['project']
-	revisions = Revision.objects.filter(artboard__project__project__contains=project_name, artboard__artboard__contains=artboard_name)
-	return render(request, 'revisions.html', {'revisions': revisions})
+	try:
+		artboard_name = request.GET.get('artboard')
+		project_name = request.session['project']
+		revisions = Revision.objects.filter(artboard__project__project__contains=project_name, artboard__artboard__contains=artboard_name)
+		return render(request, 'revisions.html', {'revisions': revisions})
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def write_note(request):
-	note = request.POST.get('note')
-	email = request.user.email
-	location = request.POST.get('location')
-	artboard = ArtBoard.objects.get(location=location)
-	new_note = Note(email=email, note=note, artboard=artboard)
-	new_note.save()
-	redirection = '/svg/?url=' + location
-	return redirect(redirection)
+	try:
+		note = request.POST.get('note')
+		email = request.user.email
+		location = request.POST.get('location')
+		artboard = ArtBoard.objects.get(location=location)
+		new_note = Note(email=email, note=note, artboard=artboard)
+		new_note.save()
+		redirection = '/svg/?url=' + location
+		return redirect(redirection)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def view_notes(request):
-	location = request.POST.get('location')
-	notes = Note.objects.filter(artboard__location__contains=location)
+	try:
+		location = request.POST.get('location')
+		notes = Note.objects.filter(artboard__location__contains=location)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def update_artboard(request):
-	defs_elms = []
-	project_name = request.session['project']
-	redirection = '/artboards?project=' + project_name
-	artboard_uuid = request.POST.get('artboard-uuid')
-	ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False, last_updated=datetime.now())
-	old_art = ArtBoard.objects.get(project__project__contains=project_name, uuid=artboard_uuid)
-	revision = Revision(name=old_art.artboard, artboard=old_art)
-	revision.save()
-	images_path = os.path.join('parse_svg', 'templates', 'uploads')
-	if not os.path.exists(images_path):
-		os.makedirs(images_path)
-	for f in request.FILES.getlist('svgfile'):
-		filename = f.name
-		print 'filename: ', filename
-		img_data = f.read()
-		uuid_name = uuid.uuid4()
-		img_name = "%s.%s" % (uuid_name, 'svg')
-		image_path = 'uploads/' + img_name
-		url = image_path
-		with open(os.path.join(images_path, img_name), "wb") as image:
-		   image.write(img_data)
-		tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
-		root = tree.getroot()
-		for child in root.iter():
-			if child.tag.split('}')[1] == 'defs':
-				for subchild in child.iter():
-					defs_elms.append(subchild)
-		for child in root.iter():
-			if child not in defs_elms:
-				attribute = child.attrib
-				if 'id' in child.attrib:
-					elem_id = check_for_id()
-					child.set('id', elem_id)
-				if child.tag.split('}')[1] == 'use' and 'id' not in attribute.keys() or child.tag.split('}')[1] == 'text' and 'id' not in attribute.keys():
-					elem_id = check_for_id()
-					child.set('id', elem_id)
-		tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
-		Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
-		project = Project.objects.get(project=project_name, email=request.user.email)
-		filename = filename.split('.')[0]
-		new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True, created=datetime.now(), last_updated=datetime.now())
-		new_entry.save()
-		Project.objects.filter(project=project_name).update(last_updated=datetime.now())
-		return redirect(redirection)
+	try:
+		defs_elms = []
+		project_name = request.session['project']
+		redirection = '/artboards?project=' + project_name
+		artboard_uuid = request.POST.get('artboard-uuid')
+		ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False, last_updated=datetime.now())
+		old_art = ArtBoard.objects.get(project__project__contains=project_name, uuid=artboard_uuid)
+		revision = Revision(name=old_art.artboard, artboard=old_art)
+		revision.save()
+		images_path = os.path.join('parse_svg', 'templates', 'uploads')
+		if not os.path.exists(images_path):
+			os.makedirs(images_path)
+		for f in request.FILES.getlist('svgfile'):
+			filename = f.name
+			print 'filename: ', filename
+			img_data = f.read()
+			uuid_name = uuid.uuid4()
+			img_name = "%s.%s" % (uuid_name, 'svg')
+			image_path = 'uploads/' + img_name
+			url = image_path
+			with open(os.path.join(images_path, img_name), "wb") as image:
+			   image.write(img_data)
+			tree = ET.parse(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+			root = tree.getroot()
+			for child in root.iter():
+				if child.tag.split('}')[1] == 'defs':
+					for subchild in child.iter():
+						defs_elms.append(subchild)
+			for child in root.iter():
+				if child not in defs_elms:
+					attribute = child.attrib
+					if 'id' in child.attrib:
+						elem_id = check_for_id()
+						child.set('id', elem_id)
+					if child.tag.split('}')[1] == 'use' and 'id' not in attribute.keys() or child.tag.split('}')[1] == 'text' and 'id' not in attribute.keys():
+						elem_id = check_for_id()
+						child.set('id', elem_id)
+			tree.write(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
+			Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
+			project = Project.objects.get(project=project_name, email=request.user.email)
+			filename = filename.split('.')[0]
+			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True, created=datetime.now(), last_updated=datetime.now())
+			new_entry.save()
+			Project.objects.filter(project=project_name).update(last_updated=datetime.now())
+			return redirect(redirection)
+	except:
+		print sys.exc_info()
+		return render(request, 'wrong.html')
