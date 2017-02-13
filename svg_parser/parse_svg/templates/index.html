@@ -26,10 +26,6 @@
         <strong>{{ artboard }}</strong>
       </div>
       <div class="col-sm-3">
-        <!-- <div style="font-size:12px">
-          <input type="text" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:200px;
-          text-align:center;border-radius:20px;"><span class="glyphicon glyphicon-search"></span>
-        </div> -->
       </div>
     </div>
     <div class="container-fluid" style="margin-top:25px;">
@@ -192,27 +188,24 @@
             }
             full_list = '';
           });
-
           function zoomin() {
-            $("svg").width(
-              $("svg").width() * 1.2
+            $('svg').width(
+              $('svg').width() * 1.2
               );
 
-            $("svg").height(
-              $("svg").height() * 1.2
+            $('svg').height(
+              $('svg').height() * 1.2
               );
           }
-
           function zoomout() {
-            $("svg").width(
-              $("svg").width() * 0.5
+            $('svg').width(
+              $('svg').width() * 0.5
               );
 
-            $("svg").height(
-              $("svg").height() * 0.5
+            $('svg').height(
+              $('svg').height() * 0.5
               );
           }
-
         </script>
       </div>
       <div class="col-sm-3 annotate" id="annotations" style="font-size:14px;height:650px;overflow:scroll;">
@@ -222,7 +215,7 @@
   <div style="position:fixed;bottom:10px;left:10px;">
     <button class="btn" id="zoom-in" onclick="zoomin()"><span class="glyphicon glyphicon-plus"></span></button>
     <button class="btn" id="zoom-out" onclick="zoomout()"><span class="glyphicon glyphicon-minus"></span></button>
-    <a href="/revisions?artboard={{artboard}}" style="text-decoration:none"><button class="btn">View Revisions</button></a>
+    <a href="/revisions?artboard={{artboard}}" style="text-decoration:none;color:#000000;"><button class="btn">View Revisions</button></a>
   </div>
   <div style="position:fixed;bottom:10px;right:400px;" data-toggle="modal" data-target="#write-note">
     <button class="btn"><span class="glyphicon glyphicon-pencil"></span></button>

@@ -21,6 +21,17 @@ button {
 	outline: none;
 }
 
+.li-drop:hover {
+	background-color: #ffbd36;
+}
+
+.dropdown-menu>li>a:hover {
+	background-color: #ffbd36;
+}
+.dropdown-menu>li>a:focus {
+	background-color: #ffbd36;
+}
+
 .btn-primary.outline {
 	background-color: #fd3c16;
 }
@@ -104,4 +115,14 @@ div.annotate li {
 }
 div.annotate li:nth-child(odd) { 
 	background: #f4f4f4; 
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.42;
+  border-radius: 15px;
 }

@@ -58,7 +58,7 @@ def getSubChild(child):
 			if 'translate' in transform:
 				trans_child.append(subchild)
 
-		if tag == 'rect' or tag == 'text' or tag == 'tspan' or tag == 'ellipse':
+		if tag == 'rect' or tag == 'text' or tag == 'tspan' or tag == 'ellipse' or tag == 'circle':
 			if translate and 'x' in attribute.keys():
 				if len(translate) > 2:
 					translation = [0] * 2
@@ -234,10 +234,12 @@ def create_project(request):
 
 def artboards(request):
 	user = request.session['username']
-	if 'project' in request.session.keys():
-		project_name = request.session['project']
-	else:
+	if request.GET.get('project'):
 		project_name = request.GET.get('project')
+	else:
+		project_name = request.session['project']
+	print 'project_name: ', project_name
+	print 'email: ', request.user.email
 	p = Project.objects.get(project=project_name, email=request.user.email)
 	description = p.description
 	thumbnail = p.thumbnail
@@ -313,10 +315,10 @@ def svg_images(request):
 					file = file.split('.')[0]
 					if file in arts:
 						old_art = ArtBoard.objects.get(artboard=file, project__project__contains=project_name, latest=True)
-						ArtBoard.objects.filter(artboard=file, project__project__contains=project_name).update(latest=False)
+						ArtBoard.objects.filter(artboard=file, project__project__contains=project_name).update(latest=False, last_updated=datetime.now())
 						revision_entry = Revision(name=file, artboard=old_art)
 						revision_entry.save()
-					new_entry = ArtBoard(project=project, artboard=file, location=url, uuid=uuid_name, latest=True)
+					new_entry = ArtBoard(project=project, artboard=file, location=url, uuid=uuid_name, latest=True, created=datetime.now(), last_updated=datetime.now())
 					new_entry.save()
 					Project.objects.filter(project=project_name).update(last_updated=datetime.now())
 		else:
@@ -348,10 +350,10 @@ def svg_images(request):
 			filename = filename.split('.')[0]
 			if filename in arts:
 				old_art = ArtBoard.objects.get(artboard=filename, project__project__contains=project_name, latest=True)
-				ArtBoard.objects.filter(artboard=filename, project__project__contains=project_name).update(latest=False)
+				ArtBoard.objects.filter(artboard=filename, project__project__contains=project_name).update(latest=False, last_updated=datetime.now())
 				revision_entry = Revision(name=filename, artboard=old_art)
 				revision_entry.save()
-			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True)
+			new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True, created=datetime.now(), last_updated=datetime.now())
 			new_entry.save()
 			Project.objects.filter(project=project_name).update(last_updated=datetime.now())
 	return redirect(redirection)
@@ -427,7 +429,8 @@ def delete_artboard(request):
 	revisions = Revision.objects.filter(name=art_name, artboard__project__project__contains=project)
 	for revision in revisions:
 		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + revision.artboard.location)
-	ArtBoard.objects.filter(location=url).delete()
+		ArtBoard.objects.filter(location=url).delete()
+	ArtBoard.objects.filter(location=revision.artboard.location).delete()
 	redirection = '/artboards?project=' + project
 	os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 	return redirect(redirection)
@@ -445,6 +448,7 @@ def delete_project(request):
 	project = request.GET.get('project')
 	email = request.user.email
 	artboards = ArtBoard.objects.filter(project__project__contains=project)
+	print 'artboards: ', artboards
 	for artboard in artboards:
 		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + artboard.location)
 	Project.objects.get(project=project, email=email).delete()
@@ -487,7 +491,7 @@ def update_artboard(request):
 	project_name = request.session['project']
 	redirection = '/artboards?project=' + project_name
 	artboard_uuid = request.POST.get('artboard-uuid')
-	ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False)
+	ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False, last_updated=datetime.now())
 	old_art = ArtBoard.objects.get(project__project__contains=project_name, uuid=artboard_uuid)
 	revision = Revision(name=old_art.artboard, artboard=old_art)
 	revision.save()
@@ -523,7 +527,7 @@ def update_artboard(request):
 		Project.objects.filter(project=project_name, email=request.user.email).update(thumbnail=url)
 		project = Project.objects.get(project=project_name, email=request.user.email)
 		filename = filename.split('.')[0]
-		new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True)
+		new_entry = ArtBoard(project=project, artboard=filename, location=url, uuid=uuid_name, latest=True, created=datetime.now(), last_updated=datetime.now())
 		new_entry.save()
 		Project.objects.filter(project=project_name).update(last_updated=datetime.now())
 		return redirect(redirection)

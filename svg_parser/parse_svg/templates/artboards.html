@@ -11,22 +11,42 @@
   function search() {
     var input = document.getElementById('search');
     var filter = input.value.toUpperCase();
-    var divs =document.getElementsByClassName("col-md-3");
+    var divs =document.getElementsByClassName('col-md-3');
     for (i = 0; i < divs.length; i++) {
       div = divs[i]
       if (div.id.toUpperCase().indexOf(filter) > -1) {
-        div.style.display = "";
+        div.style.display = '';
       } else {
-        div.style.display = "none";
+        div.style.display = 'none';
       }
     }
   }
   function update(artboard) {
     $('#artboard-uuid').val(artboard);
     $('#svgfile').click();
-    document.getElementById("svgfile").onchange = function() {
-      document.getElementById("update-artboard").submit();
+    document.getElementById('svgfile').onchange = function() {
+      document.getElementById('update-artboard').submit();
     }
+  }
+  function sortByName(id1, id2) {
+    var $divs = $('div.col-md-3');
+    var alphabeticallyOrderedDivs = $divs.sort(function (a, b) {
+      return $(a).find('button').text() > $(b).find('button').text();
+    });
+    $('#sorted-class').html(alphabeticallyOrderedDivs);
+    $('#' + id1).css('font-weight','Bold');
+    $('#' + id2).css('font-weight','Normal');
+  }
+  function sortByUpdate(id1, id2) {
+    var $divs = $('div.col-md-3');
+    var updateOrderedDivs = []
+    len = $divs.length;
+    for (var i=len; i>=0; i--) {
+      updateOrderedDivs.push($divs[i]);
+    }
+    $('#sorted-class').html(updateOrderedDivs);
+    $('#' + id1).css('font-weight','Bold');
+    $('#' + id2).css('font-weight','Normal');
   }
 </script>
 <body>
@@ -41,14 +61,14 @@
     <div class="container-fluid">
 
       <div class="col-sm-3" style="margin-top:28px;padding-left:40px;">
-        <div style="font-size:10px">
+        <div style="font-size:10px;color:#000000;">
           <div><strong>Type: {{ screen }}</strong></div>
           <div>Density: {{ density }}</div>
           <div>Created:  {{ created }}</div>
           <div>Last Updated: {{ last_updated }} </div>
         </div>
-        <div style="font-size:12px;margin-top:15px;">
-          <strong>Name</strong> | last updated
+        <div class="search-filter" style="font-size:12px;margin-top:15px;">
+          <a href="#" style="text-decoration:none;color:#000000;" onclick="sortByName('sortName', 'sortUpdate');" id="sortName">Name</a> | <a href="#" style="text-decoration:none;color:#000000;" onclick="sortByUpdate('sortUpdate', 'sortName');" id="sortUpdate">Last updated</a>
         </div>
       </div>   
 
@@ -57,11 +77,16 @@
         <button style="font-size:25px;background-color:#ffffff;border:none;">STYLEGUIDE</button>
       </div>
 
-      <div class="col-sm-3" style="margin-top:25px;text-align:right;padding-right:40px;">
+      <div class="col-sm-3" style="margin-top:25px;text-align:right;padding-right:40px;position:relative">
         <div style="font-size:12px">
-          <input type="text" id="search" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:175px;text-align:center;border-radius:20px;font-size:12px;" onkeyup="search();"><span class="glyphicon glyphicon-search"></span>
+          <div>
+            <input type="text" id="search" placeholder="SEARCH SCREENS" style="background-color:#fbc8bc;width:175px;text-align:center;border-radius:20px;font-size:12px;" onkeyup="search();">
+          </div>
+          <div style="position:absolute;right:15%;top:2%">
+            <span class="glyphicon glyphicon-search"></span>
+          </div>
         </div>
-        <div style="font-size:12px;margin-top:10px">
+        <div style="font-size:12px;margin-top:10px;color:#000000;">
           OWNER: <strong>{{ owner }}</strong>
         </div>
         <div style="margin-top:10px;">
@@ -85,7 +110,7 @@
         </div>
       </div>
 
-      <div class="container-fluid" style="padding-top:20px">
+      <div class="container-fluid" id="sorted-class" style="padding-top:20px">
         {% if artboards %}
         {% for artboard in artboards %}
         {% if artboard.latest %}
@@ -106,10 +131,10 @@
                 </span>
               </button>
               <ul class="dropdown-menu" style="right: 0; left: inherit;">                      
-                <li> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
-                <li><a href="#" onclick="update('{{ artboard.uuid }}');">UPDATE</a></li>
-                <li><a href="/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
-                <li><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
+                <li class="li-drop"> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
+                <li class="li-drop"><a href="#" onclick="update('{{ artboard.uuid }}');">UPDATE</a></li>
+                <li class="li-drop"><a href="/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
+                <li class="li-drop"><a href="/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
               </ul>  
             </div>
           </div>
@@ -129,9 +154,6 @@
                     <button  class="btn" type="submit">CHANGE</button>
                   </form>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
               </div>
             </div>
           </div>
@@ -140,49 +162,42 @@
         {% endfor %}
         {% endif %}
       </div>
-
-<!--       {% if edit %}
-      <div class = "container" style="margin-top:30px;">
-        <form class = "form-main-class" action="/svg_images/" method="post" enctype="multipart/form-data">
-         {% csrf_token %}
-         <h4 class="text-class">Upload Art Boards</h4>
-         <input class="input-class" type="file" id="svgfile" name="svgfile" multiple />
-         <button  class="list-btn-user" type="submit">Upload</button>
-       </form>
-     </div>
-     {% endif %} -->
-
-     <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Choose Sharing options</h4>
-          </div>
-          <div class="modal-body">
-            <form class = "form-main-class" action="/share_project/" method="post">
-              {% csrf_token %}
-              <input class="input-class" type="text" id="email" name="email" placeholder="Email ID" /><br>
-              <input type="checkbox" name="share" value="share">This user can share with others<br>
-              <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
-              <button  class="list-btn-user" type="submit">SHARE</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Choose Sharing options</h4>
+            </div>
+            <div class="modal-body">
+              <form class = "form-main-class" action="/share_project/" method="post">
+                {% csrf_token %}
+                <div style="margin-top:10px;">
+                  <input class="input-class" type="text" id="email" name="email" placeholder="Email ID" /><br>
+                </div>
+                <div style="margin-top:10px;">
+                  <input type="checkbox" name="share" value="share" style="margin-top:15px">This user can share with others<br>
+                </div>
+                <div style="margin-top:10px;">
+                  <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
+                </div>
+                <div style="margin-top:20px;">
+                  <button  class="btn" type="submit">SHARE</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class = "container" style="margin-top:30px;visibility:hidden;">
-      <form class = "form-main-class" id='update-artboard' action="/update_artboard/" method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-       <input class="input-class" type="file" id="svgfile" name="svgfile"/>
-       <input type="text" id="artboard-uuid" name="artboard-uuid" value="">
-       <button  class="btn" type="submit">Upload</button>
-     </form>
+      <div class = "container" style="margin-top:30px;visibility:hidden;">
+        <form class = "form-main-class" id='update-artboard' action="/update_artboard/" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input class="input-class" type="file" id="svgfile" name="svgfile"/>
+         <input type="text" id="artboard-uuid" name="artboard-uuid" value="">
+         <button  class="btn" type="submit">Upload</button>
+       </form>
+     </div>
    </div>
- </div>
-</body>
-</html>
+ </body>
+ </html>

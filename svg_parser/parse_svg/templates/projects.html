@@ -21,16 +21,14 @@
     function edit(project) {
       $('#project-uuid').val(project);
       $('#svgfile').click();
-      document.getElementById("svgfile").onchange = function() {
-        document.getElementById("update-project").submit();
+      document.getElementById('svgfile').onchange = function() {
+        document.getElementById('update-project').submit();
       };
     }
   </script>
 
   <div class="container" >
-    <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px;width: 350px;height:75px;" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
-    <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog modal-lg">
         <!-- Modal content-->
@@ -128,9 +126,9 @@
             </span>
           </button>
           <ul class="dropdown-menu inline" style="right:0;left:inherit;">                      
-            <li> <a href="#" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
-            <li><a href="#" onclick="edit('{{project.uuid}}');">UPDATE</a></li>
-            <li><a href="/delete_project?project={{ project.project }}">DELETE</a></li>
+            <li class="li-drop"> <a href="#" class="li-drop" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
+            <li class="li-drop"><a href="#" class="li-drop" onclick="edit('{{project.uuid}}');">UPDATE</a></li>
+            <li class="li-drop"><a href="/delete_project?project={{ project.project }}" class="li-drop">DELETE</a></li>
           </ul>  
         </div>
       </div>
@@ -145,15 +143,19 @@
             <div class="modal-body">
               <form class = "form-main-class" action="/share_project/" method="post">
                 {% csrf_token %}
-                <input class="input-class" type="text" id="email" name="email" placeholder="Email ID" /><br>
-                <input type="checkbox" name="share" value="share">This user can share with others<br>
-                <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
-                <input class="input-class" type="text" id="project-name" name="project-name" value="{{ project.project }}" style="display:none;" /><br>
-                <button  class="btn" type="submit">SHARE</button>
+                <div style="margin-top:10px;">
+                  <input class="input-class" type="text" id="email" name="email" placeholder="Email ID" /><br>
+                </div>
+                <div style="margin-top:10px;">
+                  <input type="checkbox" name="share" value="share" style="margin-top:15px">This user can share with others<br>
+                </div>
+                <div style="margin-top:10px;">
+                  <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
+                </div>
+                <div style="margin-top:20px;">
+                  <button  class="btn" type="submit">SHARE</button>
+                </div>
               </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>

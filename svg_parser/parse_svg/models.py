@@ -30,6 +30,8 @@ class ArtBoard(models.Model):
 	location = models.CharField(max_length=100)
 	uuid = models.CharField(max_length=50, default='')
 	latest = models.BooleanField(default=True)
+	created = models.DateTimeField(default=timezone.now)
+	last_updated = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return str(self.artboard) +  ', ' + str(self.location) + ', ' + str(self.project)
