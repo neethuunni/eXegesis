@@ -84,8 +84,15 @@ WSGI_APPLICATION = 'svg_parser.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'svg_parser',
+        'USER': 'Gokul',
+        'PASSWORD': 'qburst@12',
+        'HOST': 'localhost',
+        'PORT': '',
+        'OPTIONS': {
+            'sql_mode': 'STRICT_TRANS_TABLES'
+        }
     }
 }
 
@@ -140,3 +147,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT = "SVG Parser - Project shared!"
 EMAIL_MESSAGE = "An 'SVG Parser' project has been shared with you. Click on the following link to continue.\n\n"
+
+ALLOWED_HOSTS = ['10.7.30.2.xip.io', 'localhost', '127.0.0.1']

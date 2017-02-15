@@ -1,3 +1,9 @@
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+__pycache__
+env/
 svg_parser/parse_svg/templates/uploads
 svg_parser/db.sqlite3
 svg_parser/parse_svg/*.pyc
