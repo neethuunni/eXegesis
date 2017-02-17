@@ -27,7 +27,7 @@ SECRET_KEY = 't6zt7)r9f9qf(a#aydx8ux5)7gywb&y41%#2(&+!de+8^p09j('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.7.30.2.xip.io', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -133,7 +133,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
-STATIC_ROOT = [os.path.join(BASE_DIR, 'parse_svg', 'static'),]
+STATIC_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'static')
 STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'templates', 'uploads')
@@ -148,4 +148,4 @@ EMAIL_USE_TLS = True
 EMAIL_SUBJECT = "SVG Parser - Project shared!"
 EMAIL_MESSAGE = "An 'SVG Parser' project has been shared with you. Click on the following link to continue.\n\n"
 
-ALLOWED_HOSTS = ['10.7.30.2.xip.io', 'localhost', '127.0.0.1']
+

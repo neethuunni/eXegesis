@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +16,7 @@
   </nav>
 
 <div style="text-align:center;margin-top:250px;">
-  <a href="{% url 'social:begin' 'google-oauth2' %}?next=/projects"><img src="static/signin.png" style="height:80%; width:20%;"></a>
+  <a href="{% url 'social:begin' 'google-oauth2' %}?next=/projects"><img src="{% static "google_btn.png" %}" style="height:80%; width:20%;"></a>
 </div>
 
 </body>

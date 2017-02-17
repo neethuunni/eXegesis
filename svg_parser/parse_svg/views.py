@@ -377,30 +377,26 @@ def svg_images(request):
 
 def share_project(request):
 	try:
-		project = request.session['project']
-		redirection = '/artboards?project=' + project
+		server = request.build_absolute_uri('/')
 		email = request.POST.get('email')
 		share = request.POST.get('share')
 		edit = request.POST.get('edit')
 		share = True if share else False
 		edit = True if edit else False
+		if 'project' in request.session.keys():
+			project = request.session['project']
+			redirection = '/artboards?project=' + project
+		else:
+			project = request.POST.get('project-name')
+			redirection = '/projects'
 		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
-		url = '10.7.30.2.xip.io:8000/verify_share?token=' + encoded
+		url = server + 'verify_share?token=' + encoded
 		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
 		mail.send(fail_silently=False)
 		return redirect(redirection)
 	except:
-		email = request.POST.get('email')
-		share = request.POST.get('share')
-		edit = request.POST.get('edit')
-		share = True if share else False
-		edit = True if edit else False
-		project = request.POST.get('project-name')
-		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
-		url = '10.7.30.2.xip.io:8000/verify_share?token=' + encoded
-		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
-		mail.send(fail_silently=False)
-		return redirect('/projects')
+		print sys.exc_info()
+		return render(request, 'wrong.html')
 
 def verify_share(request):
 	try:

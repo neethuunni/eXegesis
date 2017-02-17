@@ -19,3 +19,4 @@ requests==2.13.0
 requests-oauthlib==0.7.0
 six==1.10.0
 social-auth-core==1.2.0
+uWSGI==2.0.14

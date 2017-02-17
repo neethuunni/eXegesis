@@ -40,3 +40,5 @@ urlpatterns = [
     url(r'^write_note/', views.write_note),
     url(r'^update_artboard/', views.update_artboard),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns = urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
