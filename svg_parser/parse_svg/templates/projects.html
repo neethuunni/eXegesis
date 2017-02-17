@@ -10,29 +10,20 @@
   <script type="text/javascript" src="{% static "script.js" %}"></script>
 </head>
 <body>
-  <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
-    <div class="container-fluid" style="margin:auto;display:table;">
-      <div class="navbar-header" style="display:inline-block;">
-        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid svg-nav">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/projects">Projects</a>
       </div>   
     </div>
   </nav>
 
-  <script type="text/javascript">
-    function edit(project) {
-      $('#project-uuid').val(project);
-      $('#svgfile').click();
-      document.getElementById('svgfile').onchange = function() {
-        document.getElementById('update-project').submit();
-      };
-    }
-  </script>
-
   <div class="container" >
-    <button type="button" class="btn btn-primary outline btn-lg round" style="margin:auto;display:table;margin-top:85px;width: 350px;height:75px;outline:none;" data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
+    <button type="button" class="btn btn-default create-project"  data-toggle="modal" data-target="#myModal">CREATE PROJECT</button>
+
     <div class="modal fade" id="myModal" role="dialog">
       <div class="modal-dialog modal-lg">
-        <!-- Modal content-->
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -42,9 +33,9 @@
             <form class = "form-main-class" action="/create_project/" method="post" id="create-update">
               {% csrf_token %}
               <div>
-                <input class="input-class" type="text" id="project-name" name="project-name" placeholder="Project Name" style="width:50%"/>
+                <input class="input-class text" type="text" id="project-name" name="project-name" placeholder="Project Name"/>
               </div>
-              <div style="margin-top:20px;text-align:center">
+              <div class="modal-div">
                 <label class="radio-inline">
                   <input type="radio" name="screen" value="android" onclick="displayDiv('android')">Android
                 </label>
@@ -55,7 +46,7 @@
                   <input type="radio" name="screen" value="web" onclick="displayDiv('web')">Web
                 </label>
               </div>
-              <div id="ios" style="margin-top:20px;text-align:center;display:none">
+              <div id="ios" class="modal-div none">
                 <label class="radio-inline">
                   <input type="radio" name="density" value="1x">1x
                 </label>
@@ -66,7 +57,7 @@
                   <input type="radio" name="density" value="3x">3x
                 </label>
               </div>
-              <div id="android" style="margin-top:20px;text-align:center;display:none">
+              <div id="android" class="modal-div none">
                 <label class="radio-inline">
                   <input type="radio" name="density" value="mdpi">mdpi
                 </label>
@@ -86,18 +77,17 @@
                   <input type="radio" name="density" value="xxxxhdpi">xxxxhdpi
                 </label>
               </div>
-              <div id="web" style="display:none;">
+              <div id="web" class="none" ">
               </div>
-              <div style="margin-top:20px;">
-                <input class="input-class" type="text" id="project-description" name="project-description" placeholder="Project Description" style="width:50%"/>
+
+              <div class="desc">
+                <input class="input-class text" type="text" id="project-description" name="project-description" placeholder="Project Description"/>
               </div>
             </div>
+
             <div class="modal-footer">
-              <div class="col-sm-6" style="text-align:right">
+              <div class="col-sm-12 create-btn">
                 <button  class="btn btn-default create" type="submit" id="modal-btn">Create</button>
-              </div>
-              <div class="col-sm-6" style="text-align:left">
-                <button type="button" class="btn btn-default cancel" data-dismiss="modal">Close</button>
               </div>
             </div>
           </form>
@@ -106,33 +96,35 @@
     </div>
   </div>
 
-  <div style="margin-top:50px;">
+  <div class="proj-list">
     {% if projects %}
     {% for project in projects %}
-    <div class="col-md-3" style="padding-bottom:15px;">
-      <div style="height:255px;width:250px;border:1px solid;border-color:#a6a3a3;position:relative;margin:auto;padding:5px,0px;">
-        <a href='/artboards?project={{project.project}}' style="text-decoration:none;">
-          <div style="background-image:url(/{{ project.thumbnail }}), url('/static/project.jpg');height:127px;width:248px">   
+    <div class="col-md-3" class="proj-div">
+      <div class="proj-frame">
+        <a class="no-link" href="/artboards?project={{project.project}}">
+          <div style="background-image:url(/{{ project.thumbnail }}), url('/static/project.jpg')" class="thumb-img">   
           </div>
-          <div class="caption" style="height:127px;width:248px;padding-left:17px;padding-top:23px;">
-            <div style="font-size:16px;color:#fb6946;">{{ project.project }}</div>
-            <div style="font-size:10px;color:#000000;">Type: {{ project.screen }}, Density: {{ project.density }}</div>
-            <div style="font-size:10px;color:#000000;">Created: {{ project.created }}</div>
-            <div style="font-size:10px;color:#000000;">Last updated: {{ project.last_updated }}</div>
+          <div class="caption thumb-caption">
+            <div class="proj-name">{{ project.project }}</div>
+            <div class="proj-caption">Type: {{ project.screen }}, Density: {{ project.density }}</div>
+            <div class="proj-caption">Created: {{ project.created }}</div>
+            <div class="proj-caption">Last updated: {{ project.last_updated }}</div>
           </div>
         </a>
-        <div class="dropdown" style="position:absolute;top:135px;right:10px;">
-          <button class="btn dropdown-toggle" type="button" data-toggle="dropdown" style="border-radius:50%;background-color:#fb6946;position:relative;height:40px;width:40px;outline:none;">
-            <span class="glyphicon glyphicon-cog" style="font-size:18px;color:#ffffff;margin-top:5px;position:absolute;left:28%;top:14%;">
+
+        <div class="dropdown proj-drop">
+          <button class="btn dropdown-toggle drop-btn" type="button" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-cog cog-style">
             </span>
           </button>
-          <ul class="dropdown-menu inline" style="right:0;left:inherit;">                      
+          <ul class="dropdown-menu inline drop">                      
             <li class="li-drop"> <a href="#" class="li-drop" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
-            <li class="li-drop"><a href="#" class="li-drop" onclick="edit('{{project.uuid}}');">UPDATE</a></li>
+            <li class="li-drop"><a href="#" class="li-drop" onclick="update('{{project.uuid}}');">UPDATE</a></li>
             <li class="li-drop"><a href="/delete_project?project={{ project.project }}" class="li-drop">DELETE</a></li>
           </ul>  
         </div>
       </div>
+
       <div class="modal fade" id="{{ project.project }}" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
@@ -144,16 +136,16 @@
             <div class="modal-body">
               <form class = "form-main-class" action="/share_project/" method="post">
                 {% csrf_token %}
-                <div style="margin-top:10px;">
-                  <input class="input-class" style="width:50%" type="text" id="email" name="email" placeholder="Email ID" /><br>
+                <div class="div-share">
+                  <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" /><br>
                 </div>
-                <div style="margin-top:10px;">
-                  <input type="checkbox" name="share" value="share" style="margin-top:15px">This user can share with others<br>
+                <div class="div-share">
+                  <input type="checkbox" name="share" value="share">This user can share with others<br>
                 </div>
-                <div style="margin-top:10px;">
+                <div class="div-share">
                   <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
                 </div>
-                <div style="margin-top:20px;">
+                <div class="desc">
                   <button  class="btn" type="submit">SHARE</button>
                 </div>
               </form>
@@ -165,7 +157,8 @@
     {% endfor %}
     {% endif %}
   </div>
-  <div class = "container" style="margin-top:30px;visibility:hidden;">
+
+  <div class = "container div-upload">
     <form class = "form-main-class" id='update-project' action="/svg_images/" method="post" enctype="multipart/form-data">
      {% csrf_token %}
      <input class="input-class" type="file" id="svgfile" name="svgfile" multiple/>
@@ -173,5 +166,6 @@
      <button  class="btn" type="submit">Upload</button>
    </form>
  </div>
+
 </body>
 </html>

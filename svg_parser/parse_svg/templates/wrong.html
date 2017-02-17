@@ -1,20 +1,22 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
   <title>SVG</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse" style="margin-bottom:0;">
-    <div class="container-fluid" style="background-color:#fb6946;">
-      <div class="navbar-header" style="display:inline-block">
-        <a class="navbar-brand" style="color:FFFFFF;" href="#">SVG Parser</a>
-      </div>
-  </div>
-</nav>
+   <nav class="navbar navbar-inverse new">
+    <div class="container-fluid svg-nav">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">SVG Parser</a>
+      </div>   
+    </div>
+  </nav>
 
-<div style="text-align:center;margin-top:250px;">
+<div class="login">
   <h3>Oops... Something went wrong!</h3>
 </div>
 

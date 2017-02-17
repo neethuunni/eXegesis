@@ -4,20 +4,21 @@
 <head>
   <title>SVG</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
 </head>
 <body>
 
-<nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
-    <div class="container-fluid" style="margin:auto;display:table;">
-      <div class="navbar-header" style="display:inline-block;">
-        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/">SVG Parser</a>
+  <nav class="navbar navbar-inverse new">
+    <div class="container-fluid svg-nav">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/">SVG Parser</a>
       </div>   
     </div>
   </nav>
 
-<div style="text-align:center;margin-top:250px;">
-  <a href="{% url 'social:begin' 'google-oauth2' %}?next=/projects"><img src="{% static "google_btn.png" %}" style="height:80%; width:20%;"></a>
-</div>
+  <div class="login">
+    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/projects"><img src="{% static "google_btn.png" %}"></a>
+  </div>
 
 </body>
 </html>

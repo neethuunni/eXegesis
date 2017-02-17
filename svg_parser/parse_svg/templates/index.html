@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,266 +10,265 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse" style="margin-bottom:0;background-color:#fb6946;">
-    <div class="container-fluid" style="margin:auto;display:table;">
-      <div class="navbar-header" style="display:inline-block;">
-        <a class="navbar-brand" style="color:#FFFFFF;font-size:30px" href="/projects">Projects</a>
-      </div>   
+ <nav class="navbar navbar-inverse">
+  <div class="container-fluid svg-nav">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/projects">Projects</a>
+    </div>   
+  </div>
+</nav>
+
+<div >
+  <div class="container-fluid div-share">
+    <div class="col-sm-3 head-index">
+      <span class="glyphicon glyphicon-chevron-left back-link"></span><a class="no-link" href="/artboards">Back to Dashboard</a>
     </div>
-  </nav>
-
-  <div >
-    <div class="container-fluid" style="margin-top:10px">
-      <div class="col-sm-3" style="font-size:18px;">
-        <span class="glyphicon glyphicon-chevron-left"></span><a href="/artboards" style="text-decoration:none;color:#000000;">Back to Dashboard</a>
-      </div>
-      <div class="col-sm-6" style="font-size:18px;">
-        <strong>{{ artboard }}</strong>
-      </div>
-      <div class="col-sm-3">
-      </div>
+    <div class="col-sm-6 head-index">
+      <strong>{{ artboard }}</strong>
     </div>
-    <div class="container-fluid" style="margin-top:25px;">
-      <div class="col-sm-3">
-      </div>
-      <div class="col-sm-6" id="image" style="overflow:auto;width:47%;height:100vh;">
-        {% include url %}
+    <div class="col-sm-3">
+    </div>
+  </div>
+  <div class="container-fluid div-main">
+    <div class="col-sm-3">
+    </div>
+    <div class="col-sm-6 div-image" id="image">
+      {% include url %}
 
-        <script type="text/javascript">
-          var jEscape = function(jquery) {
-            jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
-            jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
-            jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
-            jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
-            jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
-            jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
-            jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
-            jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
-            jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
-            jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
-            jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
-            jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
-            jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
-            jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
-            jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
-            jquery = jquery.replace(new RegExp("\\<", "g"), "\\<");
-            jquery = jquery.replace(new RegExp("\\>", "g"), "\\>");
-            return jquery;
-          };
+      <script type="text/javascript">
+        var jEscape = function(jquery) {
+          jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
+          jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
+          jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
+          jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
+          jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
+          jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
+          jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
+          jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
+          jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
+          jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
+          jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
+          jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
+          jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
+          jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
+          jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
+          jquery = jquery.replace(new RegExp("\\<", "g"), "\\<");
+          jquery = jquery.replace(new RegExp("\\>", "g"), "\\>");
+          return jquery;
+        };
 
-          var obj = {{ annotations|safe }};
-          console.log(obj);
-          var object;
-          var count = obj[0];
-          var full_list = '';
-          var current_idq = ''
-          for(var i = 0; i < obj.length; i++) {
-            if (obj[i]['type'] === 'text') {
-              id = obj[i]['id'];
-              for (var j = i + 1; j < obj.length; j++) {
-                if (obj[j]['type'] != 'tspan') {
-                  break;
-                }
-                else {
-                  document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
-                  count++;
-                }
+        var obj = {{ annotations|safe }};
+        console.log(obj);
+        var object;
+        var count = obj[0];
+        var full_list = '';
+        var current_idq = ''
+        for(var i = 0; i < obj.length; i++) {
+          if (obj[i]['type'] === 'text') {
+            id = obj[i]['id'];
+            for (var j = i + 1; j < obj.length; j++) {
+              if (obj[j]['type'] != 'tspan') {
+                break;
+              }
+              else {
+                document.getElementsByTagName('tspan')[count].setAttribute('parent', id);
+                count++;
               }
             }
           }
+        }
 
-          $('svg').on('mouseover', function(e) {
-            $(current_idq).removeAttr('style');
-            var parent = '';
-            outer = e.target.outerHTML;
-            outer = outer.split(' ');
+        $('svg').on('mouseover', function(e) {
+          $(current_idq).removeAttr('style');
+          var parent = '';
+          outer = e.target.outerHTML;
+          outer = outer.split(' ');
+          for (var i=0; i < outer.length; i++){
+            if (outer[i].startsWith('parent')) {
+              parent = outer[i].split("\"")[1];
+            }
+          }
+          if (parent !== '') {
+            idq = jEscape(parent);
+            idq = '#' + idq;
+            current_idq = idq
+            $(idq).css('stroke', 'orange');
+          }
+          else {
+            id = ''
             for (var i=0; i < outer.length; i++){
-              if (outer[i].startsWith('parent')) {
-                parent = outer[i].split("\"")[1];
+              if (outer[i].startsWith('id')) {
+                var id = outer[i].split('\"')[1];
+                break;
               }
             }
-            if (parent !== '') {
-              idq = jEscape(parent);
+            if (id !== '') {
+              idq = jEscape(id)
               idq = '#' + idq;
               current_idq = idq
               $(idq).css('stroke', 'orange');
             }
-            else {
-              id = ''
-              for (var i=0; i < outer.length; i++){
-                if (outer[i].startsWith('id')) {
-                  var id = outer[i].split('\"')[1];
+          }
+        });
+
+        $('svg').on('click', function(e){
+          $(current_idq).removeAttr('style');
+          var parent = '';
+          outer = e.target.outerHTML;
+          console.log('element: ', outer.substring(0, 30));
+          outer = outer.split(' ');
+          for (var i=0; i < outer.length; i++){
+            if (outer[i].startsWith('parent')) {
+              parent = outer[i].split("\"")[1];
+            }
+          }
+          if (parent !== '') {
+            idq = jEscape(parent);
+            idq = '#' + idq;
+            current_idq = idq
+            $(idq).css('stroke', 'orange');
+            for (var i = 0; i < obj.length; i++) {
+              console.log(obj[i]['id'], parent)
+              if (obj[i]['id'] === parent) {
+                displayAnnotations(obj[i]);
+                break;
+              }
+            }
+            if (obj[i]['type'] == 'text') {
+              for (var j = i + 1; j < obj.length; j++) {
+                if (obj[j]['type'] != 'tspan') {
+                  full_list = ''
                   break;
                 }
-              }
-              if (id !== '') {
-                idq = jEscape(id)
-                idq = '#' + idq;
-                current_idq = idq
-                $(idq).css('stroke', 'orange');
+                else {
+                  console.log(obj[j]);
+                  object = obj[j];
+                  displayAnnotations(object);
+                }
               }
             }
-          });
-
-          $('svg').on('click', function(e){
-            $(current_idq).removeAttr('style');
-            var parent = '';
-            outer = e.target.outerHTML;
-            console.log('element: ', outer.substring(0, 30));
-            outer = outer.split(' ');
+          }
+          else {
+            id = ''
             for (var i=0; i < outer.length; i++){
-              if (outer[i].startsWith('parent')) {
-                parent = outer[i].split("\"")[1];
+              if (outer[i].startsWith('id')) {
+                var id = outer[i].split('\"')[1];
+                console.log(id);
+                break;
               }
             }
-            if (parent !== '') {
-              idq = jEscape(parent);
+            if (id !== '') {
+              idq = jEscape(id)
               idq = '#' + idq;
               current_idq = idq
               $(idq).css('stroke', 'orange');
               for (var i = 0; i < obj.length; i++) {
-                console.log(obj[i]['id'], parent)
-                if (obj[i]['id'] === parent) {
-                  displayAnnotations(obj[i]);
+                if (obj[i]['id'] === id) {
+                  console.log(obj[i]);
+                  object = obj[i];
+                  displayAnnotations(object);
+                  full_list = '';
                   break;
                 }
               }
-              if (obj[i]['type'] == 'text') {
-                for (var j = i + 1; j < obj.length; j++) {
-                  if (obj[j]['type'] != 'tspan') {
-                    full_list = ''
-                    break;
-                  }
-                  else {
-                    console.log(obj[j]);
-                    object = obj[j];
-                    displayAnnotations(object);
-                  }
-                }
-              }
             }
-            else {
-              id = ''
-              for (var i=0; i < outer.length; i++){
-                if (outer[i].startsWith('id')) {
-                  var id = outer[i].split('\"')[1];
-                  console.log(id);
-                  break;
-                }
-              }
-              if (id !== '') {
-                idq = jEscape(id)
-                idq = '#' + idq;
-                current_idq = idq
-                $(idq).css('stroke', 'orange');
-                for (var i = 0; i < obj.length; i++) {
-                  if (obj[i]['id'] === id) {
-                    console.log(obj[i]);
-                    object = obj[i];
-                    displayAnnotations(object);
-                    full_list = '';
-                    break;
-                  }
-                }
-              }
-            }
-            function displayAnnotations(object) {
-              for (var key in object) {
-                if (key === 'type' || key == 'id') {
-                  continue;
-                }
-                if (object.hasOwnProperty(key)) {
-                  value = object[key];
-                  key = key.bold();
-                  full_list = full_list + '<li>' + key + ': ' + value + '</li>';
-                }
-              }
-              full_list += '<br />';
-              $("#annotations").html(full_list);
-            }
-            full_list = '';
-          });
-          function zoomin() {
-            $('svg').width(
-              $('svg').width() * 1.2
-              );
-
-            $('svg').height(
-              $('svg').height() * 1.2
-              );
           }
-          function zoomout() {
-            $('svg').width(
-              $('svg').width() * 0.5
-              );
-
-            $('svg').height(
-              $('svg').height() * 0.5
-              );
+          function displayAnnotations(object) {
+            for (var key in object) {
+              if (key === 'type' || key == 'id') {
+                continue;
+              }
+              if (object.hasOwnProperty(key)) {
+                value = object[key];
+                key = key.bold();
+                full_list = full_list + '<li>' + key + ': ' + value + '</li>';
+              }
+            }
+            full_list += '<br />';
+            $("#annotations").html(full_list);
           }
-        </script>
-      </div>
-      <div class="col-sm-3 annotate" id="annotations" style="font-size:14px;height:650px;overflow:scroll;">
-      </div>
-    </div>
-  </div>
-  <div style="position:fixed;bottom:10px;left:10px;">
-    <button class="btn" id="zoom-in" onclick="zoomin()" style="outline:none;"><span class="glyphicon glyphicon-plus"></span></button>
-    <button class="btn" id="zoom-out" onclick="zoomout()" style="outline:none;"><span class="glyphicon glyphicon-minus"></span></button>
-    <a href="/revisions?artboard={{artboard}}" style="text-decoration:none;color:#000000;"><button class="btn" style="outline:none;">View Revisions</button></a>
-  </div>
-  <div style="position:fixed;bottom:10px;right:400px;" data-toggle="modal" data-target="#write-note">
-    <button class="btn" style="outline:none;"><span class="glyphicon glyphicon-pencil"></span></button>
-  </div>
-  <div style="position:fixed;bottom:10px;right:450px;" data-toggle="modal" data-target="#view-notes">
-    <button class="btn" style="outline:none;"><span class="glyphicon glyphicon-eye-open"></span></button>
-  </div>
+          full_list = '';
+        });
+        function zoomin() {
+          $('svg').width(
+            $('svg').width() * 1.2
+            );
 
-  <div class="modal fade" id="write-note" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Write a note</h4>
-        </div>
-        <div class="modal-body">
-          <form class = "form-main-class" action="/write_note/" method="post">
-            {% csrf_token %}
-            <input class="input-class" type="text" id="note" name="note" placeholder="Write a note..." style="width:60%;" /><br>
-            <input class="input-class" type="text" id="location" name="location" value="{{url}}" style="width:60%;display:none" /><br>
-            <button  class="btn" type="submit" style="margin-top:10px;">WRITE</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+          $('svg').height(
+            $('svg').height() * 1.2
+            );
+        }
+        function zoomout() {
+          $('svg').width(
+            $('svg').width() * 0.5
+            );
 
-  <div class="modal fade" id="view-notes" role="dialog">
-    <div class="modal-dialog">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Notes</h4>
-        </div>
-        <div class="modal-body annotate">
-          {% if notes %}
-          <ul>
-            {% for note in notes %}
-            <li><strong>{{note.email}}: </strong>{{note.note}}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+          $('svg').height(
+            $('svg').height() * 0.5
+            );
+        }
+      </script>
+    </div>
+    <div class="col-sm-3 annotate" id="annotations">
+    </div>
+  </div>
+</div>
+<div class="foot-left">
+  <button class="btn" id="zoom-in" onclick="zoomin()"><span class="glyphicon glyphicon-plus"></span></button>
+  <button class="btn" id="zoom-out" onclick="zoomout()"><span class="glyphicon glyphicon-minus"></span></button>
+  <a class="no-link" href="/revisions?artboard={{artboard}}"><button class="btn">View Revisions</button></a>
+</div>
+<div class="write-note" data-toggle="modal" data-target="#write-note">
+  <button class="btn"><span class="glyphicon glyphicon-pencil"></span></button>
+</div>
+<div class="view-note" data-toggle="modal" data-target="#view-notes">
+  <button class="btn"><span class="glyphicon glyphicon-eye-open"></span></button>
+</div>
+
+<div class="modal fade" id="write-note" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Write a note</h4>
+      </div>
+      <div class="modal-body">
+        <form class = "form-main-class" action="/write_note/" method="post">
+          {% csrf_token %}
+          <input class="input-class text" type="text" id="note" name="note" placeholder="Write a note..." /><br>
+          <input class="input-class text none" type="text" id="location" name="location" value="{{url}}"/><br>
+          <button  class="btn div-share" type="submit">WRITE</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="view-notes" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Notes</h4>
+      </div>
+      <div class="modal-body annotate">
+        {% if notes %}
+        <ul>
+          {% for note in notes %}
+          <li><strong>{{note.email}}: </strong>{{note.note}}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
