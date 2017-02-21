@@ -10,54 +10,57 @@
 </head>
 <body>
 
- <nav class="navbar navbar-inverse">
-  <div class="container-fluid svg-nav">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/svg-parser/projects">Projects</a>
-    </div>   
-  </div>
-</nav>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid svg-nav">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <div class="logo"><img src="{% static "logo.png" %}"></div>
+          <div>{{ project }}</div>
+        </a>
+      </div>   
+    </div>
+  </nav>
 
-<div >
-  <div class="container-fluid div-share">
-    <div class="col-sm-3 head-index">
-      <span class="glyphicon glyphicon-chevron-left back-link"></span><a class="no-link" href="/svg-parser/artboards">Back to Dashboard</a>
+  <div >
+    <div class="container-fluid div-share">
+      <div class="col-sm-3 head-index">
+        <span class="glyphicon glyphicon-chevron-left back-link"></span><a class="no-link" href="/svg-parser/artboards">Back to Dashboard</a>
+      </div>
+      <div class="col-sm-6 head-index">
+        <strong>{{ artboard }}</strong>
+      </div>
+      <div class="col-sm-3">
+      </div>
     </div>
-    <div class="col-sm-6 head-index">
-      <strong>{{ artboard }}</strong>
-    </div>
-    <div class="col-sm-3">
-    </div>
-  </div>
-  <div class="container-fluid div-main">
-    <div class="col-sm-3">
-    </div>
-    <div class="col-sm-6 div-image" id="image">
-      {% include url %}
+    <div class="container-fluid div-main">
+      <div class="col-sm-3">
+      </div>
+      <div class="col-sm-6 div-image" id="image">
+        {% include url %}
 
-      <script type="text/javascript">
-        var jEscape = function(jquery) {
-          jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
-          jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
-          jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
-          jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
-          jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
-          jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
-          jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
-          jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
-          jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
-          jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
-          jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
-          jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
-          jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
-          jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
-          jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
-          jquery = jquery.replace(new RegExp("\\<", "g"), "\\<");
-          jquery = jquery.replace(new RegExp("\\>", "g"), "\\>");
-          return jquery;
-        };
+        <script type="text/javascript">
+          var jEscape = function(jquery) {
+            jquery = jquery.replace(new RegExp("\\@", "g"), "\\@");
+            jquery = jquery.replace(new RegExp("\\?", "g"), "\\?");
+            jquery = jquery.replace(new RegExp("\\-", "g"), "\\-");
+            jquery = jquery.replace(new RegExp("\\.", "g"), "\\.");
+            jquery = jquery.replace(new RegExp("\\(", "g"), "\\(");
+            jquery = jquery.replace(new RegExp("\\)", "g"), "\\)");
+            jquery = jquery.replace(new RegExp("\\%", "g"), "\\%");
+            jquery = jquery.replace(new RegExp("\\!", "g"), "\\!");
+            jquery = jquery.replace(new RegExp("\\#", "g"), "\\#");
+            jquery = jquery.replace(new RegExp("\\$", "g"), "\\$");
+            jquery = jquery.replace(new RegExp("\\^", "g"), "\\^");
+            jquery = jquery.replace(new RegExp("\\~", "g"), "\\~");
+            jquery = jquery.replace(new RegExp("\\&", "g"), "\\&");
+            jquery = jquery.replace(new RegExp("\\_", "g"), "\\_");
+            jquery = jquery.replace(new RegExp("\\;", "g"), "\\;");
+            jquery = jquery.replace(new RegExp("\\<", "g"), "\\<");
+            jquery = jquery.replace(new RegExp("\\>", "g"), "\\>");
+            return jquery;
+          };
 
-        var obj = {{ annotations|safe }};
+          var obj = {{ annotations|safe }};
         // console.log(obj);
         var object;
         var count = obj[0];
@@ -238,7 +241,7 @@
       <div class="modal-body">
         <form class = "form-main-class" action="/svg-parser/write_note/" method="post">
           {% csrf_token %}
-          <input class="input-class text" type="text" id="note" name="note" placeholder="Write a note..." /><br>
+          <input class="input-class text" type="text" id="note" name="note" placeholder="Write a note..." required /><br>
           <input class="input-class text none" type="text" id="location" name="location" value="{{url}}"/><br>
           <button  class="btn div-share" type="submit">WRITE</button>
         </form>

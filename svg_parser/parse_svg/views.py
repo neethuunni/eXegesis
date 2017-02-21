@@ -407,9 +407,10 @@ def index(request):
 		root = tree.getroot()
 		getChild(root)
 		artboard = ArtBoard.objects.get(location=params)
+		project = artboard.project.project
 		artboard = artboard.artboard
 		notes = Note.objects.filter(artboard__location__contains=params)
-		return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard, 'notes': notes})
+		return render(request, 'index.html', {'annotations': json.dumps(annotations), 'url': params, 'artboard': artboard, 'notes': notes, 'project': project})
 	except:
 		print sys.exc_info()
 		return render(request, 'wrong.html')

@@ -11,155 +11,158 @@
 </head>
 <body>
 
- <nav class="navbar navbar-inverse">
-  <div class="container-fluid svg-nav">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/svg-parser/projects">Projects</a>
-    </div>   
-  </div>
-</nav>
-
-<div class="main-container">
-  <div class="container-fluid">
-    <div class="col-sm-3 head-left">
-      <div>
-        <div><strong>Type: {{ screen }}</strong></div>
-        <div>Density: {{ density }}</div>
-        <div>Created:  {{ created }}</div>
-        <div>Last Updated: {{ last_updated }} </div>
-      </div>
-      <div class="search-filter">
-        <a class="no-link" href="#" onclick="sortByName('sortName', 'sortUpdate');" id="sortName">Name</a> | <a class="no-link" href="#" onclick="sortByUpdate('sortUpdate', 'sortName');" id="sortUpdate">Last updated</a>
-      </div>
-    </div>   
-
-    <div class="col-sm-6 head-center">
-      <button id="dash" class="btn-dash" onclick="changeDash();">DASHBOARD</button>
-      <button id="style" class="btn-style" onclick="changeStyle();">STYLEGUIDE</button>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid svg-nav">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <div class="logo"><img src="{% static "logo.png" %}"></div>
+          <div>{{ project }}</div>
+        </a>
+      </div>   
     </div>
+  </nav>
 
-    <div class="col-sm-3 head-right">
-      <div>
+  <div class="main-container">
+    <div class="container-fluid">
+      <div class="col-sm-3 head-left">
         <div>
-          <input class="search-screen" type="text" id="search" placeholder="SEARCH SCREENS" onkeyup="search();">
+          <div><strong>Type: {{ screen }}</strong></div>
+          <div>Density: {{ density }}</div>
+          <div>Created:  {{ created }}</div>
+          <div>Last Updated: {{ last_updated }} </div>
         </div>
-        <div class="search-icon">
-          <span class="glyphicon glyphicon-search"></span>
+        <div class="search-filter">
+          <a class="no-link" href="#" onclick="sortByName('sortName', 'sortUpdate');" id="sortName">Name</a> | <a class="no-link" href="#" onclick="sortByUpdate('sortUpdate', 'sortName');" id="sortUpdate">Last updated</a>
         </div>
+      </div>   
+
+      <div class="col-sm-6 head-center">
+        <button id="dash" class="btn-dash" onclick="changeDash();">DASHBOARD</button>
+        <button id="style" class="btn-style" onclick="changeStyle();">STYLEGUIDE</button>
       </div>
 
-      <div class="div-owner">
-        OWNER: <strong>{{ owner }}</strong>
-      </div>
+      <div class="col-sm-3 head-right">
+        <div>
+          <div>
+            <input class="search-screen" type="text" id="search" placeholder="SEARCH SCREENS" onkeyup="search();">
+          </div>
+          <div class="search-icon">
+            <span class="glyphicon glyphicon-search"></span>
+          </div>
+        </div>
 
-      <div class="div-share">
-        <div class="col-sm-6">
-          <div class="dropdown">
-            <button class="dropdown-toggle btn-members" type="button" data-toggle="dropdown">VIEW MEMBERS
-              <span class="caret"></span></button>
-              <ul class="dropdown-menu" data-toggle="modal" data-target="#">
-                {% if shared_members %}
-                {% for member in shared_members %}
-                <li><a href="#">{{ member.email }}</a></li>
-                {% endfor %}
-                {% endif %}
-              </ul>
+        <div class="div-owner">
+          OWNER: <strong>{{ owner }}</strong>
+        </div>
+
+        <div class="div-share">
+          <div class="col-sm-6">
+            <div class="dropdown">
+              <button class="dropdown-toggle btn-members" type="button" data-toggle="dropdown">VIEW MEMBERS
+                <span class="caret"></span></button>
+                <ul class="dropdown-menu" data-toggle="modal" data-target="#">
+                  {% if shared_members %}
+                  {% for member in shared_members %}
+                  <li><a href="#">{{ member.email }}</a></li>
+                  {% endfor %}
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+            <div class="col-sm-6 share-btn" data-toggle="modal" data-target="#myModal">
+              <button class="btn-share">SHARE</button>
             </div>
           </div>
-          <div class="col-sm-6 share-btn" data-toggle="modal" data-target="#myModal">
-            <button class="btn-share">SHARE</button>
-          </div>
         </div>
       </div>
-    </div>
 
-    <div class="container-fluid arts" id="sorted-class">
-      {% if artboards %}
-      {% for artboard in artboards %}
-      {% if artboard.latest %}
-      <div class="col-md-3 art-outline" id="{{ artboard.artboard }}">
-        <div class="art-frame">
-          <a href='/svg-parser/svg?url={{artboard.location}}'>
-            <div class="art-thumb" style="background-image:url(/svg-parser/{{ artboard.location }});">
-              <div class="caption art-caption">
-                <div>
-                  <button class="btn art-name">{{ artboard.artboard }}</button>
+      <div class="container-fluid arts" id="sorted-class">
+        {% if artboards %}
+        {% for artboard in artboards %}
+        {% if artboard.latest %}
+        <div class="col-md-3 art-outline" id="{{ artboard.artboard }}">
+          <div class="art-frame">
+            <a href='/svg-parser/svg?url={{artboard.location}}'>
+              <div class="art-thumb" style="background-image:url(/svg-parser/{{ artboard.location }});">
+                <div class="caption art-caption">
+                  <div>
+                    <button class="btn art-name">{{ artboard.artboard }}</button>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            <div class="dropdown art-drop">
+              <button class="btn dropdown-toggle btn-art-drop" type="button" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-cog cog-style-art">
+                </span>
+              </button>
+              <ul class="dropdown-menu art-drop-menu">                   
+                <li class="li-drop"> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
+                <li class="li-drop"><a href="#" onclick="updateArtboard('{{ artboard.uuid }}');">UPDATE</a></li>
+                <li class="li-drop"><a href="/svg-parser/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
+                <li class="li-drop"><a href="/svg-parser/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
+              </ul>  
+            </div>
+          </div>
+
+          <div class="modal fade" id="{{ artboard.uuid }}" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Rename Artboard</h4>
+                </div>
+                <div class="modal-body">
+                  <form class = "form-main-class" action="/svg-parser/rename_artboard/" method="post">
+                    {% csrf_token %}
+                    <input class="input-class text" type="text" id="new-name" name="new-name" placeholder="New name" required /><br>
+                    <input class="input-class art-loc" type="text" id="artboard" name="artboard" value="{{ artboard.location }}"/><br>
+                    <button  class="btn" type="submit">CHANGE</button>
+                  </form>
                 </div>
               </div>
             </div>
-          </a>
-          
-          <div class="dropdown art-drop">
-            <button class="btn dropdown-toggle btn-art-drop" type="button" data-toggle="dropdown">
-              <span class="glyphicon glyphicon-cog cog-style-art">
-              </span>
-            </button>
-            <ul class="dropdown-menu art-drop-menu">                   
-              <li class="li-drop"> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
-              <li class="li-drop"><a href="#" onclick="updateArtboard('{{ artboard.uuid }}');">UPDATE</a></li>
-              <li class="li-drop"><a href="/svg-parser/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
-              <li class="li-drop"><a href="/svg-parser/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
-            </ul>  
           </div>
-        </div>
 
-        <div class="modal fade" id="{{ artboard.uuid }}" role="dialog">
-          <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Rename Artboard</h4>
-              </div>
-              <div class="modal-body">
-                <form class = "form-main-class" action="/svg-parser/rename_artboard/" method="post">
-                  {% csrf_token %}
-                  <input class="input-class text" type="text" id="new-name" name="new-name" placeholder="New name" required /><br>
-                  <input class="input-class art-loc" type="text" id="artboard" name="artboard" value="{{ artboard.location }}"/><br>
-                  <button  class="btn" type="submit">CHANGE</button>
-                </form>
-              </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+      </div>
+
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Choose Sharing options</h4>
+            </div>
+            <div class="modal-body">
+              <form class = "form-main-class" action="/svg-parser/share_project/" method="post">
+                {% csrf_token %}
+                <div class="div-share">
+                  <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" required /><br>
+                </div>
+                <div class="desc">
+                  <button  class="btn" type="submit">SHARE</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-
       </div>
-      {% endif %}
-      {% endfor %}
-      {% endif %}
-    </div>
 
-    <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Choose Sharing options</h4>
-          </div>
-          <div class="modal-body">
-            <form class = "form-main-class" action="/svg-parser/share_project/" method="post">
-              {% csrf_token %}
-              <div class="div-share">
-                <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" required /><br>
-              </div>
-              <div class="desc">
-                <button  class="btn" type="submit">SHARE</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class = "container art-update">
-      <form class = "form-main-class" id='update-artboard' action="/svg-parser/update_artboard/" method="post" enctype="multipart/form-data">
-       {% csrf_token %}
-       <input class="input-class" type="file" id="svgfile" name="svgfile"/>
-       <input type="text" id="artboard-uuid" name="artboard-uuid" value="">
-       <button  class="btn" type="submit">Upload</button>
-     </form>
+      <div class = "container art-update">
+        <form class = "form-main-class" id='update-artboard' action="/svg-parser/update_artboard/" method="post" enctype="multipart/form-data">
+         {% csrf_token %}
+         <input class="input-class" type="file" id="svgfile" name="svgfile"/>
+         <input type="text" id="artboard-uuid" name="artboard-uuid" value="">
+         <button  class="btn" type="submit">Upload</button>
+       </form>
+     </div>
    </div>
- </div>
- 
-</body>
-</html>
+
+ </body>
+ </html>

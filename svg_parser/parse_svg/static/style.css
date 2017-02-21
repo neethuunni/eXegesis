@@ -148,7 +148,18 @@ div.annotate li:nth-child(odd) {
 
 .login {
   text-align: center;
-  margin-top: 250px;
+  margin-top: 75px;
+}
+
+.login-logo {
+  margin-top: 50px;
+  text-align: center;
+}
+
+.logo {
+  position: absolute;
+  left: 1%;
+  top: 6%;
 }
 
 .proj {
@@ -311,6 +322,7 @@ div.annotate li:nth-child(odd) {
   font-size: 25px;
   background-color: #ffffff;
   border: none;
+  display: none;
 }
 
 .head-right {

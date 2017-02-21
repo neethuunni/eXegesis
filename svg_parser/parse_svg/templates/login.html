@@ -8,16 +8,13 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-inverse new">
-    <div class="container-fluid svg-nav">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="/">EXEGESIS</a>
-      </div>   
+  <div class="container-fluid">
+    <div class="login-logo">
+      <img src="{% static "logo_main.png" %}">
+      </div>
+    <div class="login">
+      <a href="{% url 'social:begin' 'google-oauth2' %}?next=/svg-parser/projects"><img src="{% static "google_btn.png" %}"></a>
     </div>
-  </nav>
-
-  <div class="login">
-    <a href="{% url 'social:begin' 'google-oauth2' %}?next=/svg-parser/projects"><img src="{% static "google_btn.png" %}"></a>
   </div>
 
 </body>
