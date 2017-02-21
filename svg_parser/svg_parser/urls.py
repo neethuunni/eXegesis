@@ -21,7 +21,6 @@ from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url('', include('social.apps.django_app.urls', namespace='social')),
     url(r'^svg-parser/', include('parse_svg.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

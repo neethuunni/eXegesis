@@ -1,9 +1,10 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from parse_svg import views
 
 
 urlpatterns = [
     url(r'^$', views.login),
+    url('^', include('social.apps.django_app.urls', namespace='social')),
     url(r'^logout/$', views.logout),
     url(r'^svg/', views.index),
     url(r'^svg_images/', views.svg_images),
