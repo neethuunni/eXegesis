@@ -27,7 +27,7 @@ SECRET_KEY = 't6zt7)r9f9qf(a#aydx8ux5)7gywb&y41%#2(&+!de+8^p09j('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.7.30.2.xip.io', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -134,10 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'static')
-STATIC_URL = '/static/'
+STATIC_URL = '/svg-parser/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'templates', 'uploads')
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/svg-parser/uploads/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

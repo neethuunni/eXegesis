@@ -25,8 +25,8 @@
       {% for revision in revisions %}
       <div class="col-md-3 art-outline" id="{{ revision.artboard.artboard }}">
         <div class="art-frame">
-          <a href='/svg?url={{ revision.artboard.location }}'>
-            <div class="art-thumb" style="background-image:url(/{{ revision.artboard.location }});">
+          <a href='/svg-parser/svg?url={{ revision.artboard.location }}'>
+            <div class="art-thumb" style="background-image:url(/svg-parser/{{ revision.artboard.location }});">
               <div class="caption art-caption">
                 <div>
                   <button class="btn art-name">{{ revision.artboard.created }}</button>
@@ -40,7 +40,7 @@
               </span>
             </button>
             <ul class="dropdown-menu art-drop-menu">                      
-              <li><a href="/download_artboard?artboard={{ revision.artboard.location }}">DOWNLOAD</a></li>
+              <li><a href="/svg-parser/download_artboard?artboard={{ revision.artboard.location }}">DOWNLOAD</a></li>
             </ul>  
           </div>
         </div>
