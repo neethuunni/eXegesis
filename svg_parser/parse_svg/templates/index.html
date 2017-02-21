@@ -58,11 +58,12 @@
         };
 
         var obj = {{ annotations|safe }};
-        console.log(obj);
+        // console.log(obj);
         var object;
         var count = obj[0];
         var full_list = '';
-        var current_idq = ''
+        var current_idq = '';
+        var current_idq_select = ''
         for(var i = 0; i < obj.length; i++) {
           if (obj[i]['type'] === 'text') {
             id = obj[i]['id'];
@@ -79,7 +80,9 @@
         }
 
         $('svg').on('mouseover', function(e) {
-          $(current_idq).removeAttr('style');
+          if (current_idq_select != current_idq) {
+            $(current_idq).removeAttr('style');
+          }
           var parent = '';
           outer = e.target.outerHTML;
           outer = outer.split(' ');
@@ -91,8 +94,10 @@
           if (parent !== '') {
             idq = jEscape(parent);
             idq = '#' + idq;
-            current_idq = idq
-            $(idq).css('stroke', 'orange');
+            current_idq = idq;
+            if (current_idq_select != current_idq) {
+              $(idq).css('stroke', 'orange');
+            }
           }
           else {
             id = ''
@@ -105,17 +110,19 @@
             if (id !== '') {
               idq = jEscape(id)
               idq = '#' + idq;
-              current_idq = idq
-              $(idq).css('stroke', 'orange');
+              current_idq = idq;
+              if (current_idq_select != current_idq) {
+                $(idq).css('stroke', 'orange');
+              }
             }
           }
         });
 
         $('svg').on('click', function(e){
-          $(current_idq).removeAttr('style');
+          console.log('click');
+          $(current_idq_select).removeAttr('style');
           var parent = '';
           outer = e.target.outerHTML;
-          console.log('element: ', outer.substring(0, 30));
           outer = outer.split(' ');
           for (var i=0; i < outer.length; i++){
             if (outer[i].startsWith('parent')) {
@@ -125,10 +132,9 @@
           if (parent !== '') {
             idq = jEscape(parent);
             idq = '#' + idq;
-            current_idq = idq
-            $(idq).css('stroke', 'orange');
+            current_idq_select = idq
+            $(idq).css('stroke', 'yellow');
             for (var i = 0; i < obj.length; i++) {
-              console.log(obj[i]['id'], parent)
               if (obj[i]['id'] === parent) {
                 displayAnnotations(obj[i]);
                 break;
@@ -141,7 +147,6 @@
                   break;
                 }
                 else {
-                  console.log(obj[j]);
                   object = obj[j];
                   displayAnnotations(object);
                 }
@@ -153,18 +158,16 @@
             for (var i=0; i < outer.length; i++){
               if (outer[i].startsWith('id')) {
                 var id = outer[i].split('\"')[1];
-                console.log(id);
                 break;
               }
             }
             if (id !== '') {
               idq = jEscape(id)
               idq = '#' + idq;
-              current_idq = idq
-              $(idq).css('stroke', 'orange');
+              current_idq_select = idq
+              $(idq).css('stroke', 'yellow');
               for (var i = 0; i < obj.length; i++) {
                 if (obj[i]['id'] === id) {
-                  console.log(obj[i]);
                   object = obj[i];
                   displayAnnotations(object);
                   full_list = '';

@@ -33,11 +33,11 @@
             <form class = "form-main-class" action="/svg-parser/create_project/" method="post" id="create-update">
               {% csrf_token %}
               <div>
-                <input class="input-class text" type="text" id="project-name" name="project-name" placeholder="Project Name"/>
+                <input class="input-class text" type="text" id="project-name" name="project-name" placeholder="Project Name" required />
               </div>
               <div class="modal-div">
                 <label class="radio-inline">
-                  <input type="radio" name="screen" value="android" onclick="displayDiv('android')">Android
+                  <input type="radio" name="screen" value="android" onclick="displayDiv('android')" required>Android
                 </label>
                 <label class="radio-inline">
                   <input type="radio" name="screen" value="ios" onclick="displayDiv('ios')">iOS
@@ -81,7 +81,7 @@
               </div>
 
               <div class="desc">
-                <input class="input-class text" type="text" id="project-description" name="project-description" placeholder="Project Description"/>
+                <input class="input-class text" type="text" id="project-description" name="project-description" placeholder="Project Description" required />
               </div>
             </div>
 
@@ -127,7 +127,6 @@
 
       <div class="modal fade" id="{{ project.project }}" role="dialog">
         <div class="modal-dialog">
-          <!-- Modal content-->
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -137,13 +136,10 @@
               <form class = "form-main-class" action="/svg-parser/share_project/" method="post">
                 {% csrf_token %}
                 <div class="div-share">
-                  <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" /><br>
+                  <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" required="" /><br>
                 </div>
-                <div class="div-share">
-                  <input type="checkbox" name="share" value="share">This user can share with others<br>
-                </div>
-                <div class="div-share">
-                  <input type="checkbox" name="edit" value="edit">This user can edit the Project<br>
+                <div class="div-share none">
+                  <input class="input-class text" type="text" id="project-name" name="project-name" value="{{ project.project }}" /><br>
                 </div>
                 <div class="desc">
                   <button  class="btn" type="submit">SHARE</button>

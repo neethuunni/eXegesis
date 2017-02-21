@@ -65,3 +65,17 @@ function sortByUpdate(id1, id2) {
   $('#' + id1).css('font-weight','Bold');
   $('#' + id2).css('font-weight','Normal');
 }
+
+function changeDash(){
+  $('#dash').removeClass('btn-style');
+  $('#dash').addClass('btn-dash');
+  $('#style').removeClass('btn-dash');
+  $('#style').addClass('btn-style');
+};
+
+function changeStyle() {
+  $('#style').removeClass('btn-style');
+  $('#style').addClass('btn-dash');
+  $('#dash').removeClass('btn-dash');
+  $('#dash').addClass('btn-style');
+};

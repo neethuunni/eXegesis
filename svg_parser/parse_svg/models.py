@@ -12,7 +12,6 @@ class Project(models.Model):
 	project = models.CharField(max_length=50)
 	description = models.CharField(max_length=100)
 	share = models.BooleanField(default=False)
-	edit = models.BooleanField(default=False)
 	thumbnail = models.CharField(max_length=100)
 	owner = models.CharField(max_length=50)
 	screen = models.CharField(max_length=10, default='')

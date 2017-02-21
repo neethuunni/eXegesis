@@ -238,7 +238,7 @@ def create_project(request):
 		density = request.POST.get('density')
 		created = datetime.now()
 		uuid_name = uuid.uuid4()
-		new_project = Project(email=email, project=project_name, description=project_description, share=True, edit=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
+		new_project = Project(email=email, project=project_name, description=project_description, share=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
 		new_project.save()
 		return redirect('/svg-parser/projects')
 	except:
@@ -257,7 +257,6 @@ def artboards(request):
 		p = Project.objects.get(project=project_name, email=request.user.email)
 		description = p.description
 		thumbnail = p.thumbnail
-		edit = p.edit
 		share = p.share
 		owner = p.owner
 		screen = p.screen
@@ -272,7 +271,7 @@ def artboards(request):
 		request.session.modified = True
 		project = Project.objects.filter(project=project_name, email=request.user.email)
 		artboards = ArtBoard.objects.filter(project__project__contains=project_name)
-		return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'edit': edit, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
+		return render(request, 'artboards.html', {'artboards': artboards, 'user': user, 'project': project_name, 'description': description, 'share': share, 'screen': screen, 'density': density, 'created': created, 'last_updated': last_updated, 'owner': owner, 'shared_members': shared_members})
 	except:
 		print sys.exc_info()
 		return render(request, 'wrong.html')
@@ -375,33 +374,14 @@ def svg_images(request):
 
 def share_project(request):
 	try:
-		server = request.build_absolute_uri('/')
 		email = request.POST.get('email')
-		share = request.POST.get('share')
-		edit = request.POST.get('edit')
-		share = True if share else False
-		edit = True if edit else False
-		if 'project' in request.session.keys():
+		if not request.POST.get('project-name'):
 			project = request.session['project']
 			redirection = '/svg-parser/artboards?project=' + project
 		else:
 			project = request.POST.get('project-name')
 			redirection = '/svg-parser/projects'
-		encoded = jwt.encode({'code': 'verification_success', 'email': email, 'project': project, 'share': share, 'edit': edit}, 'svgparser', algorithm='HS256')
-		url = server + 'svg-parser/verify_share?token=' + encoded
-		mail = EmailMessage(EMAIL_SUBJECT, EMAIL_MESSAGE + url, EMAIL_HOST_USER, [email])
-		mail.send(fail_silently=False)
-		return redirect(redirection)
-	except:
-		print sys.exc_info()
-		return render(request, 'wrong.html')
-
-def verify_share(request):
-	try:
-		token = request.GET.get('token')
-		decoded = jwt.decode(token, 'svgparser', algorithms=['HS256'])
-		if decoded['code'] == 'verification_success':
-			project = decoded['project']
+		if not Project.objects.filter(project=project, email=email):
 			p = Project.objects.filter(project=project)[0]
 			description = p.description
 			thumbnail = p.thumbnail
@@ -410,9 +390,10 @@ def verify_share(request):
 			last_updated = p.last_updated
 			screen = p.screen
 			density = p.density
-			new_user = Project(email=decoded['email'], project=project, description=description, share=decoded['share'], edit=decoded['edit'], thumbnail=thumbnail, owner=owner, created=created, last_updated=last_updated, density=density, screen=screen)
+			uuid_name = p.uuid
+			new_user = Project(email=email, project=project, description=description, share=True, thumbnail=thumbnail, owner=owner, created=created, last_updated=last_updated, density=density, screen=screen, uuid=uuid_name)
 			new_user.save()
-			return render(request, 'verified.html')
+		return redirect(redirection)
 	except:
 		print sys.exc_info()
 		return render(request, 'wrong.html')
