@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>SVG</title>
+  <title>EXEGESIS</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -24,7 +24,7 @@
   <div >
     <div class="container-fluid div-share">
       <div class="col-sm-3 head-index">
-        <span class="glyphicon glyphicon-chevron-left back-link"></span><a class="no-link" href="/svg-parser/artboards">Back to Dashboard</a>
+        <span class="glyphicon glyphicon-chevron-left back-link"></span><a class="no-link" href="/exegesis/artboards">Back to Dashboard</a>
       </div>
       <div class="col-sm-6 head-index">
         <strong>{{ artboard }}</strong>
@@ -222,7 +222,7 @@
 <div class="foot-left">
   <button class="btn" id="zoom-in" onclick="zoomin()"><span class="glyphicon glyphicon-plus"></span></button>
   <button class="btn" id="zoom-out" onclick="zoomout()"><span class="glyphicon glyphicon-minus"></span></button>
-  <a class="no-link" href="/svg-parser/revisions?artboard={{artboard}}"><button class="btn">View Revisions</button></a>
+  <a class="no-link" href="/exegesis/revisions?artboard={{artboard}}"><button class="btn">View Revisions</button></a>
 </div>
 <div class="write-note" data-toggle="modal" data-target="#write-note">
   <button class="btn"><span class="glyphicon glyphicon-pencil"></span></button>
@@ -239,7 +239,7 @@
         <h4 class="modal-title">Write a note</h4>
       </div>
       <div class="modal-body">
-        <form class = "form-main-class" action="/svg-parser/write_note/" method="post">
+        <form class = "form-main-class" action="/exegesis/write_note/" method="post">
           {% csrf_token %}
           <input class="input-class text" type="text" id="note" name="note" placeholder="Write a note..." required /><br>
           <input class="input-class text none" type="text" id="location" name="location" value="{{url}}"/><br>

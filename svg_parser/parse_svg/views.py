@@ -217,6 +217,7 @@ def projects(request):
 			email = request.user.email
 		user = request.user.first_name + ' ' + request.user.last_name
 		request.session['username'] = user
+		request.session['email'] = email
 		request.session.modified = True
 		all_projects = Project.objects.filter(email=email)
 		print 'Username in projects: ', user
@@ -233,14 +234,14 @@ def create_project(request):
 		project_name = request.POST.get('project-name')
 		project_description = request.POST.get('project-description')
 		user = request.user.first_name + ' ' + request.user.last_name
-		thumbnail = 'svg-parser/static/project.jpg'
+		thumbnail = 'exegesis/static/project.jpg'
 		screen = request.POST.get('screen')
 		density = request.POST.get('density')
 		created = datetime.now()
 		uuid_name = uuid.uuid4()
 		new_project = Project(email=email, project=project_name, description=project_description, share=True, owner=user, thumbnail=thumbnail, screen=screen, density=density, created=created, last_updated=created, uuid=uuid_name)
 		new_project.save()
-		return redirect('/svg-parser/projects')
+		return redirect('/exegesis/projects')
 	except:
 		print sys.exc_info()
 		return render(request, 'wrong.html')
@@ -280,9 +281,9 @@ def svg_images(request):
 	defs_elms = []
 	arts = []
 	project_uuid = request.POST.get('project-uuid')
-	project = Project.objects.get(uuid=project_uuid)
+	project = Project.objects.get(uuid=project_uuid, email=request.session['email'])
 	project_name = project.project
-	redirection = '/svg-parser/projects'
+	redirection = '/exegesis/projects'
 	artboards = ArtBoard.objects.filter(project__project__contains=project_name)
 	for artboard in artboards:
 		arts.append(artboard.artboard)
@@ -377,10 +378,10 @@ def share_project(request):
 		email = request.POST.get('email')
 		if not request.POST.get('project-name'):
 			project = request.session['project']
-			redirection = '/svg-parser/artboards?project=' + project
+			redirection = '/exegesis/artboards?project=' + project
 		else:
 			project = request.POST.get('project-name')
-			redirection = '/svg-parser/projects'
+			redirection = '/exegesis/projects'
 		if not Project.objects.filter(project=project, email=email):
 			p = Project.objects.filter(project=project)[0]
 			description = p.description
@@ -418,7 +419,7 @@ def index(request):
 def logout(request):
 	try:
 		auth_logout(request)
-		return redirect('/svg-parser/')
+		return redirect('/exegesis/')
 	except:
 		print sys.exc_info()
 		return render(request, 'wrong.html')
@@ -435,7 +436,7 @@ def delete_artboard(request):
 			os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + revision.artboard.location)
 			ArtBoard.objects.filter(location=revision.artboard.location).delete()
 		ArtBoard.objects.filter(location=url).delete()
-		redirection = '/svg-parser/artboards?project=' + project
+		redirection = '/exegesis/artboards?project=' + project
 		os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + url)
 		return redirect(redirection)
 	except:
@@ -449,7 +450,7 @@ def rename_artboard(request):
 		project = request.session['project']
 		email = request.user.email
 		ArtBoard.objects.filter(location=url).update(artboard=new_name)
-		redirection = '/svg-parser/artboards?project=' + project
+		redirection = '/exegesis/artboards?project=' + project
 		return redirect(redirection)
 	except:
 		print sys.exc_info()
@@ -464,7 +465,7 @@ def delete_project(request):
 		for artboard in artboards:
 			os.remove(os.path.join(settings.BASE_DIR, 'parse_svg', 'templates') + '/' + artboard.location)
 		Project.objects.get(project=project, email=email).delete()
-		redirection = '/svg-parser/projects'
+		redirection = '/exegesis/projects'
 		return redirect(redirection)
 	except:
 		print sys.exc_info()
@@ -503,7 +504,7 @@ def write_note(request):
 		artboard = ArtBoard.objects.get(location=location)
 		new_note = Note(email=email, note=note, artboard=artboard)
 		new_note.save()
-		redirection = '/svg-parser/svg/?url=' + location
+		redirection = '/exegesis/svg/?url=' + location
 		return redirect(redirection)
 	except:
 		print sys.exc_info()
@@ -521,7 +522,7 @@ def update_artboard(request):
 	try:
 		defs_elms = []
 		project_name = request.session['project']
-		redirection = '/svg-parser/artboards?project=' + project_name
+		redirection = '/exegesis/artboards?project=' + project_name
 		artboard_uuid = request.POST.get('artboard-uuid')
 		ArtBoard.objects.filter(project__project__contains=project_name, uuid=artboard_uuid).update(latest=False, last_updated=datetime.now())
 		old_art = ArtBoard.objects.get(project__project__contains=project_name, uuid=artboard_uuid)

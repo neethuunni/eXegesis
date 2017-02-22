@@ -107,7 +107,7 @@ button {
 .annotate {
   font-size: 14px;
   height: 650px;
-  overflow: scroll;
+  overflow: auto;
 }
 
 div.annotate li {

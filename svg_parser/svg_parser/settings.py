@@ -134,10 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'static')
-STATIC_URL = '/svg-parser/static/'
+STATIC_URL = '/exegesis/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'parse_svg', 'templates', 'uploads')
-MEDIA_URL = '/svg-parser/uploads/'
+MEDIA_URL = '/exegesis/uploads/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Projects</title>
+  <title>EXEGESIS</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -14,7 +14,7 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid svg-nav">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/svg-parser/projects">
+        <a class="navbar-brand" href="/exegesis/projects">
           <div class="logo"><img src="{% static "logo.png" %}"></div>
           <div>Projects</div>
         </a>
@@ -33,7 +33,7 @@
             <h4 class="modal-title" id="header">New Project</h4>
           </div>
           <div class="modal-body">
-            <form class = "form-main-class" action="/svg-parser/create_project/" method="post" id="create-update">
+            <form class = "form-main-class" action="/exegesis/create_project/" method="post" id="create-update">
               {% csrf_token %}
               <div>
                 <input class="input-class text" type="text" id="project-name" name="project-name" placeholder="Project Name" required />
@@ -104,8 +104,8 @@
     {% for project in projects %}
     <div class="col-md-3" class="proj-div">
       <div class="proj-frame">
-        <a class="no-link" href="/svg-parser/artboards?project={{project.project}}">
-          <div style="background-image:url(/svg-parser/{{ project.thumbnail }}), url('/svg-parser/static/project.jpg')" class="thumb-img">   
+        <a class="no-link" href="/exegesis/artboards?project={{project.project}}">
+          <div style="background-image:url(/exegesis/{{ project.thumbnail }}), url('/exegesis/static/project.jpg')" class="thumb-img">   
           </div>
           <div class="caption thumb-caption">
             <div class="proj-name">{{ project.project }}</div>
@@ -123,7 +123,7 @@
           <ul class="dropdown-menu inline drop">                      
             <li class="li-drop"> <a href="#" class="li-drop" data-toggle="modal" data-target="#{{ project.project }}">SHARE</a></li>
             <li class="li-drop"><a href="#" class="li-drop" onclick="update('{{project.uuid}}');">UPDATE</a></li>
-            <li class="li-drop"><a href="/svg-parser/delete_project?project={{ project.project }}" class="li-drop">DELETE</a></li>
+            <li class="li-drop"><a href="/exegesis/delete_project?project={{ project.project }}" class="li-drop">DELETE</a></li>
           </ul>  
         </div>
       </div>
@@ -136,7 +136,7 @@
               <h4 class="modal-title">Choose Sharing options</h4>
             </div>
             <div class="modal-body">
-              <form class = "form-main-class" action="/svg-parser/share_project/" method="post">
+              <form class = "form-main-class" action="/exegesis/share_project/" method="post">
                 {% csrf_token %}
                 <div class="div-share">
                   <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" required="" /><br>
@@ -158,7 +158,7 @@
   </div>
 
   <div class = "container div-upload">
-    <form class = "form-main-class" id='update-project' action="/svg-parser/svg_images/" method="post" enctype="multipart/form-data">
+    <form class = "form-main-class" id='update-project' action="/exegesis/svg_images/" method="post" enctype="multipart/form-data">
      {% csrf_token %}
      <input class="input-class" type="file" id="svgfile" name="svgfile" multiple/>
      <input type="text" id="project-uuid" name="project-uuid" value="">

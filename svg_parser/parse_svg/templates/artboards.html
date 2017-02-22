@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Artboards</title>
+  <title>EXEGESIS</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -82,8 +82,8 @@
         {% if artboard.latest %}
         <div class="col-md-3 art-outline" id="{{ artboard.artboard }}">
           <div class="art-frame">
-            <a href='/svg-parser/svg?url={{artboard.location}}'>
-              <div class="art-thumb" style="background-image:url(/svg-parser/{{ artboard.location }});">
+            <a href='/exegesis/svg?url={{artboard.location}}'>
+              <div class="art-thumb" style="background-image:url(/exegesis/{{ artboard.location }});">
                 <div class="caption art-caption">
                   <div>
                     <button class="btn art-name">{{ artboard.artboard }}</button>
@@ -100,8 +100,8 @@
               <ul class="dropdown-menu art-drop-menu">                   
                 <li class="li-drop"> <a href="#" data-toggle="modal" data-target="#{{ artboard.uuid }}">RENAME</a></li>
                 <li class="li-drop"><a href="#" onclick="updateArtboard('{{ artboard.uuid }}');">UPDATE</a></li>
-                <li class="li-drop"><a href="/svg-parser/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
-                <li class="li-drop"><a href="/svg-parser/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
+                <li class="li-drop"><a href="/exegesis/download_artboard?artboard={{ artboard.location }}">DOWNLOAD</a></li>
+                <li class="li-drop"><a href="/exegesis/delete_artboard?artboard={{ artboard.location }}">DELETE</a></li>
               </ul>  
             </div>
           </div>
@@ -115,7 +115,7 @@
                   <h4 class="modal-title">Rename Artboard</h4>
                 </div>
                 <div class="modal-body">
-                  <form class = "form-main-class" action="/svg-parser/rename_artboard/" method="post">
+                  <form class = "form-main-class" action="/exegesis/rename_artboard/" method="post">
                     {% csrf_token %}
                     <input class="input-class text" type="text" id="new-name" name="new-name" placeholder="New name" required /><br>
                     <input class="input-class art-loc" type="text" id="artboard" name="artboard" value="{{ artboard.location }}"/><br>
@@ -140,7 +140,7 @@
               <h4 class="modal-title">Choose Sharing options</h4>
             </div>
             <div class="modal-body">
-              <form class = "form-main-class" action="/svg-parser/share_project/" method="post">
+              <form class = "form-main-class" action="/exegesis/share_project/" method="post">
                 {% csrf_token %}
                 <div class="div-share">
                   <input class="input-class text" type="text" id="email" name="email" placeholder="Email ID" required /><br>
@@ -155,7 +155,7 @@
       </div>
 
       <div class = "container art-update">
-        <form class = "form-main-class" id='update-artboard' action="/svg-parser/update_artboard/" method="post" enctype="multipart/form-data">
+        <form class = "form-main-class" id='update-artboard' action="/exegesis/update_artboard/" method="post" enctype="multipart/form-data">
          {% csrf_token %}
          <input class="input-class" type="file" id="svgfile" name="svgfile"/>
          <input type="text" id="artboard-uuid" name="artboard-uuid" value="">

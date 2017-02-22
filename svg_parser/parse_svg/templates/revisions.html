@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Revisions</title>
+  <title>EXEGESIS</title>
   <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="../static/style.css">
+  <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -28,8 +28,8 @@
       {% for revision in revisions %}
       <div class="col-md-3 art-outline" id="{{ revision.artboard.artboard }}">
         <div class="art-frame">
-          <a href='/svg-parser/svg?url={{ revision.artboard.location }}'>
-            <div class="art-thumb" style="background-image:url(/svg-parser/{{ revision.artboard.location }});">
+          <a href='/exegesis/svg?url={{ revision.artboard.location }}'>
+            <div class="art-thumb" style="background-image:url(/exegesis/{{ revision.artboard.location }});">
               <div class="caption art-caption">
                 <div>
                   <button class="btn art-name">{{ revision.artboard.created }}</button>
@@ -43,7 +43,7 @@
               </span>
             </button>
             <ul class="dropdown-menu art-drop-menu">                      
-              <li><a href="/svg-parser/download_artboard?artboard={{ revision.artboard.location }}">DOWNLOAD</a></li>
+              <li><a href="/exegesis/download_artboard?artboard={{ revision.artboard.location }}">DOWNLOAD</a></li>
             </ul>  
           </div>
         </div>
