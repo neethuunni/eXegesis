@@ -1,4 +1,4 @@
-@font-face {
+/*@font-face {
   font-family: 'Gotham';
   src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot");
   src: url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.eot?#iefix") format("embedded-opentype"),
@@ -7,10 +7,11 @@
   url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.ttf") format("truetype"),
   url("http://db.onlinewebfonts.com/t/d547aef890f72e341f3398e358ef6610.svg#Gotham") format("svg");
   font-weight: 500;
-}
+}*/
 
-body {
-  font-family: Gotham;
+@font-face {
+font-family: Gotham;
+src: url('GOTHAMHTF-BOOK_0.OTF');
 }
 
 input {
@@ -19,6 +20,15 @@ input {
 
 button {
   outline: none;
+}
+
+.navbar {
+  font-family: Gotham;
+  color: #ffffff;
+}
+
+.modal {
+  font-family: Gotham;
 }
 
 .btn {
@@ -40,6 +50,7 @@ button {
 }
 
 .create-project{
+  font-family: Gotham;
   background-color: #fd3c16;
   border-radius: 50px;
   font-size: 25px;
@@ -105,6 +116,7 @@ button {
 }
 
 .annotate {
+  font-family: Gotham;
   font-size: 14px;
   height: 650px;
   overflow: auto;
@@ -193,6 +205,7 @@ div.annotate li:nth-child(odd) {
 }
 
 .proj-list {
+  font-family: Gotham;
   margin-top: 50px;
 }
 
@@ -279,6 +292,7 @@ div.annotate li:nth-child(odd) {
 }
 
 .div-share {
+  font-family: Gotham;
   margin-top: 10px;
 }
 
@@ -288,6 +302,7 @@ div.annotate li:nth-child(odd) {
 }
 
 .main-container {
+  font-family: Gotham;
   padding: 0px 20px;
 }
 
@@ -443,6 +458,7 @@ div.annotate li:nth-child(odd) {
 }
 
 .head-index {
+  font-family: Gotham;
   font-size: 18px;
 }
 
@@ -462,18 +478,21 @@ div.annotate li:nth-child(odd) {
 }
 
 .foot-left {
+  font-family: Gotham;
   position: fixed;
   bottom: 10px;
   left: 10px;
 }
 
 .write-note {
+  font-family: Gotham;
   position: fixed;
   bottom: 10px;
   right: 400px;
 }
 
 .view-note {
+  font-family: Gotham;
   position: fixed;
   bottom: 10px;
   right: 450px;
@@ -481,4 +500,8 @@ div.annotate li:nth-child(odd) {
 
 .share-btn {
   padding: 0px;
+}
+
+.name {
+  color: #ffffff;
 }
