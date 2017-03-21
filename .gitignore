@@ -7,3 +7,5 @@ env/
 svg_parser/parse_svg/templates/uploads
 svg_parser/db.sqlite3
 svg_parser/parse_svg/*.pyc
+svg_parser/svg_parser/config.py
+svg_parser/svg_parser/config.pyc
