@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from parse_svg import views
 
-
 urlpatterns = [
     url(r'^$', views.login),
     url('^', include('social.apps.django_app.urls', namespace='social')),

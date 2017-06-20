@@ -93,9 +93,6 @@ ENV/
 
 *.pyc
 .idea/
-static/
-media/
-CT_Server/settings/local.py
-ctools.sqlite
-db_25_05_2017.sql
-
+svg_parser/parse_svg/templates/uploads/
+svg_parser/svg_parser/config.py
+svg_parser/db.sqlite3
