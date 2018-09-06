@@ -3,7 +3,7 @@
 <html>
 <head>
   <title>eXegesis</title>
-  <link rel="stylesheet" type="text/css" href="https://bootswatch.com/paper/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static "paper.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -82,7 +82,7 @@
         {% if artboard.latest %}
         <div class="col-md-3 art-outline" id="{{ artboard.artboard }}">
           <div class="art-frame">
-            <a href='/exegesis/svg?url={{artboard.location}}'>
+            <a href='/exegesis/display_artboard'>
               <div class="art-thumb" style="background-image:url(/exegesis/{{ artboard.location }});">
                 <div class="caption art-caption">
                   <div>

@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>eXegesis</title>
+      <link rel="stylesheet" type="text/css" href="{% static "marketch.css" %}">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="page" id="page">
+          <textarea class="mk-hide">
+            <div class="header">
+              <div class="brand" id="brand"><a target="_blank" href="https://github.com/tudou527/marketch">Marketch</a></div>
+              <div class="unit more" id="unit">{UNIT}：<span class="unit-current">Standard</span></div>
+              <ul class="dropdown" id="dropdown">
+                <li data-value="standard">Standard</li>
+                <li data-value="points">Points @1x (pt)</li>
+                <li data-value="retina">Retina @2x (pt)</li>
+                <li data-value="retinahd">Retina HD @3x (pt)</li>
+                <li data-value="ldpi">LDPI @0.75x (dp)</li>
+                <li data-value="mdpi">MDPI @1x (dp)</li>
+                <li data-value="hdpi">HDPI @1.5x (dp)</li>
+                <li data-value="xhdpi">XHDPI @2x (dp)</li>
+                <li data-value="xxhdpi">XXHDPI @3x (dp)</li>
+                <li data-value="xxxhdpi">XXXHDPI @4x (dp)</li>
+              </ul>
+              <div id="hd-slice" class="hd-slice"><input type="checkbox" name="slice" value="1" />
+                <label><i></i></label>{SHOWSLICE}
+              </div>
+            </div>
+            <div class="page-wrap">
+              <div class="aside" id="aside"></div>
+              <div class="artboard">
+                <div class="wrap" id="wrap"></div>
+              </div>
+              <div class="panel" id="panel"></div>
+            </div>
+          </textarea>
+        </div>
+    <script src="{% static "marketch.js" %}"></script>
+    <script src="{% static "sketches/data.js" %}"></script>
+    </body>
+</html>

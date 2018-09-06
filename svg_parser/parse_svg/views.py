@@ -356,6 +356,7 @@ def svg_images(request):
             img_data = f.read()
             uuid_name = uuid.uuid4()
             img_name = "%s.%s" % (uuid_name, 'svg')
+            print 'filename: ', img_name
             image_path = 'uploads/' + img_name
             url = image_path
             with open(os.path.join(images_path, img_name), "wb") as image:
@@ -603,6 +604,13 @@ def update_artboard(request):
             new_entry.save()
             Project.objects.filter(project=project_name).update(last_updated=datetime.now())
             return redirect(redirection)
+    except:
+        print sys.exc_info()
+        return render(request, 'wrong.html')
+
+def display_artboard(request):
+    try:
+        return render(request, 'marketch.html')
     except:
         print sys.exc_info()
         return render(request, 'wrong.html')

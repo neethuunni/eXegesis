@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^revisions/', views.revisions),
     url(r'^write_note/', views.write_note),
     url(r'^update_artboard/', views.update_artboard),
+    url(r'^display_artboard/', views.display_artboard),
 ]

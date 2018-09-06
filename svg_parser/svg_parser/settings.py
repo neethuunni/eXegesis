@@ -81,8 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'svg_parser',
-        'USER': 'Gokul',
-        'PASSWORD': 'qburst@12',
+        'USER': 'root',
+        'PASSWORD': 'root',
         'HOST': 'localhost',
         'PORT': '',
         'OPTIONS': {
@@ -139,3 +139,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_SUBJECT = "SVG Parser - Project shared!"
 EMAIL_MESSAGE = "An 'SVG Parser' project has been shared with you. Click on the following link to continue.\n\n"
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '903735569213-rrihbk2qrig6immbqm65mv4tenh0dvh5.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = 'D6XU2sUNsVTF8JlOaLQVYMNB'
